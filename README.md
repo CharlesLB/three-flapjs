@@ -1,8 +1,8 @@
-# Three Flapjs
+# UDP-APP
 
 ## Descrição
 
-O Three Flapjs é um site que permite a criação e manipulação de autômatos para linguagens formais. Com esta ferramenta interativa, você pode construir, visualizar e testar autômatos finitos determinísticos (AFDs), autômatos finitos não determinísticos (AFNs).
+O [Nome do Projeto] é um site que permite a criação e manipulação de autômatos para linguagens formais. Com esta ferramenta interativa, você pode construir, visualizar e testar autômatos finitos determinísticos (AFDs), autômatos finitos não determinísticos (AFNs).
 
 ## Recursos
 
