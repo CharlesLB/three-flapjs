@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import preferencesSlice from './slices/preferencesSlice';
+import automatonStorageSlice from './slices/automatonStorageSlice';
 
 export const store = configureStore({
   reducer: {
-    preferences: preferencesSlice
+    preferences: preferencesSlice,
+    automatonStorage: automatonStorageSlice
   }
 });
 

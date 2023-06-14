@@ -36,6 +36,6 @@ export const preferencesSlice = createSlice({
 
 export const { update } = preferencesSlice.actions;
 
-export const selectCount = (state: RootState) => state.preferences;
+export const getPreferences = (state: RootState) => state.preferences;
 
 export default preferencesSlice.reducer;
