@@ -1,7 +1,7 @@
-import { IAutomaton, IAutomatonProps, INode } from '@/@types/components/Automaton';
+import { IAutomatonProps } from '@/@types/components/Automaton';
 import addNode from '@/helpers/Automaton/Nodes/AddNode';
 import dynamic from 'next/dynamic';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React from 'react';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -9,38 +9,8 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   const width = window.innerWidth - 220;
 
   const click = () => {
-    addNode({ ...data });
+    setData(addNode({ ...data }));
   };
-
-  const handleClick = useCallback(
-    (node: INode) => {
-      const { nodes, links } = data;
-
-      const newLinks = links.filter((l) => l.source !== node && l.target !== node);
-      const newNodes = nodes.slice();
-
-      // @ts-ignore
-      newNodes.splice(node?.id, 1);
-      newNodes.forEach((n, idx) => {
-        n.id = idx;
-      });
-
-      setData({ nodes: newNodes, links: newLinks });
-    },
-    [data, setData]
-  );
-
-  useEffect(() => {
-    setInterval(() => {
-      // @ts-ignore
-      setData(({ nodes, links }) => {
-        return {
-          nodes: [...nodes],
-          links: [...links]
-        };
-      });
-    }, 500);
-  }, []);
 
   return (
     <>
@@ -52,7 +22,6 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         backgroundColor="#313638"
         nodeAutoColorBy="group"
         nodeColor="#000"
-        onNodeClick={handleClick}
         nodeCanvasObjectMode={() => 'after'}
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = `${node?.id}`;

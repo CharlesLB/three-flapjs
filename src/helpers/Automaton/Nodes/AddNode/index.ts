@@ -13,12 +13,16 @@ const getSmallestId = (automaton: IAutomaton): number => {
 const addNode = (automaton: IAutomaton): IAutomaton => {
   const id = getSmallestId(automaton);
 
-  automaton.nodes.push({
-    id: id,
-    name: `q${id}`
-  });
-
-  return automaton;
+  return {
+    ...automaton,
+    nodes: [
+      ...automaton.nodes,
+      {
+        id: id,
+        name: `q${id}`
+      }
+    ]
+  };
 };
 
 export default addNode;
