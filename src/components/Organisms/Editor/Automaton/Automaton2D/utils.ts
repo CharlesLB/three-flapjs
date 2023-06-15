@@ -19,6 +19,8 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
   const label = `${link?.name}`;
   const start = typeof link.source === 'string' || typeof link.source === 'number' ? null : link.source;
   const end = typeof link.target === 'string' || typeof link.target === 'number' ? null : link.target;
+
+
   const textPos = isSelfLoop
     ? {
         x: (start?.x || 0) + 22,
@@ -26,7 +28,7 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
       }
     : Object.assign(
         // @ts-ignore
-        ...['x', 'y'].map((c) => ({
+        ...['x', 'y'].map((c) => start !== null && end !== null && ({
           // @ts-ignore
           [c]: start[c] - 2 + (end[c] - start[c]) / 2
         }))
