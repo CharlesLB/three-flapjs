@@ -2,6 +2,7 @@ import { IAutomatonProps } from '@/@types/components/Automaton';
 import addNode from '@/helpers/Automaton/Nodes/AddNode';
 import dynamic from 'next/dynamic';
 import React from 'react';
+import { linkCanvasObject, nodeCanvasObject } from './utils';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -22,41 +23,13 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         backgroundColor="#313638"
         nodeAutoColorBy="group"
         nodeColor="#000"
+        nodeRelSize={20}
         nodeCanvasObjectMode={() => 'after'}
-        nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = `${node?.id}`;
-          const fontSize = 12 / globalScale;
-          ctx.font = `${fontSize}px Sans-Serif`;
-
-          ctx.fillStyle = 'rgba(255, 255, 255)';
-
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = node.color || '#000';
-          ctx.fillText(label, node?.x || 0, node?.y || 0);
-        }}
+        nodeCanvasObject={nodeCanvasObject}
         linkHoverPrecision={1}
         linkCanvasObjectMode={() => 'after'}
         linkAutoColorBy="group"
-        linkCanvasObject={(link, ctx, globalScale) => {
-          const label = `${link?.name}`;
-          const start = link.source;
-          const end = link.target;
-          const textPos = Object.assign(
-            // @ts-ignore
-            ...['x', 'y'].map((c) => ({
-              // @ts-ignore
-              [c]: start[c] + (end[c] - start[c]) / 2
-            }))
-          );
-
-          const fontSize = 12 / globalScale;
-          ctx.font = `${fontSize}px Sans-Serif`;
-
-          ctx.fillStyle = 'rgba(255, 255, 255)';
-          const { x: textX, y: textY } = textPos;
-          ctx.fillText(label, textX, textY);
-        }}
+        linkCanvasObject={linkCanvasObject}
         linkWidth={1}
         linkColor="#aaa"
         linkDirectionalParticleSpeed={0.01}
