@@ -1,10 +1,13 @@
 import { IAutomaton } from '@/@types/components/Automaton';
-import findNodeById from '../FindNodeById';
 
 const getSmallestId = (automaton: IAutomaton): number => {
+  var fieldToSort = 'id';
+  automaton.nodes.sort(function (a, b) {
+    return a[fieldToSort] - b[fieldToSort];
+  });
+
   for (let i = 0; i < automaton.nodes.length; i++) {
-    const nodeId = findNodeById(automaton, i);
-    if (!nodeId) {
+    if (i !== automaton.nodes[i].id) {
       return i;
     }
   }

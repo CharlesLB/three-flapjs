@@ -10,8 +10,8 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   const width = window.innerWidth - 220;
 
   const click = () => {
-    // setData(addNode({ ...data }));
-    setData(editNode({ ...data }, 0, 'q6'));
+    setData(addNode({ ...data }));
+    // setData(editNode({ ...data }, 0, 'q3'));
   };
 
   return (
