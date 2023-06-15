@@ -16,7 +16,7 @@ const DashboardPage: React.FC<Props> = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 500);
   }, []);
 
   if (loading) {

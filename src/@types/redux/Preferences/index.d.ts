@@ -4,6 +4,7 @@ interface IPreferences {
     width: number;
     color: string;
     background: string;
+    particles: boolean;
   };
   node: {
     color: string;

@@ -1,3 +1,4 @@
+import { IAutomaton } from '@/@types/components/Automaton';
 import { LinkObject } from 'react-force-graph-2d';
 
 const addLink = (automaton: IAutomaton, link: LinkObject) => {

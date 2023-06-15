@@ -1,7 +1,23 @@
-import { NodeObject } from 'react-force-graph-2d';
+import { IAutomaton } from '@/@types/components/Automaton';
 
-const addNode = (automaton: IAutomaton, node: NodeObject) => {
-  automaton.nodes.push(node);
+const getSmallestId = (automaton: IAutomaton): number => {
+  for (let i = 0; i < automaton.nodes.length; i++) {
+    if (i !== automaton.nodes[i].id) {
+      return i;
+    }
+  }
+
+  return automaton.nodes.length;
+};
+
+const addNode = (automaton: IAutomaton): IAutomaton => {
+  const id = getSmallestId(automaton);
+
+  automaton.nodes.push({
+    id: id,
+    name: `q${id}`
+  });
+
   return automaton;
 };
 
