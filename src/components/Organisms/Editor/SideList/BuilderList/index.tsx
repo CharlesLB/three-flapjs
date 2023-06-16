@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-import { Container, ListItem } from './styles';
+import { Container } from './styles';
 import SearchInput from '@/components/Atoms/Inputs/SearchInput';
+import BuilderOptions from './BuilderOptions';
 
 const BuilderList: React.FC = () => {
   const [search, setSearch] = useState<string>('');
@@ -55,20 +56,7 @@ const BuilderList: React.FC = () => {
       <header>
         <SearchInput setValues={setSearch} value={search} />
       </header>
-      <main>
-        {buildOptions.map((option, index) => (
-          <div key={index}>
-            <h3>{option.label}</h3>
-            <ul>
-              {option.items.map((item, index) => (
-                <ListItem active={state === item.state} key={index} onClick={() => handleState(item.state)}>
-                  {item.label}
-                </ListItem>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </main>
+      <BuilderOptions buildOptions={buildOptions} search={search} state={state} handleState={handleState} />
     </Container>
   );
 };
