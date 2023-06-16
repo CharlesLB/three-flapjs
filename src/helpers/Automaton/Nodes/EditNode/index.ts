@@ -32,6 +32,10 @@ const editNode = (automaton: IAutomaton, id: number, name: string): IAutomaton =
 
   const node = findNodeById(automaton, id);
 
+  if (!node) {
+    throw new Error('Não existe nó com esse ID');
+  }
+
   // @ts-ignore
   node.name = name;
 
