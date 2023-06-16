@@ -1,4 +1,6 @@
 import { IAutomatonProps } from '@/@types/components/Automaton';
+import addNode from '@/helpers/Automaton/Nodes/AddNode';
+import deleteNode from '@/helpers/Automaton/Nodes/DeleteNode';
 import editNode from '@/helpers/Automaton/Nodes/EditNode';
 import dynamic from 'next/dynamic';
 import React from 'react';
@@ -10,7 +12,8 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
 
   const click = () => {
     // setData(addNode({ ...data }));
-    setData(editNode({ ...data }, 5, 'q5'));
+    // setData(editNode({ ...data }, 1, 'banana'));
+    setData(deleteNode({ ...data }, 32));
   };
 
   return (
