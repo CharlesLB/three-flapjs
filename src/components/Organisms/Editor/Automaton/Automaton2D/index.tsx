@@ -17,20 +17,19 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     <>
       <button onClick={() => click()}>test</button>
       <ForceGraph2D
-        staticGraph={0}
         graphData={data}
         nodeLabel="id"
         width={width}
         backgroundColor="#313638"
         nodeAutoColorBy="group"
         nodeColor="#000"
-        nodeRelSize={20}
+        nodeRelSize={8}
         nodeCanvasObjectMode={() => 'after'}
         nodeCanvasObject={nodeCanvasObject}
         linkHoverPrecision={1}
         linkCanvasObjectMode={() => 'after'}
         linkAutoColorBy="group"
-        linkCanvasObject={linkCanvasObject}
+        linkCanvasObject={(link, ctx, globalScale) => linkCanvasObject(link, ctx, globalScale, data.nodes)}
         linkWidth={1}
         linkColor="#aaa"
         linkDirectionalParticleSpeed={0.01}

@@ -13,13 +13,12 @@ const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScal
   ctx.fillText(label, node?.x || 0, node?.y || 0);
 };
 
-const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScale: number) => {
+const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScale: number, nodes: INode[]) => {
   const isSelfLoop = link.source === link.target;
 
   const label = `${link?.name}`;
-  const start = typeof link.source === 'string' || typeof link.source === 'number' ? null : link.source;
-  const end = typeof link.target === 'string' || typeof link.target === 'number' ? null : link.target;
-
+  const start = typeof link.source === 'string' || typeof link.source === 'number' ? nodes[Number(link.source)] : link.source;
+  const end = typeof link.target === 'string' || typeof link.target === 'number' ? nodes[Number(link.target)] : link.target;
 
   const textPos = isSelfLoop
     ? {
@@ -28,7 +27,7 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
       }
     : Object.assign(
         // @ts-ignore
-        ...['x', 'y'].map((c) => start !== null && end !== null && ({
+        ...['x', 'y'].map((c) => ({
           // @ts-ignore
           [c]: start[c] - 2 + (end[c] - start[c]) / 2
         }))
