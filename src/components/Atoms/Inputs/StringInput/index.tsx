@@ -8,8 +8,8 @@ interface Props {
   setValues: (value: string) => void;
 }
 
-const SearchInput: React.FC<Props> = ({ placeholder = 'Search', value, setValues }) => {
+const StringInput: React.FC<Props> = ({ placeholder = 'Search', value, setValues }) => {
   return <Container placeholder={placeholder} value={value} onChange={(e) => setValues(e.target.value)} />;
 };
 
-export default SearchInput;
+export default StringInput;

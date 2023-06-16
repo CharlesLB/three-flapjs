@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Container } from './styles';
-import SearchInput from '@/components/Atoms/Inputs/SearchInput';
+import SearchInput from '@/components/Atoms/Inputs/StringInput';
 import BuilderOptions from './BuilderOptions';
 
 const BuilderList: React.FC = () => {
