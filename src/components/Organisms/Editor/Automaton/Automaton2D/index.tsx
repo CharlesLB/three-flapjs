@@ -15,7 +15,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
 
   return (
     <>
-      <button onClick={() => click()}>test</button>
+      {/* <button onClick={() => click()}>test</button> */}
       <ForceGraph2D
         graphData={data}
         nodeLabel="id"
