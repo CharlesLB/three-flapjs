@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { Container } from './styles';
 import TabSelector from '@/components/Molecules/TabSelector';
+import BuilderList from './BuilderList';
+import TestList from './TestList';
 
 const SideList: React.FC = () => {
   const [tab, setTab] = useState<string>('build');
@@ -22,8 +24,8 @@ const SideList: React.FC = () => {
       <main>
         {
           {
-            build: <div>Build</div>,
-            test: <div>Test</div>
+            build: <BuilderList />,
+            test: <TestList />
           }[tab]
         }
       </main>

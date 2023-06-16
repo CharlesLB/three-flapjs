@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container } from './styles';
+import { Container, Content } from './styles';
 import dynamic from 'next/dynamic';
 import { IAutomaton } from '@/@types/components/Automaton';
 const Automaton3D = dynamic(() => import('./Automaton3D'), { ssr: false });
@@ -18,8 +18,10 @@ const Automaton: React.FC = () => {
   });
   return (
     <Container>
-      {/* <Automaton3D data={data} setData={setData} /> */}
-      <Automaton2D data={data} setData={setData} />
+      <Content>
+        {/* <Automaton3D data={data} setData={setData} /> */}
+        <Automaton2D data={data} setData={setData} />
+      </Content>
     </Container>
   );
 };

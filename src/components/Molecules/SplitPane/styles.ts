@@ -20,35 +20,51 @@ export const Container = styled(SplitPane)`
   }
 
   .Resizer:hover {
-    -webkit-transition: all 2s ease;
-    transition: all 2s ease;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
   }
 
   .Resizer.horizontal {
-    height: 11px;
-    margin: -5px 0;
-    border-top: 5px solid rgba(255, 255, 255, 0);
-    border-bottom: 5px solid rgba(255, 255, 255, 0);
+    height: 6px;
     cursor: row-resize;
     width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    &::before {
+      content: '';
+
+      margin: 0 auto;
+      position: absolute;
+      left: calc(50% - 2.5rem);
+      width: 5rem;
+      height: 6px;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
   }
 
   .Resizer.horizontal:hover {
-    border-top: 5px solid rgba(0, 0, 0, 0.5);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 1);
   }
 
   .Resizer.vertical {
-    width: 20px;
-    margin: 0 -5px;
-    border-left: 5px solid rgba(255, 255, 255, 0);
-    border-right: 5px solid rgba(255, 255, 255, 0);
+    width: 6px;
+    background-color: rgba(0, 0, 0, 0.5);
     cursor: col-resize;
+
+    &::before {
+      content: '';
+
+      margin: 0 auto;
+      position: absolute;
+      top: calc(50% - 2.5rem);
+      height: 5rem;
+      width: 6px;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
   }
 
   .Resizer.vertical:hover {
-    border-left: 5px solid rgba(0, 0, 0, 0.5);
-    border-right: 5px solid rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 1);
   }
 
   .Resizer.disabled {

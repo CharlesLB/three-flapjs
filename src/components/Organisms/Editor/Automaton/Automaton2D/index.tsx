@@ -20,7 +20,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         graphData={data}
         nodeLabel="id"
         width={width}
-        backgroundColor="#313638"
+        backgroundColor="#31363800"
         nodeAutoColorBy="group"
         nodeColor="#000"
         nodeRelSize={8}
@@ -41,6 +41,8 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
           node.fy = node.y;
         }}
         onBackgroundClick={(data) => console.log(data)}
+        minZoom={2}
+        maxZoom={4}
       />
     </>
   );

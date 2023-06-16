@@ -14,6 +14,7 @@ const Editor: React.FC = () => {
       <SplitPane split="horizontal" minSize={50} maxSize={screenSize - 150} defaultSize={screenSize - 150}>
         <SplitPane split="vertical" minSize={220}>
           <SideList />
+
           <Automaton />
         </SplitPane>
         <Logger />
