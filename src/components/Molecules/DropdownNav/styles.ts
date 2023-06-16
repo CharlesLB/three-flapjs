@@ -5,4 +5,8 @@ export const Container = styled.div`
   color: #ccc;
   font-size: 12px;
   cursor: pointer;
+
+  &:hover {
+    color: #fff;
+  }
 `;

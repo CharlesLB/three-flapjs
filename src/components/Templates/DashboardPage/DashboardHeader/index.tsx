@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Container } from './styles';
 import DropdownNav from '@/components/Molecules/DropdownNav';
 
 const DashboardHeader: React.FC = () => {
+  const [open, setOpen] = useState<boolean>(false);
+
   const menu = [
     {
       label: 'File'
@@ -19,7 +21,7 @@ const DashboardHeader: React.FC = () => {
   return (
     <Container>
       {menu.map((item, index) => (
-        <DropdownNav key={index} {...item} />
+        <DropdownNav open={open} setOpen={setOpen} key={index} {...item} />
       ))}
     </Container>
   );

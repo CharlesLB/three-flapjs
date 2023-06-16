@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { Container } from './styles';
+import DropdownMenu from './DropdownMenu';
 
 interface Props {
   label: string;
@@ -14,6 +15,7 @@ const DropdownNav: React.FC<Props> = ({ label, open, setOpen }) => {
   return (
     <Container onClick={() => setOpen(!open)} onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
       {label}
+      <DropdownMenu active={show && open} />
     </Container>
   );
 };
