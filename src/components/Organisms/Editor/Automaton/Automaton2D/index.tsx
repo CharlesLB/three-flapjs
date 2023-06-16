@@ -11,7 +11,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
 
   const click = () => {
     setData(addNode({ ...data }));
-    // setData(editNode({ ...data }, 0, 'q3'));
+    // setData(editNode({ ...data }, 5, 'q3'));
   };
 
   return (
@@ -26,7 +26,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         nodeColor="#000"
         nodeCanvasObjectMode={() => 'after'}
         nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = `${node?.id}`;
+          const label = `${node?.id}+${node?.name}`;
           const fontSize = 12 / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
 

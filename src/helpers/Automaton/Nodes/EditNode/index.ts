@@ -34,8 +34,16 @@ const editNode = (automaton: IAutomaton, id: number, name: string): IAutomaton =
 
   // @ts-ignore
   node.name = name;
-  // @ts-ignore
-  node.id = getValidId(automaton);
+
+  const wordsName = name.split('');
+  if (wordsName[0] === 'q') {
+    const numberId = parseInt(name.slice(1, name.length));
+    // @ts-ignore
+    node.id = numberId;
+  } else {
+    // @ts-ignore
+    node.id = getValidId(automaton);
+  }
 
   return automaton;
 };
