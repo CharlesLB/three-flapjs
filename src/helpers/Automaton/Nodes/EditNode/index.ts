@@ -11,14 +11,12 @@ const checkValidName = (automaton: IAutomaton, name: string): boolean => {
   return true;
 };
 
-const getValidId = (automaton: IAutomaton): number => {
-  automaton.nodes.sort();
-
+const getAleatoryId = (automaton: IAutomaton): number => {
   const id = Math.floor(Math.random() * (100 - automaton.nodes.length) + automaton.nodes.length);
 
   for (let i = 0; i < automaton.nodes.length; i++) {
     if (id == automaton.nodes[i].id) {
-      return getValidId(automaton);
+      return getAleatoryId(automaton);
     }
   }
 
@@ -39,15 +37,17 @@ const editNode = (automaton: IAutomaton, id: number, name: string): IAutomaton =
   // @ts-ignore
   node.name = name;
 
-  const wordsName = name.split('');
-  if (wordsName[0] === 'q') {
-    const numberId = parseInt(name.slice(1, name.length));
-    // @ts-ignore
-    node.id = numberId;
+  let newId;
+
+  if (name[0] === 'q') {
+    newId = parseInt(name.slice(1, name.length));
   } else {
-    // @ts-ignore
-    node.id = getValidId(automaton);
+    automaton.nodes.sort();
+    newId = getAleatoryId(automaton);
   }
+
+  // @ts-ignore
+  node.id = newId;
 
   return automaton;
 };
