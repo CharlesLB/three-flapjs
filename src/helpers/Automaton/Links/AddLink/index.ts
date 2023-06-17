@@ -1,4 +1,4 @@
-import { IAutomaton, INode } from '@/@types/components/Automaton';
+import { IAutomaton, ILink, INode } from '@/@types/components/Automaton';
 import findNodeById from '../../Nodes/FindNodeById';
 import findLinkByNodeId from '../FindLinkByNodesId';
 
@@ -17,7 +17,22 @@ const addDataToCreatedLink = (automaton: IAutomaton, nodeSource: INode, nodeTarg
   return automaton;
 };
 
-const createLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
+const createLinkWithCurvature = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
+  return {
+    ...automaton,
+    links: [
+      ...automaton.links,
+      {
+        source: nodeSource,
+        target: nodeTarget,
+        name: name,
+        curvature: 0.8
+      }
+    ]
+  };
+};
+
+const createLinkWithoutCurvature = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
   return {
     ...automaton,
     links: [
@@ -31,6 +46,15 @@ const createLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode,
   };
 };
 
+// const getLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode): ILink => {
+//   const link = findLinkByNodeId(automaton, nodeSource, nodeTarget);
+
+//   if (!link) {
+//     throw new Error('Não existe link com esses nós');
+//   }
+
+//   return link;
+// };
 const verifyLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode): boolean => {
   const link = findLinkByNodeId(automaton, nodeSource, nodeTarget);
 
@@ -39,6 +63,30 @@ const verifyLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: 
   }
 
   return true;
+};
+
+const createLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
+  if (nodeSource.id === nodeTarget.id) {
+    return {
+      ...automaton,
+      links: [
+        ...automaton.links,
+        {
+          source: nodeSource,
+          target: nodeTarget,
+          name: name,
+          curvature: 0.8,
+          rotation: (Math.PI * 1) / 6
+        }
+      ]
+    };
+  }
+
+  const newAtomaton = verifyLinkExists(automaton, nodeTarget, nodeSource)
+    ? createLinkWithCurvature(automaton, nodeSource, nodeTarget, name)
+    : createLinkWithoutCurvature(automaton, nodeSource, nodeTarget, name);
+
+  return newAtomaton;
 };
 
 const addLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: number, name: string): IAutomaton => {
