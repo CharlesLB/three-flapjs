@@ -6,6 +6,7 @@ import editNode from '@/helpers/Automaton/Nodes/EditNode';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { linkCanvasObject, nodeCanvasObject, nodeColor } from './utils';
+import editLink from '@/helpers/Automaton/Links/EditLink';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -26,12 +27,17 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     setData(addLink({ ...data }, 1, 2, 'a'));
   };
 
+  const clickEditLink = () => {
+    setData(editLink({ ...data }, 1, 2, 'b'));
+  };
+
   return (
     <>
       <button onClick={() => clickAdd()}>Add</button>
       <button onClick={() => clickRemove()}>Remove</button>
       <button onClick={() => clickEdita()}>Edita</button>
       <button onClick={() => clickAddLink()}>Add Link</button>
+      <button onClick={() => clickEditLink()}>Edit Link</button>
       <ForceGraph2D
         graphData={data}
         nodeLabel="id"

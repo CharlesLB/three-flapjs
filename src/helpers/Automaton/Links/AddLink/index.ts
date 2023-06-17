@@ -5,14 +5,15 @@ import findLinkByNodeId from '../FindLinkByNodesId';
 const addDataToCreatedLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
   const link = automaton.links.find((link) => link.source === nodeSource && link.target === nodeTarget);
 
-  for (let i = 0; i < link?.name.length; i++) {
-    if (link?.name[i] == name) {
-      return automaton;
-    }
+  if (!link) {
+    return automaton;
   }
 
-  //@ts-ignore
-  link.name = `${link?.name}, ${name}`;
+  if (link.name.includes(name)) {
+    return automaton;
+  }
+
+  link.name = `${link.name}, ${name}`;
 
   return automaton;
 };
@@ -62,6 +63,8 @@ const createLinkWithoutCurvature = (automaton: IAutomaton, nodeSource: INode, no
 const verifyLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode): boolean => {
   const link = findLinkByNodeId(automaton, nodeSource, nodeTarget);
 
+  console.log(nodeSource?.id, nodeTarget?.id, !!link);
+
   return !!link;
 };
 
@@ -82,11 +85,11 @@ const createLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode,
     };
   }
 
-  const newAtomaton = verifyLinkExists(automaton, nodeTarget, nodeSource)
+  const newAutomaton = verifyLinkExists(automaton, nodeTarget, nodeSource)
     ? createLinkWithCurvature(automaton, nodeSource, nodeTarget, name)
     : createLinkWithoutCurvature(automaton, nodeSource, nodeTarget, name);
 
-  return newAtomaton;
+  return newAutomaton;
 };
 
 const addLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: number, name: string): IAutomaton => {
@@ -100,11 +103,11 @@ const addLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: numb
     throw new Error('Não existe nó cauda com esse ID');
   }
 
-  const newAtomaton = verifyLinkExists(automaton, nodeSource, nodeTarget)
+  const newAutomaton = verifyLinkExists(automaton, nodeSource, nodeTarget)
     ? addDataToCreatedLink(automaton, nodeSource, nodeTarget, name)
     : createLink(automaton, nodeSource, nodeTarget, name);
 
-  return newAtomaton;
+  return newAutomaton;
 };
 
 export default addLink;

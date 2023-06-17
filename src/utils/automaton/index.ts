@@ -2,12 +2,10 @@ import { IAutomaton } from '@/@types/components/Automaton';
 
 const validateAutomaton = (automaton: IAutomaton): boolean => {
   if (!automaton || typeof automaton !== 'object') {
-    console.log('Automaton is not an object');
     return false;
   }
 
   if (!Array.isArray(automaton.nodes) || !Array.isArray(automaton.links)) {
-    console.log('Automaton nodes or links are not arrays');
     return false;
   }
 

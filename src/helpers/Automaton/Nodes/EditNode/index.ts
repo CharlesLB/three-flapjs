@@ -34,13 +34,13 @@ const getNewId = (automaton: IAutomaton, name: string): number => {
 
 const editNode = (automaton: IAutomaton, id: any, name: string): IAutomaton => {
   if (!checkValidName(automaton, name)) {
-    throw new Error('Nome já existente');
+    throw new Error('Name already exists');
   }
 
   const node = findNodeById(automaton, id);
 
   if (!node) {
-    throw new Error('Não existe nó com esse ID');
+    throw new Error('Node does not exist');
   }
 
   node.name = name;

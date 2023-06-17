@@ -5,30 +5,21 @@ import findLinkByNodesId from '../FindLinkByNodesId';
 const editLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: number, name: string): IAutomaton => {
   const nodeSource = findNodeById(automaton, idNodeSource);
   if (!nodeSource) {
-    throw new Error('Não existe nó cabeça com esse ID');
+    throw new Error('There is no head node with this ID');
   }
 
   const nodeTarget = findNodeById(automaton, idNodeTarget);
   if (!nodeTarget) {
-    throw new Error('Não existe nó cauda com esse ID');
+    throw new Error('There is no tail node with this ID');
   }
 
   const link = findLinkByNodesId(automaton, nodeSource, nodeTarget);
 
   if (!link) {
-    throw new Error('Não existe link com esses ids');
+    throw new Error('There is no link with these nodes');
   }
 
-  for (let i = 0; i < link?.name.length; i++) {
-    const splitName = link?.name.split(', ');
-    if (splitName[i] == name) {
-      console.log(splitName[i], name);
-      return automaton;
-    }
-  }
-
-  //@ts-ignore
-  link.name = `${link?.name}, ${name}`;
+  link.name = name;
 
   return automaton;
 };
