@@ -4,7 +4,7 @@ export const Container = styled.div`
   padding-top: 1rem;
 
   > header {
-    border-bottom: 1px solid #232628;
+    border-bottom: 1px solid var(--color-primary-dark);
 
     > h2 {
       color: #eee;

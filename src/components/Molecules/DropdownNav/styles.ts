@@ -24,7 +24,7 @@ export const Container = styled.div`
     width: 200px;
     position: absolute;
     background-color: var(--color-primary);
-    border: 1px solid #232628;
+    border: 1px solid var(--color-primary-dark);
     border-top: #333 1px solid;
 
     > li {
