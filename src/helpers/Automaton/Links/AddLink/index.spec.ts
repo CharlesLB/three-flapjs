@@ -84,7 +84,7 @@ describe('addLink', () => {
 
     expect(() => {
       addLink(automaton, 1, 2, 'Link AB');
-    }).toThrow('Não existe nó cabeça com esse ID');
+    }).toThrow('There is no head node with this ID');
   });
 
   test('should throw an error when the target node ID does not exist', () => {
@@ -95,6 +95,6 @@ describe('addLink', () => {
 
     expect(() => {
       addLink(automaton, 1, 2, 'Link AB');
-    }).toThrow('Não existe nó cauda com esse ID');
+    }).toThrow('There is no tail node with this ID');
   });
 });
