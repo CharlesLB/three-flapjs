@@ -24,6 +24,14 @@ const getAleatoryId = (automaton: IAutomaton): number => {
   return id;
 };
 
+const getNewId = (automaton: IAutomaton, name: string): number => {
+  if (name[0] === 'q') {
+    return parseInt(name.slice(1, name.length));
+  }
+  sortIdNodes(automaton);
+  return getAleatoryId(automaton);
+};
+
 const editNode = (automaton: IAutomaton, id: any, name: string): IAutomaton => {
   if (!checkValidName(automaton, name)) {
     throw new Error('Nome já existente');
@@ -35,16 +43,8 @@ const editNode = (automaton: IAutomaton, id: any, name: string): IAutomaton => {
     throw new Error('Não existe nó com esse ID');
   }
 
-  let newId;
-  if (name[0] === 'q') {
-    newId = parseInt(name.slice(1, name.length));
-  } else {
-    sortIdNodes(automaton);
-    newId = getAleatoryId(automaton);
-  }
-
   node.name = name;
-  node.id = newId;
+  node.id = getNewId(automaton, name);
 
   return automaton;
 };

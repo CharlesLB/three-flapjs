@@ -30,8 +30,8 @@ O [Nome do Projeto] é um site que permite a criação e manipulação de autôm
 ## Lista de Tarefas
 
 0. [x] 0. Criação da estrutura do projeto
-1. [ ] 1. Navbar (http://idflood.github.io/ThreeNodes.js/index_optimized.html#Library)
-2. [ ] 2. Sidebar atualizando um contexto de seleção (http://idflood.github.io/ThreeNodes.js/index_optimized.html#Library)
+1. [x] 1. Navbar (http://idflood.github.io/ThreeNodes.js/index_optimized.html#Library)
+2. [x] 2. Sidebar atualizando um contexto de seleção (http://idflood.github.io/ThreeNodes.js/index_optimized.html#Library)
 3. [ ] 3. Adicionar seta na esquerda para estados iniciais e círculos nos estados finais
 4. [ ] 4. Criar funções de edição do Autômato
 5. [ ] 5. Adicionar funções da sidebar para inserir no gráfico
