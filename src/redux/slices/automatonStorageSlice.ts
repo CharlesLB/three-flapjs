@@ -4,8 +4,10 @@ import { IAutomatonStorage } from '@/@types/redux/AutomatonStorage';
 
 const initialState: IAutomatonStorage = {
   mode: 'none',
-  link: null,
-  node: null
+  action: {
+    type: '',
+    data: null
+  }
 };
 
 export const getPreviousPreferences = createAsyncThunk('preferences/getPreviousPreferences', () => {
@@ -20,16 +22,16 @@ export const automatonSlice = createSlice({
     changeMode: (state, action: PayloadAction<IAutomatonStorage['mode']>): void => {
       state.mode = action.payload;
     },
-    setLink: (state, action: PayloadAction<IAutomatonStorage['link']>): void => {
-      state.link = action.payload;
+    changeAction: (state, action: PayloadAction<IAutomatonStorage['action']>): void => {
+      state.action = action.payload;
     },
-    setNode: (state, action: PayloadAction<IAutomatonStorage['node']>): void => {
-      state.node = action.payload;
+    resetAction: (state): void => {
+      state.action = initialState.action;
     }
   }
 });
 
-export const { changeMode, setLink, setNode } = automatonSlice.actions;
+export const { changeMode, changeAction, resetAction } = automatonSlice.actions;
 
 export const getAutomatonStorage = (state: RootState) => state.automatonStorage;
 

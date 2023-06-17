@@ -1,4 +1,4 @@
-import { IAutomaton, ILink, INode } from '@/@types/components/Automaton';
+import { IAutomaton, INode } from '@/@types/components/Automaton';
 import findNodeById from '../../Nodes/FindNodeById';
 import findLinkByNodeId from '../FindLinkByNodesId';
 
@@ -62,11 +62,7 @@ const createLinkWithoutCurvature = (automaton: IAutomaton, nodeSource: INode, no
 const verifyLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode): boolean => {
   const link = findLinkByNodeId(automaton, nodeSource, nodeTarget);
 
-  if (!link) {
-    return false;
-  }
-
-  return true;
+  return !!link;
 };
 
 const createLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {

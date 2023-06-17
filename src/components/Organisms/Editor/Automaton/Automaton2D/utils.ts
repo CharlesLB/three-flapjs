@@ -41,4 +41,24 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
   ctx.fillText(label, textX, textY);
 };
 
-export { nodeCanvasObject, linkCanvasObject };
+const nodeColor = (node: INode): string => {
+  if (node?.start && node?.end) {
+    return '#ff00ff';
+  }
+
+  if (node?.start) {
+    return '#0000ff';
+  }
+
+  if (node?.end) {
+    return '#ff0000';
+  }
+
+  if (node?.selected) {
+    return '#ccc';
+  }
+
+  return '#fff';
+};
+
+export { nodeCanvasObject, linkCanvasObject, nodeColor };

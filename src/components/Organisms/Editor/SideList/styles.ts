@@ -12,5 +12,23 @@ export const Container = styled.div`
   > main {
     height: 100%;
     overflow: auto;
+    padding-bottom: 1rem;
+
+    ::-webkit-scrollbar {
+      width: 0.4rem;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--color-primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-primary-dark);
+      border-radius: 0.5rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
   }
 `;

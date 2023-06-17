@@ -6,7 +6,8 @@ const initialState: IPreferences = {
   link: {
     width: 10,
     color: '#000000',
-    background: '#ffffff'
+    background: '#ffffff',
+    particles: true
   },
   node: {
     color: '#000000',

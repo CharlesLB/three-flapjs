@@ -1,8 +1,8 @@
-import { IAutomaton } from '@/@types/components/Automaton';
+import { IAutomaton, INode } from '@/@types/components/Automaton';
 import getSmallestId from '../GetSmallestId';
 
-const addNode = (automaton: IAutomaton): IAutomaton => {
-  const id = getSmallestId(automaton);
+const addNode = (automaton: IAutomaton, node?: INode): IAutomaton => {
+  const id = node?.id ?? getSmallestId(automaton);
 
   return {
     ...automaton,
@@ -10,7 +10,7 @@ const addNode = (automaton: IAutomaton): IAutomaton => {
       ...automaton.nodes,
       {
         id,
-        name: `q${id}`
+        name: node?.name ?? `q${id}`
       }
     ]
   };

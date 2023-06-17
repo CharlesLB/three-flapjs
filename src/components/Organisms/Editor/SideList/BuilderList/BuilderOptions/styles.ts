@@ -26,7 +26,7 @@ export const Container = styled.div`
     }
 
     > ul {
-      border-top: 1px solid #232628;
+      border-top: 1px solid var(--color-primary-dark);
     }
   }
 `;

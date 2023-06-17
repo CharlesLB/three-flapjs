@@ -5,7 +5,7 @@ import deleteNode from '@/helpers/Automaton/Nodes/DeleteNode';
 import editNode from '@/helpers/Automaton/Nodes/EditNode';
 import dynamic from 'next/dynamic';
 import React from 'react';
-import { linkCanvasObject, nodeCanvasObject } from './utils';
+import { linkCanvasObject, nodeCanvasObject, nodeColor } from './utils';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -38,7 +38,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         width={width}
         backgroundColor="#31363800"
         nodeAutoColorBy="group"
-        nodeColor="#000"
+        nodeColor={nodeColor}
         nodeRelSize={8}
         nodeCanvasObjectMode={() => 'after'}
         nodeCanvasObject={nodeCanvasObject}
