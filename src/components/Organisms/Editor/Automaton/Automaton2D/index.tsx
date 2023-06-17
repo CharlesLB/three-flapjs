@@ -5,6 +5,7 @@ import deleteNode from '@/helpers/Automaton/Nodes/DeleteNode';
 import editNode from '@/helpers/Automaton/Nodes/EditNode';
 import dynamic from 'next/dynamic';
 import React from 'react';
+import { linkCanvasObject, nodeCanvasObject } from './utils';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -35,44 +36,16 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         graphData={data}
         nodeLabel="id"
         width={width}
-        backgroundColor="#313638"
+        backgroundColor="#31363800"
         nodeAutoColorBy="group"
         nodeColor="#000"
+        nodeRelSize={8}
         nodeCanvasObjectMode={() => 'after'}
-        nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = `${node?.id}+${node?.name}`;
-          const fontSize = 12 / globalScale;
-          ctx.font = `${fontSize}px Sans-Serif`;
-
-          ctx.fillStyle = 'rgba(255, 255, 255)';
-
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = node.color || '#000';
-          ctx.fillText(label, node?.x || 0, node?.y || 0);
-        }}
+        nodeCanvasObject={nodeCanvasObject}
         linkHoverPrecision={1}
         linkCanvasObjectMode={() => 'after'}
         linkAutoColorBy="group"
-        linkCanvasObject={(link, ctx, globalScale) => {
-          const label = `${link?.name}`;
-          const start = link.source;
-          const end = link.target;
-          const textPos = Object.assign(
-            // @ts-ignore
-            ...['x', 'y'].map((c) => ({
-              // @ts-ignore
-              [c]: start[c] + (end[c] - start[c]) / 2
-            }))
-          );
-
-          const fontSize = 12 / globalScale;
-          ctx.font = `${fontSize}px Sans-Serif`;
-
-          ctx.fillStyle = 'rgba(255, 255, 255)';
-          const { x: textX, y: textY } = textPos;
-          ctx.fillText(label, textX, textY);
-        }}
+        linkCanvasObject={(link, ctx, globalScale) => linkCanvasObject(link, ctx, globalScale, data.nodes)}
         linkWidth={1}
         linkColor="#aaa"
         linkDirectionalParticleSpeed={0.01}
@@ -84,6 +57,8 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
           node.fy = node.y;
         }}
         onBackgroundClick={(data) => console.log(data)}
+        minZoom={2}
+        maxZoom={4}
       />
     </>
   );

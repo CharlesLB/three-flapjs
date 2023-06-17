@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Container } from './styles';
 
-interface Props {
-  label: string;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const DropdownNav: React.FC<Props> = ({ label, open, setOpen }) => {
-  const [show, setShow] = useState<boolean>(false);
-
+const DropdownNav: React.FC<INavigation> = ({ label, items }) => {
   return (
-    <Container onClick={() => setOpen(!open)} onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
-      {label}
+    <Container>
+      <a>{label}</a>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>
+            <a href={item.uri || '#'} onClick={item.onClick}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
     </Container>
   );
 };
