@@ -1,4 +1,4 @@
-import { IAutomaton, ILink } from '@/@types/components/Automaton';
+import { IAutomaton } from '@/@types/components/Automaton';
 import findNodeById from '../../Nodes/FindNodeById';
 import findLinkByNodesId from '../FindLinkByNodesId';
 
