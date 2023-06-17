@@ -42,8 +42,12 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
 };
 
 const nodeColor = (node: INode): string => {
+  if (node?.start && node?.end) {
+    return '#ff00ff';
+  }
+
   if (node?.start) {
-    return '#00ff00';
+    return '#0000ff';
   }
 
   if (node?.end) {
