@@ -2,8 +2,9 @@ import { IAutomaton, ILink, INode } from '@/@types/components/Automaton';
 import findNodeById from '../../Nodes/FindNodeById';
 import findLinkByNodeId from '../FindLinkByNodesId';
 
-const addDataToCreatedLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
-  const link = automaton.links.find((link) => link.source === nodeSource && link.target === nodeTarget);
+const addDataToLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
+  // @ts-ignore
+  const link = automaton.links.find((link) => link.source?.id === nodeSource?.id && link.target?.id === nodeTarget?.id);
 
   if (!link) {
     return automaton;
@@ -63,8 +64,6 @@ const createLinkWithoutCurvature = (automaton: IAutomaton, nodeSource: INode, no
 const verifyLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode): boolean => {
   const link = findLinkByNodeId(automaton, nodeSource, nodeTarget);
 
-  console.log(nodeSource?.id, nodeTarget?.id, !!link);
-
   return !!link;
 };
 
@@ -104,7 +103,7 @@ const addLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: numb
   }
 
   const newAutomaton = verifyLinkExists(automaton, nodeSource, nodeTarget)
-    ? addDataToCreatedLink(automaton, nodeSource, nodeTarget, name)
+    ? addDataToLink(automaton, nodeSource, nodeTarget, name)
     : createLink(automaton, nodeSource, nodeTarget, name);
 
   return newAutomaton;
