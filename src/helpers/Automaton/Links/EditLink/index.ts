@@ -15,6 +15,10 @@ const editLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: num
 
   const link = findLinkByNodesId(automaton, nodeSource, nodeTarget);
 
+  if (!link) {
+    throw new Error('Não existe link com esses ids');
+  }
+
   for (let i = 0; i < link?.name.length; i++) {
     const splitName = link?.name.split(', ');
     if (splitName[i] == name) {
