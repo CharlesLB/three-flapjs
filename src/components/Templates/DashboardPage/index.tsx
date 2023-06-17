@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Container } from './styles';
 import DashboardHeader from '@/components/Templates/DashboardPage/DashboardHeader';
 import LoadingCube from '@/components/Molecules/Loaders/LoadingCube';
+import { Provider } from 'react-redux';
+import { store } from '@/redux/store';
 
 interface Props {
   children?: React.ReactNode;
@@ -25,11 +27,13 @@ const DashboardPage: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <ToastContainer />
+      <Provider store={store}>
+        <ToastContainer />
 
-      <DashboardHeader />
+        <DashboardHeader />
 
-      {props.children}
+        {props.children}
+      </Provider>
     </Container>
   );
 };

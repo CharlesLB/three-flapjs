@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Container } from './styles';
-import TabSelector from '@/components/Molecules/TabSelector';
+import TabSelector from '@/components/Molecules/Tabs/TabSelector';
 import BuilderList from './BuilderList';
 import TestList from './TestList';
 

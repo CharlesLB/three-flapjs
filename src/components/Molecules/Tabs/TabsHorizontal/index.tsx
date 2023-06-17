@@ -4,12 +4,12 @@ import { Container } from './styles';
 import Tab from './Tab';
 
 interface Props {
-  tabs: { id: string; label: string }[];
+  tabs: ITab[];
   selected: string;
   setSelected: (id: string) => void;
 }
 
-const TabSelector: React.FC<Props> = ({ tabs, selected, setSelected }) => {
+const TabsHorizontal: React.FC<Props> = ({ tabs, selected, setSelected }) => {
   return (
     <Container>
       {tabs.map((tab, index) => (
@@ -19,4 +19,4 @@ const TabSelector: React.FC<Props> = ({ tabs, selected, setSelected }) => {
   );
 };
 
-export default TabSelector;
+export default TabsHorizontal;
