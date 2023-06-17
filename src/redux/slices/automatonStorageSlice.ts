@@ -24,11 +24,14 @@ export const automatonSlice = createSlice({
     },
     changeAction: (state, action: PayloadAction<IAutomatonStorage['action']>): void => {
       state.action = action.payload;
+    },
+    resetAction: (state): void => {
+      state.action = initialState.action;
     }
   }
 });
 
-export const { changeMode, changeAction } = automatonSlice.actions;
+export const { changeMode, changeAction, resetAction } = automatonSlice.actions;
 
 export const getAutomatonStorage = (state: RootState) => state.automatonStorage;
 

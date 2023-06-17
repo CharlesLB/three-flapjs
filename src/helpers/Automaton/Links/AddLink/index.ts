@@ -1,10 +1,10 @@
 import { IAutomaton } from '@/@types/components/Automaton';
-import { LinkObject } from 'react-force-graph-2d';
 import findNodeById from '../../Nodes/FindNodeById';
 
 const addLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: number, name?: string) => {
   const nodeSource = findNodeById(automaton, idNodeSource);
   if (!nodeSource) {
+    console.log(nodeSource);
     throw new Error('Não existe nó cabeça com esse ID');
   }
 

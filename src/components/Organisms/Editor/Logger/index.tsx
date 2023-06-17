@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Container, Log } from './styles';
 import TabsHorizontal from '@/components/Molecules/Tabs/TabsHorizontal';
 import { BsFillTrashFill } from 'react-icons/bs';
-import { addLog, cleanLogs, getLogs } from '@/redux/slices/logsSlice';
+import { cleanLogs, getLogs } from '@/redux/slices/logsSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 const Logger: React.FC = () => {
