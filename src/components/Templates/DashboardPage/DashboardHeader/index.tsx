@@ -49,6 +49,16 @@ const DashboardHeader: React.FC = () => {
               })
             );
           }
+        },
+        {
+          label: 'Export',
+          onClick: () => {
+            dispatch(
+              changeAction({
+                type: 'export'
+              })
+            );
+          }
         }
       ]
     },

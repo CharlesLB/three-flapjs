@@ -50,6 +50,7 @@ const Automaton: React.FC = () => {
 
   const updateAutomatonByLinks = useCallback((): void => {
     localStorage.removeItem('automaton');
+
     const nextLinkToBeAdded = linksToBeAdded[0];
 
     setData(
@@ -74,8 +75,6 @@ const Automaton: React.FC = () => {
     updateAutomatonByNodes(previousData.nodes);
 
     setLinksToBeAdded(previousData.links);
-
-    // setLoading(false);
   };
 
   const updateDataByNewObject = (newObject: IAutomaton): void => {
@@ -91,7 +90,7 @@ const Automaton: React.FC = () => {
     setData(newData);
   };
 
-  const actionRun = (action: IAutomatonStorage['action']): void => {
+  const actions = (action: IAutomatonStorage['action']): void => {
     const load = (): void => {
       setLoading(true);
 
@@ -108,9 +107,14 @@ const Automaton: React.FC = () => {
       updateDataByNewObject(action.data);
     };
 
-    const save = (): void => {
+    const exportData = (): void => {
       downloadJsonByObject(cleanAutomaton(data), 'automaton');
       logger.logInfo('Your automaton has been downloaded.');
+    };
+
+    const save = (): void => {
+      localStorage.setItem('automaton', JSON.stringify(cleanAutomaton(data)));
+      logger.logInfo('Your automaton has been saved.');
     };
 
     switch (action.type) {
@@ -119,6 +123,9 @@ const Automaton: React.FC = () => {
         break;
       case 'save':
         save();
+        break;
+      case 'export':
+        exportData();
         break;
       default:
         break;
@@ -130,7 +137,7 @@ const Automaton: React.FC = () => {
   useEffect(() => {
     if (!automatonStorage.action.type) return;
 
-    actionRun(automatonStorage.action);
+    actions(automatonStorage.action);
   }, [automatonStorage.action]);
 
   useEffect(() => {
