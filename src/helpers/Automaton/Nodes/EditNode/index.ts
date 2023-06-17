@@ -43,9 +43,7 @@ const editNode = (automaton: IAutomaton, id: any, name: string): IAutomaton => {
     newId = getAleatoryId(automaton);
   }
 
-  // @ts-ignore
   node.name = name;
-  // @ts-ignore
   node.id = newId;
 
   return automaton;
