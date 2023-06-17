@@ -3,6 +3,7 @@ import findNodeById from '../FindNodeById';
 import editNode from '../EditNode';
 import getSmallestId from '../GetSmallestId';
 import sortIdNodes from '../SortIdNodes';
+import deleteLink from '../../Links/DeleteLink';
 
 const editDefaultNameNodes = (automaton: IAutomaton, id: number): void => {
   for (let i = id; i < automaton.nodes.length; i++) {
@@ -19,6 +20,15 @@ const deleteNode = (automaton: IAutomaton, id: number): IAutomaton => {
 
   if (!node) {
     throw new Error('Não existe nó com esse ID');
+  }
+
+  for (let i = 0; i < automaton.links.length; i++) {
+    //@ts-ignore
+    if (automaton.links[i].source.id === id || automaton.links[i].target.id === id) {
+      //@ts-ignore
+      automaton = deleteLink(automaton, automaton.links[i].source.id, automaton.links[i].target.id);
+      i--;
+    }
   }
 
   const index = automaton.nodes.indexOf(node);
