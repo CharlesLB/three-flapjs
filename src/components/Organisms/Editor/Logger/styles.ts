@@ -38,6 +38,23 @@ export const Container = styled.div`
     overflow: auto;
     height: 100%;
     padding-top: 0.5rem;
+
+    ::-webkit-scrollbar {
+      width: 0.4rem;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--color-primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-primary-dark);
+      border-radius: 0.5rem;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
   }
 `;
 
