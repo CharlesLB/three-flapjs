@@ -5,6 +5,12 @@ import findLinkByNodeId from '../FindLinkByNodesId';
 const addDataToCreatedLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
   const link = automaton.links.find((link) => link.source === nodeSource && link.target === nodeTarget);
 
+  for (let i = 0; i < link?.name.length; i++) {
+    if (link?.name[i] == name) {
+      return automaton;
+    }
+  }
+
   //@ts-ignore
   link.name = `${link?.name}, ${name}`;
 
