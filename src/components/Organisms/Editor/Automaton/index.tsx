@@ -49,21 +49,18 @@ const Automaton: React.FC = () => {
 
     setLoading(false);
 
-    setTimeout(() => {
-      parsedData.links.forEach((link: any) => {
-        console.log(link);
-        setData(
-          addLink(
-            {
-              ...data
-            },
-            link.source?.id,
-            link.target?.id,
-            link.name
-          )
-        );
-      });
-    }, 1000);
+    parsedData.links.forEach((link: any) => {
+      setData(
+        addLink(
+          {
+            ...data
+          },
+          link.source?.id,
+          link.target?.id,
+          link.name
+        )
+      );
+    });
 
     logger.logInfo('Your automaton has been loaded.');
   };
