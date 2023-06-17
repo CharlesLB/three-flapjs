@@ -1,4 +1,5 @@
 import { IAutomatonProps } from '@/@types/components/Automaton';
+import addLink from '@/helpers/Automaton/Links/AddLink';
 import addNode from '@/helpers/Automaton/Nodes/AddNode';
 import deleteNode from '@/helpers/Automaton/Nodes/DeleteNode';
 import editNode from '@/helpers/Automaton/Nodes/EditNode';
@@ -14,10 +15,14 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     setData(addNode({ ...data }));
   };
   const clickRemove = () => {
-    setData(deleteNode({ ...data }, 1));
+    setData(deleteNode({ ...data }, 3));
   };
   const clickEdita = () => {
-    setData(editNode({ ...data }, 3, 'ba'));
+    setData(editNode({ ...data }, 1, 'banana'));
+  };
+
+  const clickAddLink = () => {
+    setData(addLink({ ...data }, 1, 2, 'a'));
   };
 
   return (
@@ -25,6 +30,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       <button onClick={() => clickAdd()}>Add</button>
       <button onClick={() => clickRemove()}>Remove</button>
       <button onClick={() => clickEdita()}>Edita</button>
+      <button onClick={() => clickAddLink()}>Add Link</button>
       <ForceGraph2D
         graphData={data}
         nodeLabel="id"
