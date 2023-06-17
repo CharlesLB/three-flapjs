@@ -2,17 +2,31 @@ import { IAutomaton } from '@/@types/components/Automaton';
 import findNodeById from '../FindNodeById';
 import editNode from '../EditNode';
 
-const checkNameNodes = (automaton: IAutomaton, id: number): number => {
-  for (let i = id; i < automaton.nodes.length; i++) {
-    const wordsName = automaton.nodes[i].name.split('');
+const getSmallestId = (automaton: IAutomaton): number => {
+  var fieldToSort = 'id';
+  automaton.nodes.sort(function (a, b) {
+    return a[fieldToSort] - b[fieldToSort];
+  });
 
-    if (wordsName[0] === 'q') {
-      const newId = `q${i}`;
-      editNode(automaton, i + 1, newId.toString());
+  for (let i = 0; i < automaton.nodes.length; i++) {
+    if (i !== automaton.nodes[i].id) {
+      return i;
     }
   }
 
-  return id;
+  return automaton.nodes.length;
+};
+
+const editDefaultNameNodes = (automaton: IAutomaton, id: number): void => {
+  for (let i = id; i < automaton.nodes.length; i++) {
+    console.log('- ' + i + ' ' + automaton.nodes[i].name);
+    if (automaton.nodes[i].name[0] === 'q') {
+      const smalledId = getSmallestId(automaton);
+      const newId = `q${smalledId}`;
+      editNode(automaton, i + 1, newId.toString());
+    }
+    console.log(' ' + (i - 1) + ' ' + automaton.nodes[i - 1].name);
+  }
 };
 
 const deleteNode = (automaton: IAutomaton, id: number): IAutomaton => {
@@ -25,7 +39,9 @@ const deleteNode = (automaton: IAutomaton, id: number): IAutomaton => {
   const index = automaton.nodes.indexOf(node);
   automaton.nodes.splice(index, 1);
 
-  checkNameNodes(automaton, id);
+  automaton.nodes.sort();
+
+  editDefaultNameNodes(automaton, id);
 
   return automaton;
 };
