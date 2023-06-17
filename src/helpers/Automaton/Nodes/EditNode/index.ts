@@ -1,5 +1,6 @@
 import { IAutomaton } from '@/@types/components/Automaton';
 import findNodeById from '../FindNodeById';
+import sortIdNodes from '../SortIdNodes';
 
 const checkValidName = (automaton: IAutomaton, name: string): boolean => {
   for (let i = 0; i < automaton.nodes.length; i++) {
@@ -23,7 +24,7 @@ const getAleatoryId = (automaton: IAutomaton): number => {
   return id;
 };
 
-const editNode = (automaton: IAutomaton, id: number, name: string): IAutomaton => {
+const editNode = (automaton: IAutomaton, id: any, name: string): IAutomaton => {
   if (!checkValidName(automaton, name)) {
     throw new Error('Nome já existente');
   }
@@ -34,18 +35,16 @@ const editNode = (automaton: IAutomaton, id: number, name: string): IAutomaton =
     throw new Error('Não existe nó com esse ID');
   }
 
-  // @ts-ignore
-  node.name = name;
-
   let newId;
-
   if (name[0] === 'q') {
     newId = parseInt(name.slice(1, name.length));
   } else {
-    automaton.nodes.sort();
+    sortIdNodes(automaton);
     newId = getAleatoryId(automaton);
   }
 
+  // @ts-ignore
+  node.name = name;
   // @ts-ignore
   node.id = newId;
 

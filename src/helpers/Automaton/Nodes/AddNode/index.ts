@@ -1,19 +1,5 @@
 import { IAutomaton } from '@/@types/components/Automaton';
-
-const getSmallestId = (automaton: IAutomaton): number => {
-  let fieldToSort = 'id';
-  automaton.nodes.sort(function (a, b) {
-    return a[fieldToSort] - b[fieldToSort];
-  });
-
-  for (let i = 0; i < automaton.nodes.length; i++) {
-    if (i !== automaton.nodes[i].id) {
-      return i;
-    }
-  }
-
-  return automaton.nodes.length;
-};
+import getSmallestId from '../GetSmallestId';
 
 const addNode = (automaton: IAutomaton): IAutomaton => {
   const id = getSmallestId(automaton);
@@ -24,7 +10,7 @@ const addNode = (automaton: IAutomaton): IAutomaton => {
       ...automaton.nodes,
       {
         id,
-        label: `q${id}`
+        name: `q${id}`
       }
     ]
   };
