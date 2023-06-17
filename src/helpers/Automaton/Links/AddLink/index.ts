@@ -17,7 +17,20 @@ const addDataToCreatedLink = (automaton: IAutomaton, nodeSource: INode, nodeTarg
   return automaton;
 };
 
+const getLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode): ILink => {
+  const link = findLinkByNodeId(automaton, nodeSource, nodeTarget);
+
+  if (!link) {
+    throw new Error('Não existe link com esses nós');
+  }
+
+  return link;
+};
+
 const createLinkWithCurvature = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
+  const link = getLinkExists(automaton, nodeTarget, nodeSource);
+  link.curvature = 0.3;
+
   return {
     ...automaton,
     links: [
@@ -26,7 +39,7 @@ const createLinkWithCurvature = (automaton: IAutomaton, nodeSource: INode, nodeT
         source: nodeSource,
         target: nodeTarget,
         name: name,
-        curvature: 0.8
+        curvature: 0.3
       }
     ]
   };
@@ -46,15 +59,6 @@ const createLinkWithoutCurvature = (automaton: IAutomaton, nodeSource: INode, no
   };
 };
 
-// const getLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode): ILink => {
-//   const link = findLinkByNodeId(automaton, nodeSource, nodeTarget);
-
-//   if (!link) {
-//     throw new Error('Não existe link com esses nós');
-//   }
-
-//   return link;
-// };
 const verifyLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode): boolean => {
   const link = findLinkByNodeId(automaton, nodeSource, nodeTarget);
 
