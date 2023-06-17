@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Content } from './styles';
 import dynamic from 'next/dynamic';
-import { IAutomaton } from '@/@types/components/Automaton';
+import { IAutomaton, ILink, INode } from '@/@types/components/Automaton';
 import useLog from '@/hooks/useLog';
 import { getAutomatonStorage, resetAction } from '@/redux/slices/automatonStorageSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -17,52 +17,65 @@ const Automaton: React.FC = () => {
   const logger = useLog();
   const automatonStorage = useAppSelector(getAutomatonStorage);
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState<boolean>(true);
 
+  const [loading, setLoading] = useState<boolean>(true);
+  const [linksToBeAdded, setLinksToBeAdded] = useState<ILink[]>([]);
   const [data, setData] = useState<IAutomaton>({
-    // @ts-ignore
-    nodes: [
-      // ...Array(3).keys()].map((i) => ({ id: i, name: i })
-      // ),
-    ],
-    links: [
-      // { source: 0, target: 0, curvature: 0.8, name: 0, rotation: (Math.PI * 1) / 6, linkLabel: 'a' },
-      // { source: 0, target: 1, name: 0, linkLabel: 'a' },
-      // { source: 2, target: 1, name: 1, curvature: 0.3, linkLabel: 'a' },
-      // { source: 1, target: 2, name: 2, curvature: 0.3, linkLabel: 'a' }
-    ]
+    nodes: [],
+    links: []
   });
 
-  const getPreviousData = (): void => {
+  const getDataFromStorage = (): IAutomaton => {
     const previousData = localStorage.getItem('automaton');
 
-    if (!previousData) return;
+    if (!previousData) {
+      setLoading(false);
+      return {
+        nodes: [],
+        links: []
+      };
+    }
 
     const parsedData = JSON.parse(previousData);
 
-    console.log(parsedData);
+    return parsedData;
+  };
 
+  const updateAutomatonByNodes = (nodes: INode[]): void => {
     setData({
-      nodes: [...parsedData.nodes],
+      nodes: [...nodes],
       links: []
     });
+  };
 
-    setLoading(false);
+  const updateAutomatonByLinks = useCallback((): void => {
+    localStorage.removeItem('automaton');
+    const nextLinkToBeAdded = linksToBeAdded[0];
 
-    parsedData.links.forEach((link: any) => {
-      setData(
-        addLink(
-          {
-            ...data
-          },
-          link.source?.id,
-          link.target?.id,
-          link.name
-        )
-      );
-    });
+    setData(
+      addLink(
+        {
+          ...data
+        },
+        // @ts-ignore
+        nextLinkToBeAdded.source?.id,
+        // @ts-ignore
+        nextLinkToBeAdded.target?.id,
+        nextLinkToBeAdded.name
+      )
+    );
 
-    logger.logInfo('Your automaton has been loaded.');
+    setLinksToBeAdded(linksToBeAdded.slice(1));
+  }, [data]);
+
+  const getPreviousData = (): void => {
+    const previousData = getDataFromStorage();
+
+    updateAutomatonByNodes(previousData.nodes);
+
+    setLinksToBeAdded(previousData.links);
+
+    // setLoading(false);
   };
 
   const updateDataByNewObject = (newObject: IAutomaton): void => {
@@ -124,6 +137,17 @@ const Automaton: React.FC = () => {
     if (!loading) return;
     getPreviousData();
   }, []);
+
+  useEffect(() => {
+    if (linksToBeAdded.length === 0) {
+      return;
+    }
+
+    if (linksToBeAdded.length > 0 && data.nodes.length > 0) {
+      updateAutomatonByLinks();
+      setLoading(false);
+    }
+  }, [linksToBeAdded]);
 
   return (
     <Container>
