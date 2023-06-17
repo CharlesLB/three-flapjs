@@ -1,7 +1,6 @@
 import { twoDigits } from '../string';
 
-const getSimpleTimestamp = () => {
-  const date = new Date();
+const getSimpleTimestamp = (date: Date = new Date()) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
