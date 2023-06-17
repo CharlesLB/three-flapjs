@@ -1,31 +1,17 @@
 import { IAutomaton } from '@/@types/components/Automaton';
 import findNodeById from '../FindNodeById';
 import editNode from '../EditNode';
-
-const getSmallestId = (automaton: IAutomaton): number => {
-  var fieldToSort = 'id';
-  automaton.nodes.sort(function (a, b) {
-    return a[fieldToSort] - b[fieldToSort];
-  });
-
-  for (let i = 0; i < automaton.nodes.length; i++) {
-    if (i !== automaton.nodes[i].id) {
-      return i;
-    }
-  }
-
-  return automaton.nodes.length;
-};
+import getSmallestId from '../GetSmallestId';
+import sortIdNodes from '../SortIdNodes';
+import deleteLink from '../../Links/DeleteLink';
 
 const editDefaultNameNodes = (automaton: IAutomaton, id: number): void => {
   for (let i = id; i < automaton.nodes.length; i++) {
-    console.log('- ' + i + ' ' + automaton.nodes[i].name);
     if (automaton.nodes[i].name[0] === 'q') {
       const smalledId = getSmallestId(automaton);
       const newId = `q${smalledId}`;
-      editNode(automaton, i + 1, newId.toString());
+      editNode(automaton, automaton.nodes[i].id, newId.toString());
     }
-    console.log(' ' + (i - 1) + ' ' + automaton.nodes[i - 1].name);
   }
 };
 
@@ -36,10 +22,19 @@ const deleteNode = (automaton: IAutomaton, id: number): IAutomaton => {
     throw new Error('Não existe nó com esse ID');
   }
 
+  for (let i = 0; i < automaton.links.length; i++) {
+    //@ts-ignore
+    if (automaton.links[i].source.id === id || automaton.links[i].target.id === id) {
+      //@ts-ignore
+      automaton = deleteLink(automaton, automaton.links[i].source.id, automaton.links[i].target.id);
+      i--;
+    }
+  }
+
   const index = automaton.nodes.indexOf(node);
   automaton.nodes.splice(index, 1);
 
-  automaton.nodes.sort();
+  sortIdNodes(automaton);
 
   editDefaultNameNodes(automaton, id);
 
