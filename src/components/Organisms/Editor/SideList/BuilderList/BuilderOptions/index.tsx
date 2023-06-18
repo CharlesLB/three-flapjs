@@ -1,17 +1,18 @@
 import React from 'react';
 
 import { Container, ListItem } from './styles';
+import { IAutomatonStorageMode } from '@/@types/redux/AutomatonStorage';
 
 interface Props {
   buildOptions: {
     label: string;
     items: {
       label: string;
-      state: string;
+      state: IAutomatonStorageMode;
     }[];
   }[];
   state: string;
-  handleState: (state: string) => void;
+  handleState: (state: IAutomatonStorageMode) => void;
   search: string;
 }
 

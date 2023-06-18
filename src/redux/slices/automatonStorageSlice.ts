@@ -14,14 +14,17 @@ export const automatonStorageSlice = createSlice({
   name: 'automatonStorage',
   initialState,
   reducers: {
-    changeMode: (state, action: PayloadAction<IAutomatonStorage['mode']>): void => {
+    changeMode: (state, action: PayloadAction<IAutomatonStorage['mode']>) => {
       state.mode = action.payload;
+      return state;
     },
-    changeAction: (state, action: PayloadAction<IAutomatonStorage['action']>): void => {
+    changeAction: (state, action: PayloadAction<IAutomatonStorage['action']>) => {
       state.action = action.payload;
+      return state;
     },
-    resetAction: (state): void => {
+    resetAction: (state) => {
       state.action = initialState.action;
+      return state;
     }
   }
 });
