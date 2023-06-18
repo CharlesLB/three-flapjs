@@ -4,6 +4,7 @@ import { Container } from './styles';
 import { RiCloseFill } from 'react-icons/ri';
 import { resetModal } from '@/redux/slices/modalSlice';
 import { useAppDispatch } from '@/redux/hooks';
+import ModalButton from '../../Buttons/ModalButton';
 
 interface Props {
   title: string;
@@ -11,9 +12,10 @@ interface Props {
   submitHandler: () => void;
   cancelHandler?: () => void;
   submitText?: string;
+  big?: boolean;
 }
 
-const BigModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHandler, submitText = 'Save' }) => {
+const ModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHandler, submitText = 'Save', big }) => {
   const dispatch = useAppDispatch();
 
   const closeModal = () => {
@@ -30,24 +32,22 @@ const BigModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submi
   };
 
   return (
-    <Container>
+    <Container big={big}>
       <header>
         <h2>{title}</h2>
-        <button>
+        <button onClick={() => closeModal()}>
           <RiCloseFill size={24} color="#ccc" />
         </button>
       </header>
       <main>{children}</main>
       <footer>
-        <button onClick={() => closeModal()} className="button is-ghost">
+        <ModalButton onClick={() => closeModal()} cancelButton>
           Cancel
-        </button>
-        <button onClick={() => submitModal()} className="button is-primary">
-          {submitText}
-        </button>
+        </ModalButton>
+        <ModalButton onClick={() => submitModal()}>{submitText}</ModalButton>
       </footer>
     </Container>
   );
 };
 
-export default BigModalLayout;
+export default ModalLayout;

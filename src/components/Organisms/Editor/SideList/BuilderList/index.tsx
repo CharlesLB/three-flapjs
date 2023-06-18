@@ -3,16 +3,21 @@ import React, { useState } from 'react';
 import { Container } from './styles';
 import SearchInput from '@/components/Atoms/Inputs/StringInput';
 import BuilderOptions from './BuilderOptions';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { changeMode, getAutomatonStorage } from '@/redux/slices/automatonStorageSlice';
+import { IAutomatonStorageMode } from '@/@types/redux/AutomatonStorage';
 
 const BuilderList: React.FC = () => {
   const [search, setSearch] = useState<string>('');
-  const [state, setState] = useState<string>('move');
+
+  const dispatch = useAppDispatch();
+  const automatonStorage = useAppSelector(getAutomatonStorage);
 
   const buildOptions: {
     label: string;
     items: {
       label: string;
-      state: string;
+      state: IAutomatonStorageMode;
     }[];
   }[] = [
     {
@@ -29,7 +34,7 @@ const BuilderList: React.FC = () => {
         { label: 'Edit Node', state: 'node:edit' },
         { label: 'Delete Node', state: 'node:delete' },
         { label: 'Set Started node', state: 'node:started' },
-        { label: 'Set Finished node', state: 'node:finished' }
+        { label: 'Set Finished node', state: 'node:end' }
       ]
     },
     {
@@ -42,13 +47,13 @@ const BuilderList: React.FC = () => {
     }
   ];
 
-  const handleState = (newState: string) => {
-    if (newState === state) {
-      setState('move');
+  const handleState = (newState: IAutomatonStorageMode) => {
+    if (newState === automatonStorage.mode) {
+      dispatch(changeMode('move'));
       return;
     }
 
-    setState(newState);
+    dispatch(changeMode(newState));
   };
 
   return (
@@ -56,7 +61,7 @@ const BuilderList: React.FC = () => {
       <header>
         <SearchInput setValues={setSearch} value={search} />
       </header>
-      <BuilderOptions buildOptions={buildOptions} search={search} state={state} handleState={handleState} />
+      <BuilderOptions buildOptions={buildOptions} search={search} state={automatonStorage.mode} handleState={handleState} />
     </Container>
   );
 };

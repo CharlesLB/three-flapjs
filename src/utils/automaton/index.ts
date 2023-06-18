@@ -31,7 +31,9 @@ const cleanAutomaton = (automaton: IAutomaton): IAutomaton => {
   const nodes = automaton.nodes.map((node) => {
     return {
       id: node.id,
-      name: node.name
+      name: node.name,
+      start: node.start,
+      end: node.end
     };
   });
 

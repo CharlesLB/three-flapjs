@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div<{
+  big?: boolean;
+}>`
   position: absolute;
   top: 0;
   left: 0;
@@ -11,7 +13,7 @@ export const Container = styled.div`
   justify-content: center;
 
   max-height: 90vh;
-  max-width: 800px;
+  max-width: ${({ big }) => (big ? '800px' : '400px')};
   height: min-content;
   margin: auto auto;
   background-color: var(--color-primary);
@@ -47,6 +49,7 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
     }
   }
 
@@ -95,56 +98,6 @@ export const Container = styled.div`
       flex-shrink: 0;
       background-image: linear-gradient(to top, rgba(#fff, 0.75), transparent);
       pointer-events: none;
-    }
-  }
-
-  .button {
-    padding: 12px 20px;
-    border-radius: 8px;
-    background-color: transparent;
-    border: 0;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.15s ease;
-
-    &.is-ghost {
-      &:hover,
-      &:focus {
-        background-color: #dfdad7;
-      }
-    }
-
-    &.is-primary {
-      background-color: #750550;
-      color: #fff;
-      &:hover,
-      &:focus {
-        background-color: #4a0433;
-      }
-    }
-  }
-
-  .icon-button {
-    padding: 0;
-    border: 0;
-    background-color: transparent;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: 0.15s ease;
-    svg {
-      width: 24px;
-      height: 24px;
-    }
-
-    &:hover,
-    &:focus {
-      background-color: #dfdad7;
     }
   }
 `;
