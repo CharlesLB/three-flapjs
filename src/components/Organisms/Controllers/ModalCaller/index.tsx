@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Container } from './styles';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -9,10 +9,6 @@ import PreferencesModal from '../../Modals/PreferencesModal';
 const ModalCaller: React.FC = () => {
   const modal = useAppSelector(getModal);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    console.log(modal);
-  }, [modal]);
 
   if (!modal.type) return <></>;
 
