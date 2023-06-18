@@ -41,6 +41,8 @@ const deleteNode = (automaton: IAutomaton, id: number): IAutomaton => {
 
   editDefaultNameNodes(automaton, id);
 
+  console.log(automaton);
+
   return automaton;
 };
 
