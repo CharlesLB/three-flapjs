@@ -5,12 +5,12 @@ import findLinkByNodesId from '../FindLinkByNodesId';
 const deleteLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: number): IAutomaton => {
   const nodeSource = findNodeById(automaton, idNodeSource);
   if (!nodeSource) {
-    throw new Error('Não existe nó cabeça com esse ID');
+    throw new Error('There is no head node with this ID');
   }
 
   const nodeTarget = findNodeById(automaton, idNodeTarget);
   if (!nodeTarget) {
-    throw new Error('Não existe nó cauda com esse ID');
+    throw new Error('There is no tail node with this ID');
   }
 
   const link = findLinkByNodesId(automaton, nodeSource, nodeTarget);

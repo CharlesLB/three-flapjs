@@ -23,7 +23,7 @@ const getLinkExists = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INo
   const link = findLinkByNodeId(automaton, nodeSource, nodeTarget);
 
   if (!link) {
-    throw new Error('Não existe link com esses nós');
+    throw new Error('There is no link with this ID');
   }
 
   return link;
@@ -94,12 +94,12 @@ const createLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode,
 const addLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: number, name: string): IAutomaton => {
   const nodeSource = findNodeById(automaton, idNodeSource);
   if (!nodeSource) {
-    throw new Error('Não existe nó cabeça com esse ID');
+    throw new Error('There is no head node with this ID');
   }
 
   const nodeTarget = findNodeById(automaton, idNodeTarget);
   if (!nodeTarget) {
-    throw new Error('Não existe nó cauda com esse ID');
+    throw new Error('There is no tail node with this ID');
   }
 
   const newAutomaton = verifyLinkExists(automaton, nodeSource, nodeTarget)
