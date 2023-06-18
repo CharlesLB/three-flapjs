@@ -15,6 +15,8 @@ import setStartNode from '@/helpers/Automaton/Nodes/SetStartNode';
 import setNotEndNode from '@/helpers/Automaton/Nodes/SetNotEndNode';
 import setNotStartNode from '@/helpers/Automaton/Nodes/SetNotStartNode';
 import checkIfAutomatonIsAFD from '@/helpers/Automaton';
+import stringTestInAutomaton from '@/helpers/Automaton/Test';
+import deleteLink from '@/helpers/Automaton/Links/DeleteLink';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -32,11 +34,15 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   };
 
   const clickAddLink = () => {
-    setData(addLink({ ...data }, 1, 2, 'a'));
+    setData(addLink({ ...data }, 2, 2, 'b'));
   };
 
   const clickEditLink = () => {
     setData(editLink({ ...data }, 0, 0, 'b'));
+  };
+
+  const clickDeleteLink = () => {
+    setData(deleteLink({ ...data }, 0, 0));
   };
 
   const clickSelectNode = () => {
@@ -56,7 +62,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   };
 
   const clickSetStartNode = () => {
-    setData(setStartNode({ ...data }, 1));
+    setData(setStartNode({ ...data }, 0));
   };
 
   const clickSetNotEndNode = () => {
@@ -68,7 +74,12 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   };
 
   const clickCheckIfAutomatonIsAFD = () => {
-    const aux = checkIfAutomatonIsAFD({ ...data });
+    checkIfAutomatonIsAFD({ ...data });
+  };
+
+  const clickTest = () => {
+    const aux = stringTestInAutomaton({ ...data }, 'ab');
+    console.log('A saida do teste é: ', aux);
   };
 
   return (
@@ -78,14 +89,16 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       <button onClick={() => clickEdita()}>Edita</button>
       <button onClick={() => clickAddLink()}>Add Link</button>
       <button onClick={() => clickEditLink()}>Edit Link</button>
-      <button onClick={() => clickSelectNode()}>Select Node</button>
+      <button onClick={() => clickDeleteLink()}>Delete Link</button>
+      {/* <button onClick={() => clickSelectNode()}>Select Node</button>
       <button onClick={() => clickDeselectNode()}>Deselect Node</button>
-      <button onClick={() => clickDeselectAllNode()}>Deselect All Nodes</button>
+      <button onClick={() => clickDeselectAllNode()}>Deselect All Nodes</button> */}
       <button onClick={() => clickSetStartNode()}>Set start node</button>
       <button onClick={() => clickSetEndNode()}>Set end node</button>
       <button onClick={() => clickSetNotEndNode()}>Set NOT end node</button>
       <button onClick={() => clickSetNotStartNode()}>Set NOT start node</button>
-      <button onClick={() => clickCheckIfAutomatonIsAFD()}>VERIFY</button>
+      <button onClick={() => clickCheckIfAutomatonIsAFD()}>AFD</button>
+      <button onClick={() => clickTest()}>TEST</button>
 
       <ForceGraph2D
         graphData={data}
