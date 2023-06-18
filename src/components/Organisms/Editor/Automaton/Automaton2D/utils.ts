@@ -109,10 +109,6 @@ const nodeColor = (node: INode): string => {
     return '#ff00ff';
   }
 
-  if (node?.start) {
-    return '#0000ff';
-  }
-
 
   if (node?.selected) {
     return '#686868';
