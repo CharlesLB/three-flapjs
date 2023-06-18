@@ -4,7 +4,7 @@ import addNode from '@/helpers/Automaton/Nodes/AddNode';
 import deleteNode from '@/helpers/Automaton/Nodes/DeleteNode';
 import editNode from '@/helpers/Automaton/Nodes/EditNode';
 import dynamic from 'next/dynamic';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { linkCanvasObject, nodeCanvasObject, nodeColor } from './utils';
 import editLink from '@/helpers/Automaton/Links/EditLink';
 import selectNode from '@/helpers/Automaton/Nodes/SelectNode';
@@ -16,16 +16,19 @@ import setNotEndNode from '@/helpers/Automaton/Nodes/SetNotEndNode';
 import setNotStartNode from '@/helpers/Automaton/Nodes/SetNotStartNode';
 import checkIfAutomatonIsAFD from '@/helpers/Automaton';
 import deleteLink from '@/helpers/Automaton/Links/DeleteLink';
-import stringTestInAutomaton from '@/helpers/Automaton/StringTestInAutomaton';
 import getStartNode from '@/helpers/Automaton/Nodes/GetStartNode';
 import pe from '@/helpers/Automaton/StringTestInAutomaton';
 import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
 import setNotTestPositionNode from '@/helpers/Automaton/Nodes/SetNotTestPositionNode';
 import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestPositionNodes';
+import { getAutomatonStorage } from '@/redux/slices/automatonStorageSlice';
+import { useAppSelector } from '@/redux/hooks';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
 const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
+  const automatonStorage = useAppSelector(getAutomatonStorage);
+
   const width = window.innerWidth - 220;
 
   const clickAdd = () => {
