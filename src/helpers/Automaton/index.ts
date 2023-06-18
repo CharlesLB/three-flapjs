@@ -3,76 +3,56 @@ import checkExistsLinkByNodeId from './Links/CheckExistsLinkByNodeId';
 import findAllLinksByNodeId from './Links/FindAllLinksByNodeId';
 
 const checkIfStartStateExists = (automaton: IAutomaton): boolean => {
-  for (let i = 0; i < automaton.nodes.length; i++) {
-    if (automaton.nodes[i].start) {
-      return true;
-    }
-  }
-
-  return false;
+  return automaton.nodes.some((node) => node.start);
 };
 
 const checkIfEndStateExists = (automaton: IAutomaton): boolean => {
-  for (let i = 0; i < automaton.nodes.length; i++) {
-    if (automaton.nodes[i].end) {
-      return true;
-    }
-  }
-
-  return false;
+  return automaton.nodes.some((node) => node.end);
 };
 
 const checkIfNotIsolatedStateExists = (automaton: IAutomaton): boolean => {
-  for (let i = 0; i < automaton.nodes.length; i++) {
+  return automaton.nodes.every((node) => {
     //@ts-ignore
-    const existLinkByNode = checkExistsLinkByNodeId(automaton, automaton.nodes[i].id);
-
-    if (!existLinkByNode) {
-      return false;
-    }
-  }
-
-  return true;
+    const existLinkByNode = checkExistsLinkByNodeId(automaton, node.id);
+    return existLinkByNode;
+  });
 };
 
 const checkIfAllNamesLinksByNodeAreDifferents = (automaton: IAutomaton): boolean => {
-  for (let i = 0; i < automaton.nodes.length; i++) {
-    const linksByNode: ILink[] = findAllLinksByNodeId(automaton, automaton.nodes[i].id);
-
-    for (let j = 0; j < linksByNode.length; j++) {
-      for (let k = 0; k < linksByNode.length; k++) {
-        if (linksByNode[j].name === linksByNode[k].name && linksByNode[j] !== linksByNode[k]) {
-          return false;
-        }
-      }
-    }
-  }
-
-  return true;
+  return automaton.nodes.every((node) => {
+    const linksByNode: ILink[] = findAllLinksByNodeId(automaton, node.id);
+    return linksByNode.every((link, index) => {
+      return !linksByNode.some((otherLink, otherIndex) => {
+        return index !== otherIndex && link.name === otherLink.name;
+      });
+    });
+  });
 };
 
 const checkIfAutomatonIsAFD = (automaton: IAutomaton): boolean => {
   const existStartState = checkIfStartStateExists(automaton);
   if (!existStartState) {
-    throw new Error('Not is AFD: There is no initial state');
+    throw new Error('Its not AFD: There is no initial state');
   }
 
   const existEndState = checkIfEndStateExists(automaton);
   if (!existEndState) {
-    throw new Error('Not is AFD: There is no end state');
+    throw new Error('Its not AFD: There is no end state');
   }
 
   const existNotIsolatedState = checkIfNotIsolatedStateExists(automaton);
   if (!existNotIsolatedState) {
-    throw new Error('Not is AFD: There is isolated state');
+    throw new Error('Its not AFD: There is isolated state');
   }
 
   const allNamesLinksByNodeAreDifferents = checkIfAllNamesLinksByNodeAreDifferents(automaton);
   if (!allNamesLinksByNodeAreDifferents) {
-    throw new Error('Not is AFD: Exists Names Links Of Node Equals'); //(?)
+    throw new Error('Its not AFD: Exists Names Links Of Node Equals'); //(?)
   }
 
   return true;
 };
+
+export { checkIfStartStateExists, checkIfEndStateExists, checkIfNotIsolatedStateExists, checkIfAllNamesLinksByNodeAreDifferents };
 
 export default checkIfAutomatonIsAFD;
