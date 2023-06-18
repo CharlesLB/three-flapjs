@@ -4,7 +4,7 @@ import addNode from '@/helpers/Automaton/Nodes/AddNode';
 import deleteNode from '@/helpers/Automaton/Nodes/DeleteNode';
 import editNode from '@/helpers/Automaton/Nodes/EditNode';
 import dynamic from 'next/dynamic';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { linkCanvasObject, nodeCanvasObject, nodeColor } from './utils';
 import editLink from '@/helpers/Automaton/Links/EditLink';
 import selectNode from '@/helpers/Automaton/Nodes/SelectNode';
@@ -17,6 +17,11 @@ import setNotStartNode from '@/helpers/Automaton/Nodes/SetNotStartNode';
 import checkIfAutomatonIsAFD from '@/helpers/Automaton';
 import deleteLink from '@/helpers/Automaton/Links/DeleteLink';
 import stringTestInAutomaton from '@/helpers/Automaton/StringTestInAutomaton';
+import getStartNode from '@/helpers/Automaton/Nodes/GetStartNode';
+import pe from '@/helpers/Automaton/StringTestInAutomaton';
+import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
+import setNotTestPositionNode from '@/helpers/Automaton/Nodes/SetNotTestPositionNode';
+import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestPositionNodes';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -73,13 +78,65 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     setData(setNotStartNode({ ...data }, 0));
   };
 
+  const clickSetPositionNode = () => {
+    setData(setTestPositionNode({ ...data }, 0));
+  };
+
+  const clickSetNotPositionNode = () => {
+    setData(setNotTestPositionNode({ ...data }, 0));
+  };
+
+  const clickSetAllNotPositionNode = () => {
+    setData(setNotAllTestPositionNodes({ ...data }));
+  };
+
   const clickCheckIfAutomatonIsAFD = () => {
     checkIfAutomatonIsAFD({ ...data });
   };
 
   const clickTest = () => {
-    const aux = stringTestInAutomaton({ ...data }, 'abb');
-    console.log('A saida do teste é: ', aux);
+    const word = 'abb';
+    let finish = false;
+    let wordSlice = word;
+    checkIfAutomatonIsAFD({ ...data });
+
+    let currentNode = getStartNode({ ...data });
+    if (!currentNode) {
+      throw new Error('Its not AFD: There is no initial state');
+    }
+    //@ts-ignore
+    setData(setTestPositionNode({ ...data }, currentNode.id));
+
+    const func = setInterval(() => {
+      if (wordSlice.length > 0) {
+        console.log(`-Calculing Pe(${currentNode?.name}, ${wordSlice})`);
+      } else {
+        console.log(`Calculing Pe(${currentNode?.name}, ε) = ${currentNode?.name}`);
+      }
+
+      let newCurrentNode;
+      if (wordSlice.length > 0) {
+        //@ts-ignore
+        newCurrentNode = pe({ ...data }, currentNode, wordSlice);
+      } else {
+        newCurrentNode = currentNode;
+        finish = true;
+      }
+
+      setData({ ...data });
+      wordSlice = wordSlice.slice(1, wordSlice.length);
+      currentNode = newCurrentNode;
+
+      if (finish) {
+        if (!currentNode?.end) {
+          console.log(`This '${word}' is not accepted in the automaton: The state ${currentNode?.name} not is final state`);
+        }
+
+        console.log(`This '${word}' is accepted in the automaton: The state ${currentNode?.name} is final state`);
+
+        clearInterval(func);
+      }
+    }, 1000);
   };
 
   return (
@@ -97,6 +154,9 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       <button onClick={() => clickSetEndNode()}>Set end node</button>
       <button onClick={() => clickSetNotEndNode()}>Set NOT end node</button>
       <button onClick={() => clickSetNotStartNode()}>Set NOT start node</button>
+      <button onClick={() => clickSetPositionNode()}>Set Position node</button>
+      <button onClick={() => clickSetNotPositionNode()}>Set NOT Position node</button>
+      <button onClick={() => clickSetAllNotPositionNode()}>Set All NOT Position node</button>
       <button onClick={() => clickCheckIfAutomatonIsAFD()}>AFD</button>
       <button onClick={() => clickTest()}>TEST</button>
 

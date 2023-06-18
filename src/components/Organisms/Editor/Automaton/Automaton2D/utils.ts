@@ -68,6 +68,10 @@ const nodeColor = (node: INode): string => {
 
   // return '#fff';
 
+  if (node?.testPosition || (node?.testPosition && node?.start) || (node?.testPosition && node?.end)) {
+    return '#FF4500';
+  }
+
   if (node?.start && node?.end) {
     return '#ff00ff';
   }
@@ -82,10 +86,6 @@ const nodeColor = (node: INode): string => {
 
   if (node?.selected) {
     return '#686868';
-  }
-
-  if (node?.testPosition || (node?.testPosition && node?.start) || (node?.testPosition && node?.end)) {
-    return '#FF4500';
   }
 
   return '#fff';
