@@ -6,13 +6,13 @@ import sortIdNodes from '../SortIdNodes';
 import deleteLink from '../../Links/DeleteLink';
 
 const editDefaultNameNodes = (automaton: IAutomaton, id: number): void => {
-  for (let i = id; i < automaton.nodes.length; i++) {
-    if (automaton.nodes[i].name[0] === 'q') {
-      const smalledId = getSmallestId(automaton);
-      const newId = `q${smalledId}`;
-      editNode(automaton, automaton.nodes[i].id, newId.toString());
+  automaton.nodes.forEach((node, i) => {
+    if (i >= id && node.name[0] === 'q') {
+      const smallestId = getSmallestId(automaton);
+      const newId = `q${smallestId}`;
+      editNode(automaton, node.id, newId.toString());
     }
-  }
+  });
 };
 
 const deleteAssociatedLinks = (automaton: IAutomaton, id: number): void => {
@@ -41,9 +41,9 @@ const deleteNode = (automaton: IAutomaton, id: number): IAutomaton => {
 
   editDefaultNameNodes(automaton, id);
 
-  console.log(automaton);
-
   return automaton;
 };
 
 export default deleteNode;
+
+export { editDefaultNameNodes };

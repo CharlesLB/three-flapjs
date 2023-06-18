@@ -1,7 +1,5 @@
 import { IAutomaton, INode } from '@/@types/components/Automaton';
-import getStartNode from '../Nodes/GetStartNode';
 import findLinkByNodeIdAndName from '../Links/FindLinkByNodeIdAndName';
-import checkIfAutomatonIsAFD from '..';
 import setTestPositionNode from '../Nodes/SetTestPositionNode';
 import setNotTestPositionNode from '../Nodes/SetNotTestPositionNode';
 
@@ -30,7 +28,7 @@ const pe = (automaton: IAutomaton, currentNode: INode, word: string): INode => {
     console.log(`Calculing Pe(P(${currentNode?.name}, ${word[0]}), ${word.slice(1, word.length)})`);
   }
 
-  let newCurrentNode = p(automaton, currentNode, word[0]);
+  const newCurrentNode = p(automaton, currentNode, word[0]);
 
   //@ts-ignore
   setNotTestPositionNode(automaton, currentNode.id);

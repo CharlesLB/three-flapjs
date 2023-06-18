@@ -4,13 +4,9 @@ import sortIdNodes from '../SortIdNodes';
 const getSmallestId = (automaton: IAutomaton): number => {
   sortIdNodes(automaton);
 
-  for (let i = 0; i < automaton.nodes.length; i++) {
-    if (i !== automaton.nodes[i].id) {
-      return i;
-    }
-  }
+  const smallestId = automaton.nodes.findIndex((node, index) => index !== node.id);
 
-  return automaton.nodes.length;
+  return smallestId !== -1 ? smallestId : automaton.nodes.length;
 };
 
 export default getSmallestId;

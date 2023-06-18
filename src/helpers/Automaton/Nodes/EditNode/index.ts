@@ -3,22 +3,18 @@ import findNodeById from '../FindNodeById';
 import sortIdNodes from '../SortIdNodes';
 
 const checkValidName = (automaton: IAutomaton, name: string): boolean => {
-  for (let i = 0; i < automaton.nodes.length; i++) {
-    if (name === automaton.nodes[i].name) {
-      return false;
-    }
-  }
+  const nameExists = automaton.nodes.some((node) => node.name === name);
 
-  return true;
+  return !nameExists;
 };
 
 const getAleatoryId = (automaton: IAutomaton): number => {
   const id = Math.floor(Math.random() * (100 - automaton.nodes.length) + automaton.nodes.length);
 
-  for (let i = 0; i < automaton.nodes.length; i++) {
-    if (id == automaton.nodes[i].id) {
-      return getAleatoryId(automaton);
-    }
+  const foundNode = automaton.nodes.find((node) => node.id === id);
+
+  if (foundNode) {
+    return getAleatoryId(automaton);
   }
 
   return id;

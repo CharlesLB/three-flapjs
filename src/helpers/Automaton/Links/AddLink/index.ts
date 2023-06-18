@@ -1,6 +1,6 @@
 import { IAutomaton, ILink, INode } from '@/@types/components/Automaton';
-import findNodeById from '../../Nodes/FindNodeById';
 import findLinkByNodeId from '../FindLinkByNodesId';
+import findNodeById from '../../Nodes/FindNodeById';
 
 const addDataToLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
   // @ts-ignore

@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import findNodeById from '../FindNodeById';
-import deleteNode from '.';
+import deleteNode, { editDefaultNameNodes } from '.';
 
 describe('deleteNode', () => {
   test('should delete the node and its associated links', () => {
@@ -49,5 +49,33 @@ describe('deleteNode', () => {
     expect(() => {
       deleteNode(automaton, 4);
     }).toThrowError('Não existe nó com esse ID');
+  });
+});
+
+describe('editDefaultNameNodes', () => {
+  test('should update node names starting with "q" from the given id', () => {
+    const automaton = {
+      nodes: [
+        { id: 1, name: 'q1' },
+        { id: 2, name: 'q2' },
+        { id: 3, name: 'p1' },
+        { id: 4, name: 'q3' }
+      ],
+      links: []
+    };
+
+    const expectedAutomaton = {
+      nodes: [
+        { id: 1, name: 'q1' },
+        { id: 2, name: 'q2' },
+        { id: 3, name: 'p1' },
+        { id: 0, name: 'q0' }
+      ],
+      links: []
+    };
+
+    editDefaultNameNodes(automaton, 3);
+
+    expect(automaton).toEqual(expectedAutomaton);
   });
 });
