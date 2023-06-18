@@ -1,7 +1,7 @@
-import BigModalLayout from '@/components/Atoms/Structures/ModalLayouts/BigModalLayout';
 import React from 'react';
 
 import { Container } from './styles';
+import ModalLayout from '@/components/Atoms/Structures/ModalLayout';
 
 const PreferencesModal: React.FC = () => {
   const submitHandler = () => {
@@ -9,9 +9,9 @@ const PreferencesModal: React.FC = () => {
   };
 
   return (
-    <BigModalLayout title="Preferences" submitHandler={submitHandler}>
+    <ModalLayout title="Preferences" submitHandler={submitHandler} big>
       <Container></Container>
-    </BigModalLayout>
+    </ModalLayout>
   );
 };
 

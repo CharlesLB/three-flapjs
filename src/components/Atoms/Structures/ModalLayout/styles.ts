@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div<{
+  big?: boolean;
+}>`
   position: absolute;
   top: 0;
   left: 0;
@@ -11,7 +13,7 @@ export const Container = styled.div`
   justify-content: center;
 
   max-height: 90vh;
-  max-width: 800px;
+  max-width: ${({ big }) => (big ? '800px' : '400px')};
   height: min-content;
   margin: auto auto;
   background-color: var(--color-primary);
