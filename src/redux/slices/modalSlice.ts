@@ -10,6 +10,7 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     callModal: (_state, action: PayloadAction<IModalSlice>) => {
+      console.log(action.payload);
       return action.payload;
     },
     resetModal: () => {

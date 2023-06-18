@@ -42,6 +42,7 @@ export default memo(createGlobalStyle`
 
     --color-primary: #313638;
     --color-primary-dark: #232628;
+    --color-primary-light: #4f5457;
     --color-success: #00c851;
     --color-error: #ff4444;
     --color-warning: #ffbb33;
