@@ -1,4 +1,4 @@
-import BigModalLayout from '@/components/Atoms/Structures/BigModalLayout';
+import BigModalLayout from '@/components/Atoms/Structures/ModalLayouts/BigModalLayout';
 import React from 'react';
 
 import { Container } from './styles';
