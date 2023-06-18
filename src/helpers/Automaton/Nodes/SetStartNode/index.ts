@@ -1,4 +1,4 @@
-import { IAutomaton, INode } from '@/@types/components/Automaton';
+import { IAutomaton } from '@/@types/components/Automaton';
 import findNodeById from '../FindNodeById';
 
 const setStartNode = (automaton: IAutomaton, id: number): IAutomaton => {
@@ -7,6 +7,10 @@ const setStartNode = (automaton: IAutomaton, id: number): IAutomaton => {
   if (!node) {
     throw new Error('Node does not exist');
   }
+
+  automaton.nodes.forEach((node) => {
+    node.start = false;
+  });
 
   node.start = true;
 
