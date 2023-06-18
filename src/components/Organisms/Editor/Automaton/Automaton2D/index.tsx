@@ -15,8 +15,8 @@ import setStartNode from '@/helpers/Automaton/Nodes/SetStartNode';
 import setNotEndNode from '@/helpers/Automaton/Nodes/SetNotEndNode';
 import setNotStartNode from '@/helpers/Automaton/Nodes/SetNotStartNode';
 import checkIfAutomatonIsAFD from '@/helpers/Automaton';
-import stringTestInAutomaton from '@/helpers/Automaton/Test';
 import deleteLink from '@/helpers/Automaton/Links/DeleteLink';
+import stringTestInAutomaton from '@/helpers/Automaton/StringTestInAutomaton';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -78,7 +78,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   };
 
   const clickTest = () => {
-    const aux = stringTestInAutomaton({ ...data }, 'ab');
+    const aux = stringTestInAutomaton({ ...data }, 'abb');
     console.log('A saida do teste é: ', aux);
   };
 
