@@ -14,6 +14,7 @@ import setEndNode from '@/helpers/Automaton/Nodes/SetEndNode';
 import setStartNode from '@/helpers/Automaton/Nodes/SetStartNode';
 import setNotEndNode from '@/helpers/Automaton/Nodes/SetNotEndNode';
 import setNotStartNode from '@/helpers/Automaton/Nodes/SetNotStartNode';
+import checkIfAutomatonIsAFD from '@/helpers/Automaton';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -24,7 +25,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     setData(addNode({ ...data }));
   };
   const clickRemove = () => {
-    setData(deleteNode({ ...data }, 1));
+    setData(deleteNode({ ...data }, 3));
   };
   const clickEdita = () => {
     setData(editNode({ ...data }, 1, 'banana'));
@@ -35,7 +36,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   };
 
   const clickEditLink = () => {
-    setData(editLink({ ...data }, 1, 2, 'b'));
+    setData(editLink({ ...data }, 0, 0, 'b'));
   };
 
   const clickSelectNode = () => {
@@ -55,7 +56,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   };
 
   const clickSetStartNode = () => {
-    setData(setStartNode({ ...data }, 0));
+    setData(setStartNode({ ...data }, 1));
   };
 
   const clickSetNotEndNode = () => {
@@ -64,6 +65,10 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
 
   const clickSetNotStartNode = () => {
     setData(setNotStartNode({ ...data }, 0));
+  };
+
+  const clickCheckIfAutomatonIsAFD = () => {
+    const aux = checkIfAutomatonIsAFD({ ...data });
   };
 
   return (
@@ -77,9 +82,11 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       <button onClick={() => clickDeselectNode()}>Deselect Node</button>
       <button onClick={() => clickDeselectAllNode()}>Deselect All Nodes</button>
       <button onClick={() => clickSetStartNode()}>Set start node</button>
-      <button onClick={() => clickSetNotEndNode()}>Set end node</button>
+      <button onClick={() => clickSetEndNode()}>Set end node</button>
       <button onClick={() => clickSetNotEndNode()}>Set NOT end node</button>
       <button onClick={() => clickSetNotStartNode()}>Set NOT start node</button>
+      <button onClick={() => clickCheckIfAutomatonIsAFD()}>VERIFY</button>
+
       <ForceGraph2D
         graphData={data}
         nodeLabel="id"

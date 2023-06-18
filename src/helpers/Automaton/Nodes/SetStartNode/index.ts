@@ -8,6 +8,10 @@ const setStartNode = (automaton: IAutomaton, id: number): IAutomaton => {
     throw new Error('Node does not exist');
   }
 
+  automaton.nodes.forEach((node) => {
+    node.start = false;
+  });
+
   node.start = true;
 
   return automaton;
