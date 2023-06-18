@@ -19,6 +19,7 @@ const p = (automaton: IAutomaton, currentNode: INode, char: string): INode => {
   //@ts-ignore
   return link.target;
 };
+
 const pe = (automaton: IAutomaton, currentNode: INode, word: string): INode => {
   if (word.length === 1) {
     console.log(`Calculing Pe(P(${currentNode?.name}, ${word[0]}), ε)`);

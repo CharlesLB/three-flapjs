@@ -42,33 +42,7 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
 };
 
 const nodeColor = (node: INode): string => {
-  // if (node?.start && node?.end) {
-  //   return '#FF4500';
-  // }
-
-  // if (node?.start && node?.selected) {
-  //   return '#0000FF';
-  // }
-
-  // if (node?.end && node?.selected) {
-  //   return '#B22222	';
-  // }
-
-  // if (node?.start) {
-  //   return '#00008B';
-  // }
-
-  // if (node?.end) {
-  //   return '#ff0000';
-  // }
-
-  // if (node?.selected) {
-  //   return '#686868';
-  // }
-
-  // return '#fff';
-
-  if (node?.testPosition || (node?.testPosition && node?.start) || (node?.testPosition && node?.end)) {
+  if (node?.testPosition) {
     return '#FF4500';
   }
 
