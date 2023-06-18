@@ -1,4 +1,4 @@
-import { IAutomaton, INode } from '@/@types/components/Automaton';
+import { IAutomaton } from '@/@types/components/Automaton';
 import findNodeById from '../FindNodeById';
 
 const setNotStartNode = (automaton: IAutomaton, id: number): IAutomaton => {

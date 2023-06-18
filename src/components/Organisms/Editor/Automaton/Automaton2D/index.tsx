@@ -30,10 +30,6 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     setData(editNode({ ...data }, 1, 'banana'));
   };
 
-  // const clickAddLink = () => {
-  //   setData(addLink({ ...data }, 0, 1, 'a'));
-  // };
-
   const clickAddLink = () => {
     setData(addLink({ ...data }, 1, 2, 'a'));
   };
