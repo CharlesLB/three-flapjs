@@ -8,6 +8,7 @@ import { changeAction } from '@/redux/slices/automatonStorageSlice';
 import { getDataFromFile, getFileFromUser } from '@/utils/file';
 import { validateAutomaton } from '@/utils/automaton';
 import useLog from '@/hooks/useLog';
+import { callModal } from '@/redux/slices/modalSlice';
 
 const DashboardHeader: React.FC = () => {
   const logger = useLog();
@@ -68,7 +69,11 @@ const DashboardHeader: React.FC = () => {
         {
           label: 'Preferences',
           onClick: () => {
-            alert('Preferences');
+            dispatch(
+              callModal({
+                type: 'preferences'
+              })
+            );
           }
         }
       ]
@@ -79,6 +84,7 @@ const DashboardHeader: React.FC = () => {
         {
           label: 'Github Page',
           uri: AppConfig.github,
+          target: '_blank',
           onClick: () => {
             window.open(AppConfig.github, '_blank');
           }

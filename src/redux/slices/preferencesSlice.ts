@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 const initialState: IPreferences = {
-  exhibition: '3d',
+  exhibition: '2d',
   link: {
     width: 10,
     color: '#000000',
@@ -21,16 +21,18 @@ export const getPreviousPreferences = createAsyncThunk('preferences/getPreviousP
 });
 
 export const preferencesSlice = createSlice({
-  name: 'counter',
+  name: 'preferences',
   initialState,
   reducers: {
-    getPreviousPreferences: (state): void => {
+    getPreviousPreferences: (state) => {
       const response = window.localStorage.getItem('preferences');
       state = response ? JSON.parse(response) : initialState;
+      return state;
     },
-    update: (state, action: PayloadAction<IPreferences>): void => {
+    update: (state, action: PayloadAction<IPreferences>) => {
       state = action.payload;
       window.localStorage.setItem('preferences', JSON.stringify(state));
+      return state;
     }
   }
 });

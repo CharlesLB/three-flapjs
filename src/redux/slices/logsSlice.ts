@@ -11,7 +11,7 @@ const initialState: ILog[] = [
 ];
 
 export const logsSlice = createSlice({
-  name: 'counter',
+  name: 'logs',
   initialState,
   reducers: {
     cleanLogs: (_state) => {

@@ -9,12 +9,14 @@ import { IAutomatonStorage } from '@/@types/redux/AutomatonStorage';
 import { downloadJsonByObject } from '@/utils/file';
 import { cleanAutomaton } from '@/utils/automaton';
 import addLink from '@/helpers/Automaton/Links/AddLink';
+import { getPreferences } from '@/redux/slices/preferencesSlice';
 
 const Automaton3D = dynamic(() => import('./Automaton3D'), { ssr: false });
 const Automaton2D = dynamic(() => import('./Automaton2D'), { ssr: false });
 
 const Automaton: React.FC = () => {
   const logger = useLog();
+  const preferences = useAppSelector(getPreferences);
   const automatonStorage = useAppSelector(getAutomatonStorage);
   const dispatch = useAppDispatch();
 
@@ -27,6 +29,8 @@ const Automaton: React.FC = () => {
 
   const getDataFromStorage = (): IAutomaton => {
     const previousData = localStorage.getItem('automaton');
+
+    setTimeout(() => localStorage.removeItem('automaton'), 1000);
 
     if (!previousData) {
       setLoading(false);
@@ -46,11 +50,10 @@ const Automaton: React.FC = () => {
       nodes: [...nodes],
       links: []
     });
+    setLoading(false);
   };
 
   const updateAutomatonByLinks = useCallback((): void => {
-    localStorage.removeItem('automaton');
-
     const nextLinkToBeAdded = linksToBeAdded[0];
 
     setData(
@@ -159,12 +162,12 @@ const Automaton: React.FC = () => {
   return (
     <Container>
       <Content>
-        {!loading && (
-          <>
-            {/* <Automaton3D data={data} setData={setData} /> */}
-            <Automaton2D data={data} setData={setData} />
-          </>
-        )}
+        {
+          {
+            '2d': <Automaton2D data={data} setData={setData} />,
+            '3d': <Automaton3D data={data} setData={setData} />
+          }[preferences.exhibition]
+        }
       </Content>
     </Container>
   );

@@ -34,8 +34,6 @@ const deleteNode = (automaton: IAutomaton, id: number): IAutomaton => {
 
   deleteAssociatedLinks(automaton, id);
 
-  console.log('xxx', automaton.links);
-
   const index = automaton.nodes.indexOf(node);
   automaton.nodes.splice(index, 1);
 

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { IAutomatonStorage } from '@/@types/redux/AutomatonStorage';
 
@@ -10,13 +10,8 @@ const initialState: IAutomatonStorage = {
   }
 };
 
-export const getPreviousPreferences = createAsyncThunk('preferences/getPreviousPreferences', () => {
-  const response = window.localStorage.getItem('preferences');
-  return response ? JSON.parse(response) : initialState;
-});
-
-export const automatonSlice = createSlice({
-  name: 'counter',
+export const automatonStorageSlice = createSlice({
+  name: 'automatonStorage',
   initialState,
   reducers: {
     changeMode: (state, action: PayloadAction<IAutomatonStorage['mode']>): void => {
@@ -31,8 +26,8 @@ export const automatonSlice = createSlice({
   }
 });
 
-export const { changeMode, changeAction, resetAction } = automatonSlice.actions;
+export const { changeMode, changeAction, resetAction } = automatonStorageSlice.actions;
 
 export const getAutomatonStorage = (state: RootState) => state.automatonStorage;
 
-export default automatonSlice.reducer;
+export default automatonStorageSlice.reducer;

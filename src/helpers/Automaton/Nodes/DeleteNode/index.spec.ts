@@ -31,8 +31,6 @@ describe('deleteNode', () => {
       { id: 3, name: 'C' }
     ]);
 
-    console.log(updatedAutomaton.links);
-
     expect(updatedAutomaton.links).toEqual([]);
 
     expect(findNodeById(updatedAutomaton, 2)).toBeUndefined();

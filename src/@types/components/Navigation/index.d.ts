@@ -7,4 +7,5 @@ interface INavigationItem {
   label: string;
   onClick: () => void;
   uri?: AppConfig.github;
+  target?: '_blank';
 }

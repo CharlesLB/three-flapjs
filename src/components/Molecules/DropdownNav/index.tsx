@@ -9,7 +9,7 @@ const DropdownNav: React.FC<INavigation> = ({ label, items }) => {
       <ul>
         {items.map((item, index) => (
           <li key={index}>
-            <a href={item.uri || '#'} onClick={item.onClick}>
+            <a href={item.uri || '#'} onClick={item.onClick} target={item?.target}>
               {item.label}
             </a>
           </li>

@@ -2,12 +2,14 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import preferencesSlice from './slices/preferencesSlice';
 import automatonStorageSlice from './slices/automatonStorageSlice';
 import logsSlice from './slices/logsSlice';
+import modalSlice from './slices/modalSlice';
 
 export const store = configureStore({
   reducer: {
     preferences: preferencesSlice,
     automatonStorage: automatonStorageSlice,
-    logs: logsSlice
+    logs: logsSlice,
+    modal: modalSlice
   }
 });
 
