@@ -12,6 +12,8 @@ import deselectNode from '@/helpers/Automaton/Nodes/DeselectNode';
 import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
 import setEndNode from '@/helpers/Automaton/Nodes/SetEndNode';
 import setStartNode from '@/helpers/Automaton/Nodes/SetStartNode';
+import setNotEndNode from '@/helpers/Automaton/Nodes/SetNotEndNode';
+import setNotStartNode from '@/helpers/Automaton/Nodes/SetNotStartNode';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -60,6 +62,14 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     setData(setStartNode({ ...data }, 0));
   };
 
+  const clickSetNotEndNode = () => {
+    setData(setNotEndNode({ ...data }, 2));
+  };
+
+  const clickSetNotStartNode = () => {
+    setData(setNotStartNode({ ...data }, 0));
+  };
+
   return (
     <>
       <button onClick={() => clickAdd()}>Add</button>
@@ -71,7 +81,9 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       <button onClick={() => clickDeselectNode()}>Deselect Node</button>
       <button onClick={() => clickDeselectAllNode()}>Deselect All Nodes</button>
       <button onClick={() => clickSetStartNode()}>Set start node</button>
-      <button onClick={() => clickSetEndNode()}>Set end node</button>
+      <button onClick={() => clickSetNotEndNode()}>Set end node</button>
+      <button onClick={() => clickSetNotEndNode()}>Set NOT end node</button>
+      <button onClick={() => clickSetNotStartNode()}>Set NOT start node</button>
       <ForceGraph2D
         graphData={data}
         nodeLabel="id"
