@@ -11,8 +11,16 @@ describe('deleteNode', () => {
         { id: 3, name: 'C' }
       ],
       links: [
-        { source: 1, target: 2, name: 'Link1' },
-        { source: 2, target: 3, name: 'Link2' }
+        {
+          source: { id: 1, name: 'A' },
+          target: { id: 2, name: 'B' },
+          name: 'Link1'
+        },
+        {
+          source: { id: 2, name: 'B' },
+          target: { id: 3, name: 'C' },
+          name: 'Link2'
+        }
       ]
     };
 
@@ -22,6 +30,8 @@ describe('deleteNode', () => {
       { id: 1, name: 'A' },
       { id: 3, name: 'C' }
     ]);
+
+    console.log(updatedAutomaton.links);
 
     expect(updatedAutomaton.links).toEqual([]);
 

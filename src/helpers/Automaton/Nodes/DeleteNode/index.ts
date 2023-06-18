@@ -3,6 +3,7 @@ import findNodeById from '../FindNodeById';
 import editNode from '../EditNode';
 import getSmallestId from '../GetSmallestId';
 import sortIdNodes from '../SortIdNodes';
+import deleteLink from '../../Links/DeleteLink';
 
 const editDefaultNameNodes = (automaton: IAutomaton, id: number): void => {
   for (let i = id; i < automaton.nodes.length; i++) {
@@ -15,7 +16,13 @@ const editDefaultNameNodes = (automaton: IAutomaton, id: number): void => {
 };
 
 const deleteAssociatedLinks = (automaton: IAutomaton, id: number): void => {
-  automaton.links = automaton.links.filter((link) => link.source !== id && link.target !== id);
+  // @ts-ignore
+  const linksToRemove = automaton.links.filter((link) => link.source.id === id || link.target.id === id);
+
+  linksToRemove.forEach((link) => {
+    // @ts-ignore
+    automaton = deleteLink(automaton, link.source.id, link.target.id);
+  });
 };
 
 const deleteNode = (automaton: IAutomaton, id: number): IAutomaton => {
@@ -26,6 +33,8 @@ const deleteNode = (automaton: IAutomaton, id: number): IAutomaton => {
   }
 
   deleteAssociatedLinks(automaton, id);
+
+  console.log('xxx', automaton.links);
 
   const index = automaton.nodes.indexOf(node);
   automaton.nodes.splice(index, 1);
