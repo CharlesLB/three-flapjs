@@ -10,6 +10,11 @@ import { downloadJsonByObject } from '@/utils/file';
 import { cleanAutomaton } from '@/utils/automaton';
 import addLink from '@/helpers/Automaton/Links/AddLink';
 import { getPreferences } from '@/redux/slices/preferencesSlice';
+import checkIfAutomatonIsAFD from '@/helpers/Automaton';
+import getStartNode from '@/helpers/Automaton/Nodes/GetStartNode';
+import pe from '@/helpers/Automaton/StringTestInAutomaton';
+import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
+import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
 
 const Automaton3D = dynamic(() => import('./Automaton3D'), { ssr: false });
 const Automaton2D = dynamic(() => import('./Automaton2D'), { ssr: false });
@@ -93,6 +98,60 @@ const Automaton: React.FC = () => {
     setData(newData);
   };
 
+  const runTest = (word: string): void => {
+    try {
+      const log = (data: string) => {
+        logger.logInfo(data, true);
+      };
+
+      setData(deselectAllNodes({ ...data }));
+
+      let finish = false;
+      let wordSlice = word;
+      checkIfAutomatonIsAFD({ ...data });
+
+      let currentNode = getStartNode({ ...data });
+      if (!currentNode) {
+        throw new Error('Its not AFD: There is no initial state');
+      }
+      //@ts-ignore
+      setData(setTestPositionNode({ ...data }, currentNode.id));
+
+      const func = setInterval(() => {
+        if (wordSlice.length > 0) {
+          log(`-Calculating Pe(${currentNode?.name}, ${wordSlice})`);
+        } else {
+          log(`Calculating Pe(${currentNode?.name}, ε) = ${currentNode?.name}`);
+        }
+
+        let newCurrentNode;
+        if (wordSlice.length > 0) {
+          //@ts-ignore
+          newCurrentNode = pe({ ...data }, currentNode, wordSlice);
+        } else {
+          newCurrentNode = currentNode;
+          finish = true;
+        }
+
+        setData({ ...data });
+        wordSlice = wordSlice.slice(1, wordSlice.length);
+        currentNode = newCurrentNode;
+
+        if (finish) {
+          if (!currentNode?.end) {
+            logger.logError(`This '${word}' is not accepted in the automaton: The state ${currentNode?.name} not is final state`);
+          }
+
+          logger.logSuccess(`This '${word}' is accepted in the automaton: The state ${currentNode?.name} is final state`);
+
+          clearInterval(func);
+        }
+      }, 1000);
+    } catch (error: any) {
+      logger.logError(error?.message);
+    }
+  };
+
   const actions = (action: IAutomatonStorage['action']): void => {
     const load = (): void => {
       setLoading(true);
@@ -107,7 +166,7 @@ const Automaton: React.FC = () => {
         return;
       }
 
-      updateDataByNewObject(action.data);
+      updateDataByNewObject(action.data as IAutomaton);
     };
 
     const exportData = (): void => {
@@ -129,6 +188,9 @@ const Automaton: React.FC = () => {
         break;
       case 'export':
         exportData();
+        break;
+      case 'test':
+        if (typeof action.data === 'string') runTest(action.data as string);
         break;
       default:
         break;

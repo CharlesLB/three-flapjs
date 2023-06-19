@@ -1,5 +1,5 @@
 interface IModalSlice {
   type: string | null;
-  callback?: () => void;
+  callback?: (value?: any) => void;
   data?: any;
 }

@@ -8,7 +8,7 @@ const selectNode = (automaton: IAutomaton, id: number): IAutomaton => {
     throw new Error('Node does not exist');
   }
 
-  node.selected = true;
+  node.selected = !node.selected;
 
   return automaton;
 };

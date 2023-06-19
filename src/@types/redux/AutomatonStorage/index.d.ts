@@ -3,8 +3,8 @@ import { IAutomaton, ILink, INode } from '@/@types/components/Automaton';
 interface IAutomatonStorage {
   mode: IAutomatonStorageMode;
   action: {
-    type: 'save' | 'load' | 'export' | '';
-    data?: IAutomaton | null;
+    type: 'save' | 'load' | 'export' | 'test' | '';
+    data?: IAutomaton | null | string;
   };
 }
 

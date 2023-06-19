@@ -8,27 +8,24 @@ import React from 'react';
 import { linkCanvasObject, nodeCanvasObject, nodeColor } from './utils';
 import editLink from '@/helpers/Automaton/Links/EditLink';
 import selectNode from '@/helpers/Automaton/Nodes/SelectNode';
-import deselectNode from '@/helpers/Automaton/Nodes/DeselectNode';
-import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
 import setEndNode from '@/helpers/Automaton/Nodes/SetEndNode';
 import setStartNode from '@/helpers/Automaton/Nodes/SetStartNode';
 import setNotEndNode from '@/helpers/Automaton/Nodes/SetNotEndNode';
 import setNotStartNode from '@/helpers/Automaton/Nodes/SetNotStartNode';
 import checkIfAutomatonIsAFD from '@/helpers/Automaton';
 import deleteLink from '@/helpers/Automaton/Links/DeleteLink';
-import getStartNode from '@/helpers/Automaton/Nodes/GetStartNode';
-import pe from '@/helpers/Automaton/StringTestInAutomaton';
 import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
 import setNotTestPositionNode from '@/helpers/Automaton/Nodes/SetNotTestPositionNode';
 import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestPositionNodes';
 import { getAutomatonStorage } from '@/redux/slices/automatonStorageSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { callModal, getModal } from '@/redux/slices/modalSlice';
+import { callModal } from '@/redux/slices/modalSlice';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
 const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   const automatonStorage = useAppSelector(getAutomatonStorage);
+  const selectedNode = data.nodes.find((node) => node.selected);
   const dispatch = useAppDispatch();
 
   const width = window.innerWidth - 220;
@@ -53,18 +50,6 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
 
   const clickDeleteLink = () => {
     setData(deleteLink({ ...data }, 0, 2));
-  };
-
-  const clickSelectNode = () => {
-    setData(selectNode({ ...data }, 2));
-  };
-
-  const clickDeselectNode = () => {
-    setData(deselectNode({ ...data }, 1));
-  };
-
-  const clickDeselectAllNode = () => {
-    setData(deselectAllNodes({ ...data }));
   };
 
   const clickSetEndNode = () => {
@@ -99,56 +84,10 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     checkIfAutomatonIsAFD({ ...data });
   };
 
-  const clickTest = () => {
-    const word = 'abb';
-    let finish = false;
-    let wordSlice = word;
-    checkIfAutomatonIsAFD({ ...data });
-
-    let currentNode = getStartNode({ ...data });
-    if (!currentNode) {
-      throw new Error('Its not AFD: There is no initial state');
-    }
-    //@ts-ignore
-    setData(setTestPositionNode({ ...data }, currentNode.id));
-
-    const func = setInterval(() => {
-      if (wordSlice.length > 0) {
-        console.log(`-Calculing Pe(${currentNode?.name}, ${wordSlice})`);
-      } else {
-        console.log(`Calculing Pe(${currentNode?.name}, ε) = ${currentNode?.name}`);
-      }
-
-      let newCurrentNode;
-      if (wordSlice.length > 0) {
-        //@ts-ignore
-        newCurrentNode = pe({ ...data }, currentNode, wordSlice);
-      } else {
-        newCurrentNode = currentNode;
-        finish = true;
-      }
-
-      setData({ ...data });
-      wordSlice = wordSlice.slice(1, wordSlice.length);
-      currentNode = newCurrentNode;
-
-      if (finish) {
-        if (!currentNode?.end) {
-          console.log(`This '${word}' is not accepted in the automaton: The state ${currentNode?.name} not is final state`);
-        }
-
-        console.log(`This '${word}' is accepted in the automaton: The state ${currentNode?.name} is final state`);
-
-        clearInterval(func);
-      }
-    }, 1000);
-  };
-
   const handleNodeClick = (node: INode) => {
     switch (automatonStorage.mode) {
       case 'node:create':
-        //@ts-ignore
-        setData(selectNode({ ...data }, node?.id));
+        setData(addNode({ ...data }));
         break;
       case 'node:edit':
         dispatch(
@@ -165,15 +104,81 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
           })
         );
         break;
+      case 'node:started':
+        //@ts-ignore
+        setData(setStartNode({ ...data }, node?.id));
+        break;
+      case 'node:end':
+        //@ts-ignore
+        setData(setEndNode({ ...data }, node?.id));
+        break;
+      case 'node:delete':
+        //@ts-ignore
+        setData(deleteNode({ ...data }, node?.id));
+        break;
+      case 'delete':
+        //@ts-ignore
+        setData(deleteNode({ ...data }, node?.id));
+        break;
+      case 'link:create':
+        //@ts-ignore
+        if (selectedNode) {
+          dispatch(
+            callModal({
+              type: 'link:create',
+              callback: (name: string) => {
+                //@ts-ignore
+                setData(addLink({ ...data }, selectedNode.id, node?.id, name));
+              }
+            })
+          );
+          return;
+        }
 
+        //@ts-ignore
+        setData(selectNode({ ...data }, node?.id));
+
+        break;
       default:
         break;
     }
   };
 
-  const handleLinkClick = (link: ILink) => {};
+  const handleLinkClick = (link: ILink) => {
+    switch (automatonStorage.mode) {
+      case 'link:edit':
+        dispatch(
+          callModal({
+            type: 'link:edit',
+            data: {
+              link: {
+                id: link.id,
+                source: link.source,
+                target: link.target,
+                label: link.label
+              }
+            }
+          })
+        );
+        break;
+      case 'link:delete':
+        //@ts-ignore
+        setData(deleteLink({ ...data }, link?.source, link?.target));
+        break;
+      default:
+        break;
+    }
+  };
 
-  const handleBackgroundClick = () => {};
+  const handleBackgroundClick = (_event: MouseEvent) => {
+    switch (automatonStorage.mode) {
+      case 'node:create':
+        setData(addNode(data));
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <>
@@ -194,7 +199,6 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       <button onClick={() => clickSetNotPositionNode()}>Set NOT Position node</button>
       <button onClick={() => clickSetAllNotPositionNode()}>Set All NOT Position node</button>
       <button onClick={() => clickCheckIfAutomatonIsAFD()}>AFD</button>
-      <button onClick={() => clickTest()}>TEST</button>
 
       <ForceGraph2D
         graphData={data}
@@ -216,13 +220,14 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         linkDirectionalArrowLength={5}
         linkCurvature="curvature"
         linkDirectionalParticles={2}
+        cooldownTicks={0}
         onNodeDragEnd={(node) => {
           node.fx = node.x;
           node.fy = node.y;
         }}
-        onBackgroundClick={(data) => console.log(data)}
+        onBackgroundClick={(data) => handleBackgroundClick(data)}
         onNodeClick={(node) => handleNodeClick(node)}
-        onLinkClick={(link) => console.log(link)}
+        onLinkClick={(link) => handleLinkClick(link)}
         minZoom={2}
         maxZoom={4}
       />

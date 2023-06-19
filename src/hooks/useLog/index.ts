@@ -1,21 +1,25 @@
 import { useAppDispatch } from '@/redux/hooks';
 import { addLog } from '@/redux/slices/logsSlice';
-import { toast } from 'react-toastify';
+import { ToastOptions, toast } from 'react-toastify';
 
 const useLog = () => {
   const dispatch = useAppDispatch();
 
-  const logError = (error: string): void => {
-    toast.error(error, {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored'
-    });
+  const toastOptions: ToastOptions = {
+    position: 'top-right',
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored'
+  };
+
+  const logError = (error: string, withoutToast: boolean = false): void => {
+    if (!withoutToast) {
+      toast.error(error, toastOptions);
+    }
 
     dispatch(
       addLog({
@@ -25,17 +29,10 @@ const useLog = () => {
     );
   };
 
-  const logInfo = (info: string): void => {
-    toast.info(info, {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored'
-    });
+  const logInfo = (info: string, withoutToast: boolean = false): void => {
+    if (!withoutToast) {
+      toast.info(info, toastOptions);
+    }
 
     dispatch(
       addLog({
@@ -45,9 +42,23 @@ const useLog = () => {
     );
   };
 
+  const logSuccess = (message: string, withoutToast: boolean = false): void => {
+    if (!withoutToast) {
+      toast.success(message, toastOptions);
+    }
+
+    dispatch(
+      addLog({
+        type: 'success',
+        message: message
+      })
+    );
+  };
+
   return {
     logError,
-    logInfo
+    logInfo,
+    logSuccess
   };
 };
 

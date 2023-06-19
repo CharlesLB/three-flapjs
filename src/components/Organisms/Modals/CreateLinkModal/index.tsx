@@ -3,17 +3,17 @@ import React from 'react';
 import { Container } from './styles';
 import ModalLayout from '@/components/Atoms/Structures/ModalLayout';
 
-const EditNodeModal: React.FC<IModalSlice> = ({ data, callback }) => {
+const CreateLinkModal: React.FC<IModalSlice> = ({ data, callback }) => {
   const submitHandler = () => {
     console.log(data);
-    if (callback) callback();
+    if (callback) callback('a');
   };
 
   return (
-    <ModalLayout title="Edit Node" submitHandler={submitHandler}>
+    <ModalLayout title="Create Link" submitHandler={submitHandler}>
       <Container></Container>
     </ModalLayout>
   );
 };
 
-export default EditNodeModal;
+export default CreateLinkModal;

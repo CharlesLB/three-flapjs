@@ -1,11 +1,9 @@
 import { ILink, INode } from '@/@types/components/Automaton';
 
-const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScale: number) => {  
-  if (node.end)
-    endNodeCanvas(node, ctx);
+const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScale: number) => {
+  if (node.end) endNodeCanvas(node, ctx);
 
-  if (node.start)
-    startNodeCanvas(node, ctx);
+  if (node.start) startNodeCanvas(node, ctx);
 
   const label = `${node?.name}`;
   const fontSize = 12 / globalScale;
@@ -22,27 +20,24 @@ const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScal
 const endNodeCanvas = (node: INode, ctx: CanvasRenderingContext2D) => {
   const { x, y } = node;
 
-  if (!x || !y)
-    throw new Error("Eh necessario saber a posicao do no")
-
   const nodeRadius = 6;
   const innerColor = 'white';
   const borderColor = 'white';
   const borderWidth = 1;
-        
-  // Draw the inner circle
+
   ctx.beginPath();
+  // @ts-ignore
   ctx.arc(x, y, nodeRadius, 0, 2 * Math.PI);
   ctx.fillStyle = innerColor;
   ctx.fill();
 
-  // Draw the outer border
   ctx.beginPath();
+  // @ts-ignore
   ctx.arc(x, y, nodeRadius + 4 * borderWidth, 0, 2 * Math.PI);
   ctx.lineWidth = borderWidth;
   ctx.strokeStyle = borderColor;
   ctx.stroke();
-}
+};
 
 const startNodeCanvas = (node: INode, ctx: CanvasRenderingContext2D) => {
   const triangleSize = 5;
@@ -51,26 +46,22 @@ const startNodeCanvas = (node: INode, ctx: CanvasRenderingContext2D) => {
 
   const { x, y } = node;
 
-  if (!x || !y)
-  throw new Error("Eh necessario saber a posicao do no")
-
-  // Draw the triangle
-
-  
   ctx.beginPath();
-  const xpos = x - 2*triangleSize;
+  // @ts-ignore
+  const xpos = x - 2 * triangleSize;
+  // @ts-ignore
   ctx.moveTo(xpos, y);
+  // @ts-ignore
   ctx.lineTo(xpos - triangleSize, y + triangleSize);
-  ctx.lineTo(xpos - triangleSize, y  - triangleSize);
-  // ctx.moveTo(x - 2*triangleSize, y + triangleSize /2 );
-  // ctx.lineTo(x - triangleSize, y - triangleSize / 2);
+  // @ts-ignore
+  ctx.lineTo(xpos - triangleSize, y - triangleSize);
   ctx.closePath();
   ctx.lineWidth = lineWidth;
   ctx.strokeStyle = triangleColor;
   ctx.stroke();
   ctx.fillStyle = triangleColor;
   ctx.fill();
-}
+};
 
 const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScale: number, nodes: INode[]) => {
   const isSelfLoop = link.source === link.target;
@@ -101,20 +92,7 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
 };
 
 const nodeColor = (node: INode): string => {
-  if (node?.testPosition) {
-    return '#FF4500';
-  }
-
-  if (node?.start && node?.end) {
-    return '#ff00ff';
-  }
-
-
-  if (node?.selected) {
-    return '#686868';
-  }
-
-  return '#fff';
+  return node?.selected || node?.testPosition ? '#686868' : '#fff';
 };
 
 export { nodeCanvasObject, linkCanvasObject, nodeColor };
