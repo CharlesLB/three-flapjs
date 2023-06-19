@@ -12,6 +12,9 @@ const useLog = () => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
+    style: {
+      fontSize: '12px'
+    },
     progress: undefined,
     theme: 'colored'
   };
