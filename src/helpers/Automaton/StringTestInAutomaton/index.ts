@@ -30,9 +30,7 @@ const pe = (automaton: IAutomaton, currentNode: INode, word: string, log: (messa
     log(`Pe(P(${currentNode?.name}, ${word[0]}), ${word.slice(1, word.length)})`);
   }
 
-  let newCurrentNode: INode = {};
-
-  newCurrentNode = p(automaton, currentNode, word[0], log);
+  const newCurrentNode = p(automaton, currentNode, word[0], log);
 
   //@ts-ignore
   setNotTestPositionNode(automaton, currentNode.id);
