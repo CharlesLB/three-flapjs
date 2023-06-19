@@ -42,19 +42,19 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   };
 
   const clickAddLink = () => {
-    setData(addLink({ ...data }, 2, 2, 'b'));
+    setData(addLink({ ...data }, 0, 2, 'ε'));
   };
 
   const clickEditLink = () => {
-    setData(editLink({ ...data }, 0, 0, 'b'));
+    setData(editLink({ ...data }, 0, 2, 'a'));
   };
 
   const clickDeleteLink = () => {
-    setData(deleteLink({ ...data }, 0, 0));
+    setData(deleteLink({ ...data }, 0, 2));
   };
 
   const clickSetEndNode = () => {
-    setData(setEndNode({ ...data }, 2));
+    setData(setEndNode({ ...data }, 1));
   };
 
   const clickSetStartNode = () => {
@@ -196,8 +196,8 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       <button onClick={() => clickDeselectAllNode()}>Deselect All Nodes</button> */}
       <button onClick={() => clickSetStartNode()}>Set start node</button>
       <button onClick={() => clickSetEndNode()}>Set end node</button>
-      <button onClick={() => clickSetNotEndNode()}>Set NOT end node</button>
-      <button onClick={() => clickSetNotStartNode()}>Set NOT start node</button>
+      {/* <button onClick={() => clickSetNotEndNode()}>Set NOT end node</button>
+      <button onClick={() => clickSetNotStartNode()}>Set NOT start node</button> */}
       <button onClick={() => clickSetPositionNode()}>Set Position node</button>
       <button onClick={() => clickSetNotPositionNode()}>Set NOT Position node</button>
       <button onClick={() => clickSetAllNotPositionNode()}>Set All NOT Position node</button>

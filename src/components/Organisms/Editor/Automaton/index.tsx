@@ -15,6 +15,7 @@ import getStartNode from '@/helpers/Automaton/Nodes/GetStartNode';
 import pe from '@/helpers/Automaton/StringTestInAutomaton';
 import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
 import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
+import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestPositionNodes';
 
 const Automaton3D = dynamic(() => import('./Automaton3D'), { ssr: false });
 const Automaton2D = dynamic(() => import('./Automaton2D'), { ssr: false });
@@ -119,15 +120,20 @@ const Automaton: React.FC = () => {
 
       const func = setInterval(() => {
         if (wordSlice.length > 0) {
-          log(`-Calculating Pe(${currentNode?.name}, ${wordSlice})`);
+          log(`Calculating Pe(${currentNode?.name}, ${wordSlice})`);
         } else {
           log(`Calculating Pe(${currentNode?.name}, ε) = ${currentNode?.name}`);
         }
 
         let newCurrentNode;
         if (wordSlice.length > 0) {
-          //@ts-ignore
-          newCurrentNode = pe({ ...data }, currentNode, wordSlice);
+          try {
+            //@ts-ignore
+            newCurrentNode = pe({ ...data }, currentNode, wordSlice, log);
+          } catch (e) {
+            logger.logError(`${e}`);
+            clearInterval(func);
+          }
         } else {
           newCurrentNode = currentNode;
           finish = true;
@@ -135,15 +141,17 @@ const Automaton: React.FC = () => {
 
         setData({ ...data });
         wordSlice = wordSlice.slice(1, wordSlice.length);
+        //@ts-ignore
         currentNode = newCurrentNode;
 
         if (finish) {
           if (!currentNode?.end) {
             logger.logError(`This '${word}' is not accepted in the automaton: The state ${currentNode?.name} not is final state`);
+          } else {
+            logger.logSuccess(`This '${word}' is accepted in the automaton: The state ${currentNode?.name} is final state`);
           }
 
-          logger.logSuccess(`This '${word}' is accepted in the automaton: The state ${currentNode?.name} is final state`);
-
+          setData(setNotAllTestPositionNodes({ ...data }));
           clearInterval(func);
         }
       }, 1000);
