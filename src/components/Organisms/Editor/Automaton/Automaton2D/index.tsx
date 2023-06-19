@@ -102,6 +102,10 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         //@ts-ignore
         setData(deleteLink({ ...data }, link?.source?.id, link?.target?.id));
         break;
+      case 'delete':
+        //@ts-ignore
+        setData(deleteLink({ ...data }, link?.source?.id, link?.target?.id));
+        break;
       default:
         break;
     }
