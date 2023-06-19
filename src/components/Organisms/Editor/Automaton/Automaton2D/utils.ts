@@ -92,7 +92,7 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
 };
 
 const nodeColor = (node: INode): string => {
-  return node?.selected ? '#686868' : '#fff';
+  return node?.selected || node?.testPosition ? '#686868' : '#fff';
 };
 
 export { nodeCanvasObject, linkCanvasObject, nodeColor };

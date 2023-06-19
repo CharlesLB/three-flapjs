@@ -17,7 +17,6 @@ const TestList: React.FC = () => {
         data: value
       })
     );
-    setValue('');
   };
 
   return (

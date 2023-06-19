@@ -13,6 +13,8 @@ import { getPreferences } from '@/redux/slices/preferencesSlice';
 import checkIfAutomatonIsAFD from '@/helpers/Automaton';
 import getStartNode from '@/helpers/Automaton/Nodes/GetStartNode';
 import pe from '@/helpers/Automaton/StringTestInAutomaton';
+import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
+import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
 
 const Automaton3D = dynamic(() => import('./Automaton3D'), { ssr: false });
 const Automaton2D = dynamic(() => import('./Automaton2D'), { ssr: false });
@@ -102,6 +104,8 @@ const Automaton: React.FC = () => {
         logger.logInfo(data, true);
       };
 
+      setData(deselectAllNodes({ ...data }));
+
       let finish = false;
       let wordSlice = word;
       checkIfAutomatonIsAFD({ ...data });
@@ -162,7 +166,7 @@ const Automaton: React.FC = () => {
         return;
       }
 
-      updateDataByNewObject(action.data);
+      updateDataByNewObject(action.data as IAutomaton);
     };
 
     const exportData = (): void => {
