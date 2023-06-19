@@ -127,8 +127,13 @@ const Automaton: React.FC = () => {
 
         let newCurrentNode;
         if (wordSlice.length > 0) {
-          //@ts-ignore
-          newCurrentNode = pe({ ...data }, currentNode, wordSlice, log);
+          try {
+            //@ts-ignore
+            newCurrentNode = pe({ ...data }, currentNode, wordSlice, log);
+          } catch (e) {
+            logger.logError(`${e}`);
+            clearInterval(func);
+          }
         } else {
           newCurrentNode = currentNode;
           finish = true;
@@ -136,6 +141,7 @@ const Automaton: React.FC = () => {
 
         setData({ ...data });
         wordSlice = wordSlice.slice(1, wordSlice.length);
+        //@ts-ignore
         currentNode = newCurrentNode;
 
         if (finish) {
