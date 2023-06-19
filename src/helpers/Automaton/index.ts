@@ -47,7 +47,7 @@ const checkIfAutomatonIsAFD = (automaton: IAutomaton): boolean => {
 
   const allNamesLinksByNodeAreDifferents = checkIfAllNamesLinksByNodeAreDifferents(automaton);
   if (!allNamesLinksByNodeAreDifferents) {
-    throw new Error('Its not AFD: Exists Names Links Of Node Equals'); //(?)
+    throw new Error('Its not AFD: Exists Names Links Of Node Equals');
   }
 
   return true;
