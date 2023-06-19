@@ -6,7 +6,7 @@ import { LinkObject, NodeObject } from 'react-force-graph-3d';
 const ForceGraph3D = dynamic(() => import('react-force-graph-3d'), { ssr: false });
 import SpriteText from 'three-spritetext';
 
-const Automaton3D: React.FC<IAutomatonProps> = ({ data, setData }) => {
+const Automaton3D: React.FC<IAutomatonProps> = ({ data }) => {
   const width = window.innerWidth - 220;
 
   return (
