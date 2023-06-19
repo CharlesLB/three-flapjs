@@ -6,6 +6,7 @@ import { getModal, resetModal } from '@/redux/slices/modalSlice';
 import Backdrop from '@/components/Atoms/Structures/Backdrop';
 import PreferencesModal from '../../Modals/PreferencesModal';
 import EditNodeModal from '../../Modals/EditNodeModal';
+import EditLinkModal from '../../Modals/EditLinkModal';
 
 const ModalCaller: React.FC = () => {
   const modal = useAppSelector(getModal);
@@ -20,7 +21,8 @@ const ModalCaller: React.FC = () => {
       {
         {
           preferences: <PreferencesModal />,
-          'node:edit': <EditNodeModal />
+          'node:edit': <EditNodeModal {...modal} />,
+          'link:edit': <EditLinkModal {...modal} />
         }[modal.type]
       }
     </Container>

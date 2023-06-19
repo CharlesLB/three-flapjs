@@ -10,7 +10,8 @@ const addNode = (automaton: IAutomaton, node?: INode): IAutomaton => {
       ...automaton.nodes,
       {
         id,
-        name: node?.name ?? `q${id}`
+        name: node?.name ?? `q${id}`,
+        ...node
       }
     ]
   };

@@ -23,14 +23,14 @@ import setNotTestPositionNode from '@/helpers/Automaton/Nodes/SetNotTestPosition
 import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestPositionNodes';
 import { getAutomatonStorage } from '@/redux/slices/automatonStorageSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { callModal, getModal } from '@/redux/slices/modalSlice';
+import { callModal } from '@/redux/slices/modalSlice';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
 const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   const automatonStorage = useAppSelector(getAutomatonStorage);
   const dispatch = useAppDispatch();
-  
+
   const width = window.innerWidth - 220;
 
   const clickAdd = () => {
@@ -99,8 +99,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     checkIfAutomatonIsAFD({ ...data });
   };
 
-  const clickTest = () => {
-    const word = 'abb';
+  const clickTest = (word: string): void => {
     let finish = false;
     let wordSlice = word;
     checkIfAutomatonIsAFD({ ...data });
@@ -166,15 +165,19 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         break;
       case 'node:started':
         //@ts-ignore
-        setData(setStartNode({...data}, node?.id))
+        setData(setStartNode({ ...data }, node?.id));
         break;
       case 'node:end':
         //@ts-ignore
-        setData(setEndNode({...data}, node?.id))
+        setData(setEndNode({ ...data }, node?.id));
         break;
       case 'node:delete':
         //@ts-ignore
-        setData(deleteNode({...data}, node?.id))
+        setData(deleteNode({ ...data }, node?.id));
+        break;
+      case 'delete':
+        //@ts-ignore
+        setData(deleteNode({ ...data }, node?.id));
         break;
       default:
         //@ts-ignore
@@ -183,9 +186,41 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     }
   };
 
-  const handleLinkClick = (link: ILink) => {};
+  const handleLinkClick = (link: ILink) => {
+    switch (automatonStorage.mode) {
+      case 'link:edit':
+        dispatch(
+          callModal({
+            type: 'link:edit',
+            data: {
+              link: {
+                id: link.id,
+                source: link.source,
+                target: link.target,
+                label: link.label
+              }
+            }
+          })
+        );
+        break;
+      case 'link:delete':
+        //@ts-ignore
+        setData(deleteLink({ ...data }, link?.source, link?.target));
+        break;
+      default:
+        break;
+    }
+  };
 
-  const handleBackgroundClick = () => {};
+  const handleBackgroundClick = (_event: MouseEvent) => {
+    switch (automatonStorage.mode) {
+      case 'node:create':
+        setData(addNode(data));
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <>
@@ -206,7 +241,6 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       <button onClick={() => clickSetNotPositionNode()}>Set NOT Position node</button>
       <button onClick={() => clickSetAllNotPositionNode()}>Set All NOT Position node</button>
       <button onClick={() => clickCheckIfAutomatonIsAFD()}>AFD</button>
-      <button onClick={() => clickTest()}>TEST</button>
 
       <ForceGraph2D
         graphData={data}
@@ -228,13 +262,14 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         linkDirectionalArrowLength={5}
         linkCurvature="curvature"
         linkDirectionalParticles={2}
+        cooldownTicks={0}
         onNodeDragEnd={(node) => {
           node.fx = node.x;
           node.fy = node.y;
         }}
-        onBackgroundClick={(data) => console.log(data)}
+        onBackgroundClick={(data) => handleBackgroundClick(data)}
         onNodeClick={(node) => handleNodeClick(node)}
-        onLinkClick={(link) => console.log(link)}
+        onLinkClick={(link) => handleLinkClick(link)}
         minZoom={2}
         maxZoom={4}
       />
