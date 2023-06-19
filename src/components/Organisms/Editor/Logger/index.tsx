@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Container, Log } from './styles';
 import TabsHorizontal from '@/components/Molecules/Tabs/TabsHorizontal';
@@ -8,10 +8,8 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
 const Logger: React.FC = () => {
   const [selected, setSelected] = useState<string>('all');
-  const [onHover, setOnHover] = useState<boolean>(false);
   const logs = useAppSelector(getLogs);
   const dispatch = useAppDispatch();
-  const ref = useRef<HTMLDivElement>(null);
 
   const filteredLogs = selected === 'all' ? logs : logs.filter((item) => item.type === selected);
 
@@ -26,17 +24,8 @@ const Logger: React.FC = () => {
     dispatch(cleanLogs());
   };
 
-  const scrollToBottom = (): void => {
-    // @ts-ignore
-    ref.current?.scrollTop = ref.current?.scrollHeight;
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [logs]);
-
   return (
-    <Container onMouseEnter={() => setOnHover(true)} onMouseLeave={() => setOnHover(false)}>
+    <Container>
       <header>
         <TabsHorizontal tabs={tabs} selected={selected} setSelected={setSelected} />
 
@@ -46,7 +35,7 @@ const Logger: React.FC = () => {
           </a>
         </aside>
       </header>
-      <main ref={ref}>
+      <main>
         {filteredLogs.map((item, index) => (
           <Log key={index} type={item.type}>
             <aside>{item.type}: </aside>
