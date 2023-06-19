@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div<{
+export const Container = styled.button<{
   ghost?: boolean;
 }>`
   padding: 12px 20px;

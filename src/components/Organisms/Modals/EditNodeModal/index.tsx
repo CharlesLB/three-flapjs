@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Container } from './styles';
 import ModalLayout from '@/components/Atoms/Structures/ModalLayout';
+import LabelledInput from '@/components/Molecules/InputGroups/LabelledInput';
 
 const EditNodeModal: React.FC<IModalSlice> = ({ data, callback }) => {
+  const [value, setValue] = useState<string>(data || '');
+
   const submitHandler = () => {
-    if (callback) callback();
+    if (validation(value)) return;
+
+    if (callback) callback(value);
+  };
+
+  const validation = (value: string): string | void => {
+    if (!value) {
+      return 'Cannot be empty';
+    }
+
+    return;
   };
 
   return (
     <ModalLayout title="Edit Node" submitHandler={submitHandler}>
-      <Container></Container>
+      <Container>
+        <LabelledInput placeholder="String" value={value} setValue={setValue} validation={validation} />
+      </Container>
     </ModalLayout>
   );
 };

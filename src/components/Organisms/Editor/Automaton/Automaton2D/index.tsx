@@ -13,6 +13,8 @@ import { getAutomatonStorage } from '@/redux/slices/automatonStorageSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { callModal } from '@/redux/slices/modalSlice';
 import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
+import editLink from '@/helpers/Automaton/Links/EditLink';
+import editNode from '@/helpers/Automaton/Nodes/EditNode';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -32,13 +34,10 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         dispatch(
           callModal({
             type: 'node:edit',
-            data: {
-              node: {
-                id: node.id,
-                name: node.name,
-                start: node.start,
-                end: node.end
-              }
+            data: node?.name,
+            callback: (name: string) => {
+              //@ts-ignore
+              setData(editNode({ ...data }, node?.id, name));
             }
           })
         );
@@ -91,13 +90,10 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         dispatch(
           callModal({
             type: 'link:edit',
-            data: {
-              link: {
-                id: link.id,
-                source: link.source,
-                target: link.target,
-                label: link.label
-              }
+            data: link?.name,
+            callback: (name: string) => {
+              //@ts-ignore
+              setData(editLink({ ...data }, link?.source?.id, link?.target?.id, name));
             }
           })
         );

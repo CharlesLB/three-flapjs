@@ -31,8 +31,12 @@ const ModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHa
     dispatch(resetModal());
   };
 
+  const onFormSubmit = (e: any) => {
+    e.preventDefault();
+  };
+
   return (
-    <Container onSubmit={() => submitModal()} big={big}>
+    <Container onSubmit={(e) => onFormSubmit(e)} big={big}>
       <header>
         <h2>{title}</h2>
         <button onClick={() => closeModal()}>
@@ -44,7 +48,9 @@ const ModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHa
         <ModalButton onClick={() => closeModal()} cancelButton>
           Cancel
         </ModalButton>
-        <ModalButton onClick={() => submitModal()}>{submitText}</ModalButton>
+        <ModalButton type="submit" onClick={() => submitModal()}>
+          {submitText}
+        </ModalButton>
       </footer>
     </Container>
   );
