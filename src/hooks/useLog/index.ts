@@ -5,17 +5,19 @@ import { toast } from 'react-toastify';
 const useLog = () => {
   const dispatch = useAppDispatch();
 
-  const logError = (error: string): void => {
-    toast.error(error, {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored'
-    });
+  const logError = (error: string, withoutToat: boolean = false): void => {
+    if (!withoutToat) {
+      toast.error(error, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
+    }
 
     dispatch(
       addLog({
@@ -25,17 +27,19 @@ const useLog = () => {
     );
   };
 
-  const logInfo = (info: string): void => {
-    toast.info(info, {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored'
-    });
+  const logInfo = (info: string, withoutToat: boolean = false): void => {
+    if (!withoutToat) {
+      toast.info(info, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      });
+    }
 
     dispatch(
       addLog({

@@ -24,11 +24,14 @@ import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestP
 import { getAutomatonStorage } from '@/redux/slices/automatonStorageSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { callModal } from '@/redux/slices/modalSlice';
+import useLog from '@/hooks/useLog';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
 const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   const automatonStorage = useAppSelector(getAutomatonStorage);
+  const selectedNode = data.nodes.find((node) => node.selected);
+  const logger = useLog();
   const dispatch = useAppDispatch();
 
   const width = window.innerWidth - 220;
@@ -100,6 +103,10 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   };
 
   const clickTest = (word: string): void => {
+    const log = (data: string) => {
+      logger.logInfo(data, true);
+    };
+
     let finish = false;
     let wordSlice = word;
     checkIfAutomatonIsAFD({ ...data });
@@ -178,6 +185,19 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       case 'delete':
         //@ts-ignore
         setData(deleteNode({ ...data }, node?.id));
+        break;
+      case 'link:create':
+        //@ts-ignore
+        if (selectedNode) {
+          callModal({
+            type: 'link:create',
+            callback: (name: string) => {
+              //@ts-ignore
+              setData(addLink({ ...data }, selectedNode.id, node?.id, name));
+            }
+          });
+        }
+
         break;
       default:
         //@ts-ignore

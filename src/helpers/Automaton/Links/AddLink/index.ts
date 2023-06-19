@@ -1,6 +1,7 @@
 import { IAutomaton, ILink, INode } from '@/@types/components/Automaton';
 import findLinkByNodeId from '../FindLinkByNodesId';
 import findNodeById from '../../Nodes/FindNodeById';
+import deselectAllNodes from '../../Nodes/DeselectAllNodes';
 
 const addDataToLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INode, name: string): IAutomaton => {
   // @ts-ignore
@@ -106,7 +107,9 @@ const addLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: numb
     ? addDataToLink(automaton, nodeSource, nodeTarget, name)
     : createLink(automaton, nodeSource, nodeTarget, name);
 
-  return newAutomaton;
+  const deselectedAllNodesAutomaton = deselectAllNodes(newAutomaton);
+
+  return deselectedAllNodesAutomaton;
 };
 
 export default addLink;
