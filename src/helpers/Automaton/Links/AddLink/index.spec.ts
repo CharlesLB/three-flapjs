@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'vitest';
-import addLink from '.';
+import { describe, test, expect, beforeEach } from 'vitest';
+import addLink, { addDataToLink } from '.';
 
 describe('addLink', () => {
   test('should add a new link without curvature', () => {
@@ -15,8 +15,8 @@ describe('addLink', () => {
 
     expect(updatedAutomaton.links).toEqual([
       {
-        source: { id: 1, name: 'A' },
-        target: { id: 2, name: 'B' },
+        source: { id: 1, name: 'A', selected: false },
+        target: { id: 2, name: 'B', selected: false },
         name: 'Link AB'
       }
     ]);
@@ -36,14 +36,14 @@ describe('addLink', () => {
 
     expect(updatedAutomaton2.links).toEqual([
       {
-        source: { id: 2, name: 'B' },
-        target: { id: 1, name: 'A' },
+        source: { id: 2, name: 'B', selected: false },
+        target: { id: 1, name: 'A', selected: false },
         name: 'Link BA',
         curvature: 0.3
       },
       {
-        source: { id: 1, name: 'A' },
-        target: { id: 2, name: 'B' },
+        source: { id: 1, name: 'A', selected: false },
+        target: { id: 2, name: 'B', selected: false },
         name: 'Link AB',
         curvature: 0.3
       }
@@ -96,5 +96,42 @@ describe('addLink', () => {
     expect(() => {
       addLink(automaton, 1, 2, 'Link AB');
     }).toThrow('There is no tail node with this ID');
+  });
+});
+
+describe('addDataToLink', () => {
+  let automaton: any;
+
+  beforeEach(() => {
+    automaton = {
+      nodes: [
+        { id: 1, name: 'A' },
+        { id: 2, name: 'B' },
+        { id: 3, name: 'C' },
+        { id: 4, name: 'D' }
+      ],
+      links: [
+        { source: { id: 1, name: 'A' }, target: { id: 2, name: 'B' }, name: 'a, b, c' },
+        { source: { id: 3, name: 'C' }, target: { id: 4, name: 'D' }, name: 'x, y, z' }
+      ]
+    };
+  });
+
+  const nodeSource = { id: 1 };
+  const nodeTarget = { id: 2 };
+
+  test('should add new names to the existing link', () => {
+    const updatedAutomaton = addDataToLink(automaton, nodeSource, nodeTarget, 'd, e');
+    expect(updatedAutomaton.links[0].name).toBe('a, b, c, d, e');
+  });
+
+  test('should not modify the link if the names already exist', () => {
+    const updatedAutomaton = addDataToLink(automaton, nodeSource, nodeTarget, 'b, c');
+    expect(updatedAutomaton.links[0].name).toBe('a, b, c');
+  });
+
+  test('should not modify the automaton if the link does not exist', () => {
+    const nonExistentLinkAutomaton = addDataToLink(automaton, { id: 10 }, { id: 20 }, 'd, e');
+    expect(nonExistentLinkAutomaton).toBe(automaton);
   });
 });

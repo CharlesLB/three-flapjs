@@ -7,6 +7,7 @@ export const Container = styled.div<{
   flex-direction: row;
   align-items: center;
   padding: 0.5rem 0.5rem;
+  width: 100%;
 
   > label {
     color: #eee;

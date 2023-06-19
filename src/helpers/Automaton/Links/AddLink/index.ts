@@ -11,11 +11,20 @@ const addDataToLink = (automaton: IAutomaton, nodeSource: INode, nodeTarget: INo
     return automaton;
   }
 
-  if (link.name.includes(name)) {
-    return automaton;
-  }
+  const allNames = link.name.split(',');
+  const allNamesTrimmed = allNames.map((name: string) => name.trim());
+  const uniqueNames = Array.from(new Set(allNamesTrimmed));
 
-  link.name = `${link.name}, ${name}`;
+  const allNewNames = name.split(',');
+  const allNewNamesTrimmed = allNewNames.map((name: string) => name.trim());
+
+  allNewNamesTrimmed.forEach((newName) => {
+    if (!uniqueNames.includes(newName)) {
+      uniqueNames.push(newName);
+    }
+  });
+
+  link.name = uniqueNames.join(', ');
 
   return automaton;
 };
@@ -113,3 +122,5 @@ const addLink = (automaton: IAutomaton, idNodeSource: number, idNodeTarget: numb
 };
 
 export default addLink;
+
+export { addDataToLink };

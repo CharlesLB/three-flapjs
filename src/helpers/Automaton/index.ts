@@ -65,7 +65,7 @@ const checkIfAutomatonIsAFD = (automaton: IAutomaton): boolean => {
   }
 
   const notExistEmptyTransition = checkIfNotEmptyTransitionExists(automaton);
-  console.log(notExistEmptyTransition);
+
   if (!notExistEmptyTransition) {
     throw new Error('Its not AFD: There is empty transition');
   }

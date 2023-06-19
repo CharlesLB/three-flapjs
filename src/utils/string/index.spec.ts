@@ -22,8 +22,8 @@ describe('checkLinkString', () => {
     expect(checkLinkString('a, b')).toBe(true);
   });
 
-  it('should return false for "a,b"', () => {
-    expect(checkLinkString('a,b')).toBe(false);
+  it('should return true for "a,b"', () => {
+    expect(checkLinkString('a,b')).toBe(true);
   });
 
   it('should return false for "a,b,a"', () => {
@@ -33,18 +33,12 @@ describe('checkLinkString', () => {
   it('should return false for "a, b, a"', () => {
     expect(checkLinkString('a, b, a')).toBe(false);
   });
-});
 
-describe('checkNoSpace', () => {
-  it('should return true when inputString contains no spaces', () => {
-    expect(checkNoSpace('hello')).toBe(true);
-    expect(checkNoSpace('')).toBe(true);
-    expect(checkNoSpace('1234567890')).toBe(true);
+  it('should return false for "ab, bd, af"', () => {
+    expect(checkLinkString('ab, bd, af')).toBe(false);
   });
 
-  it('should return false when inputString contains spaces', () => {
-    expect(checkNoSpace('hello world')).toBe(false);
-    expect(checkNoSpace('  ')).toBe(false);
-    expect(checkNoSpace('hello ')).toBe(false);
+  it('should return false for "ab, bd, af"', () => {
+    expect(checkLinkString('ab, , af')).toBe(false);
   });
 });

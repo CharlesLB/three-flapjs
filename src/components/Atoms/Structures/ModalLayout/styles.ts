@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div<{
+export const Container = styled.form<{
   big?: boolean;
 }>`
   position: absolute;
@@ -55,6 +55,7 @@ export const Container = styled.div<{
 
   > main {
     height: 100%;
+    width: 100%;
     padding: 1.5rem 2rem;
     overflow-y: auto;
     color: #ccc;

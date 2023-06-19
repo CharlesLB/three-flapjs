@@ -4,9 +4,7 @@ import { Container } from './styles';
 import ModalLayout from '@/components/Atoms/Structures/ModalLayout';
 
 const PreferencesModal: React.FC = () => {
-  const submitHandler = () => {
-    console.log('submit');
-  };
+  const submitHandler = () => {};
 
   return (
     <ModalLayout title="Preferences" submitHandler={submitHandler} big>

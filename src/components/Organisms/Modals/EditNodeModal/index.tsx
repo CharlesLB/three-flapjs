@@ -5,7 +5,6 @@ import ModalLayout from '@/components/Atoms/Structures/ModalLayout';
 
 const EditNodeModal: React.FC<IModalSlice> = ({ data, callback }) => {
   const submitHandler = () => {
-    console.log(data);
     if (callback) callback();
   };
 

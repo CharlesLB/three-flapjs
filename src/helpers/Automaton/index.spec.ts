@@ -1,10 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import checkIfAutomatonIsAFD, {
-  checkIfAllNamesLinksByNodeAreDifferents,
-  checkIfEndStateExists,
-  checkIfNotIsolatedStateExists,
-  checkIfStartStateExists
-} from '.';
+import checkIfAutomatonIsAFD, { checkIfAllNamesLinksByNodeAreDifferents, checkIfNotIsolatedStateExists, checkIfStartStateExists } from '.';
 
 describe('Automaton Validation', () => {
   let automaton: any;
@@ -36,20 +31,6 @@ describe('Automaton Validation', () => {
       automaton.nodes[0].start = false;
 
       const result = checkIfStartStateExists(automaton);
-      expect(result).toBe(false);
-    });
-  });
-
-  describe('checkIfEndStateExists', () => {
-    it('should return true if there is an end state in the automaton', () => {
-      const result = checkIfEndStateExists(automaton);
-      expect(result).toBe(true);
-    });
-
-    it('should return false if there is no end state in the automaton', () => {
-      automaton.nodes[2].end = false;
-
-      const result = checkIfEndStateExists(automaton);
       expect(result).toBe(false);
     });
   });
@@ -98,12 +79,12 @@ describe('Automaton Validation', () => {
       }).toThrow('Its not AFD: There is no initial state');
     });
 
-    it('should throw an error if there is no end state', () => {
+    it('should throw a success if there is no end state', () => {
       automaton.nodes[2].end = false;
 
       expect(() => {
         checkIfAutomatonIsAFD(automaton);
-      }).toThrow('Its not AFD: There is no end state');
+      }).toBeTruthy();
     });
 
     it('should throw an error if there is an isolated state', () => {

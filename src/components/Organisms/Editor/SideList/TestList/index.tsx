@@ -20,6 +20,8 @@ const TestList: React.FC = () => {
   };
 
   const submit = () => {
+    if (validation(value)) return;
+
     dispatch(
       changeAction({
         type: 'test',
