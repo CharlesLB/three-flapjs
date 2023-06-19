@@ -20,6 +20,7 @@ import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestP
 import { getAutomatonStorage } from '@/redux/slices/automatonStorageSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { callModal } from '@/redux/slices/modalSlice';
+import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
@@ -128,10 +129,12 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
               type: 'link:create',
               callback: (name: string) => {
                 //@ts-ignore
-                setData(addLink({ ...data }, selectedNode.id, node?.id, name));
+                setData(deselectAllNodes(addLink({ ...data }, selectedNode.id, node?.id, name)));
               }
             })
           );
+
+          setData;
           return;
         }
 
