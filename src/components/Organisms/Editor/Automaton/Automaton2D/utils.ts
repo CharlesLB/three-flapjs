@@ -1,6 +1,12 @@
 import { ILink, INode } from '@/@types/components/Automaton';
 
-const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScale: number) => {
+const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScale: number) => {  
+  if (node.end)
+    endNodeCanvas(node, ctx);
+
+  if (node.start)
+    startNodeCanvas(node, ctx);
+
   const label = `${node?.name}`;
   const fontSize = 12 / globalScale;
   ctx.font = `${fontSize}px Sans-Serif`;
@@ -12,6 +18,59 @@ const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScal
   ctx.fillStyle = node.color || '#000';
   ctx.fillText(label, node?.x || 0, node?.y || 0);
 };
+
+const endNodeCanvas = (node: INode, ctx: CanvasRenderingContext2D) => {
+  const { x, y } = node;
+
+  if (!x || !y)
+    throw new Error("Eh necessario saber a posicao do no")
+
+  const nodeRadius = 6;
+  const innerColor = 'white';
+  const borderColor = 'white';
+  const borderWidth = 1;
+        
+  // Draw the inner circle
+  ctx.beginPath();
+  ctx.arc(x, y, nodeRadius, 0, 2 * Math.PI);
+  ctx.fillStyle = innerColor;
+  ctx.fill();
+
+  // Draw the outer border
+  ctx.beginPath();
+  ctx.arc(x, y, nodeRadius + 4 * borderWidth, 0, 2 * Math.PI);
+  ctx.lineWidth = borderWidth;
+  ctx.strokeStyle = borderColor;
+  ctx.stroke();
+}
+
+const startNodeCanvas = (node: INode, ctx: CanvasRenderingContext2D) => {
+  const triangleSize = 5;
+  const triangleColor = 'white';
+  const lineWidth = 2;
+
+  const { x, y } = node;
+
+  if (!x || !y)
+  throw new Error("Eh necessario saber a posicao do no")
+
+  // Draw the triangle
+
+  
+  ctx.beginPath();
+  const xpos = x - 2*triangleSize;
+  ctx.moveTo(xpos, y);
+  ctx.lineTo(xpos - triangleSize, y + triangleSize);
+  ctx.lineTo(xpos - triangleSize, y  - triangleSize);
+  // ctx.moveTo(x - 2*triangleSize, y + triangleSize /2 );
+  // ctx.lineTo(x - triangleSize, y - triangleSize / 2);
+  ctx.closePath();
+  ctx.lineWidth = lineWidth;
+  ctx.strokeStyle = triangleColor;
+  ctx.stroke();
+  ctx.fillStyle = triangleColor;
+  ctx.fill();
+}
 
 const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScale: number, nodes: INode[]) => {
   const isSelfLoop = link.source === link.target;
@@ -50,13 +109,6 @@ const nodeColor = (node: INode): string => {
     return '#ff00ff';
   }
 
-  if (node?.start) {
-    return '#0000ff';
-  }
-
-  if (node?.end) {
-    return '#ff0000';
-  }
 
   if (node?.selected) {
     return '#686868';
