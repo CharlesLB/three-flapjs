@@ -8,30 +8,24 @@ import React from 'react';
 import { linkCanvasObject, nodeCanvasObject, nodeColor } from './utils';
 import editLink from '@/helpers/Automaton/Links/EditLink';
 import selectNode from '@/helpers/Automaton/Nodes/SelectNode';
-import deselectNode from '@/helpers/Automaton/Nodes/DeselectNode';
-import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
 import setEndNode from '@/helpers/Automaton/Nodes/SetEndNode';
 import setStartNode from '@/helpers/Automaton/Nodes/SetStartNode';
 import setNotEndNode from '@/helpers/Automaton/Nodes/SetNotEndNode';
 import setNotStartNode from '@/helpers/Automaton/Nodes/SetNotStartNode';
 import checkIfAutomatonIsAFD from '@/helpers/Automaton';
 import deleteLink from '@/helpers/Automaton/Links/DeleteLink';
-import getStartNode from '@/helpers/Automaton/Nodes/GetStartNode';
-import pe from '@/helpers/Automaton/StringTestInAutomaton';
 import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
 import setNotTestPositionNode from '@/helpers/Automaton/Nodes/SetNotTestPositionNode';
 import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestPositionNodes';
 import { getAutomatonStorage } from '@/redux/slices/automatonStorageSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { callModal } from '@/redux/slices/modalSlice';
-import useLog from '@/hooks/useLog';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
 const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   const automatonStorage = useAppSelector(getAutomatonStorage);
   const selectedNode = data.nodes.find((node) => node.selected);
-  const logger = useLog();
   const dispatch = useAppDispatch();
 
   const width = window.innerWidth - 220;
@@ -56,18 +50,6 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
 
   const clickDeleteLink = () => {
     setData(deleteLink({ ...data }, 0, 0));
-  };
-
-  const clickSelectNode = () => {
-    setData(selectNode({ ...data }, 2));
-  };
-
-  const clickDeselectNode = () => {
-    setData(deselectNode({ ...data }, 1));
-  };
-
-  const clickDeselectAllNode = () => {
-    setData(deselectAllNodes({ ...data }));
   };
 
   const clickSetEndNode = () => {
@@ -100,54 +82,6 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
 
   const clickCheckIfAutomatonIsAFD = () => {
     checkIfAutomatonIsAFD({ ...data });
-  };
-
-  const clickTest = (word: string): void => {
-    const log = (data: string) => {
-      logger.logInfo(data, true);
-    };
-
-    let finish = false;
-    let wordSlice = word;
-    checkIfAutomatonIsAFD({ ...data });
-
-    let currentNode = getStartNode({ ...data });
-    if (!currentNode) {
-      throw new Error('Its not AFD: There is no initial state');
-    }
-    //@ts-ignore
-    setData(setTestPositionNode({ ...data }, currentNode.id));
-
-    const func = setInterval(() => {
-      if (wordSlice.length > 0) {
-        console.log(`-Calculing Pe(${currentNode?.name}, ${wordSlice})`);
-      } else {
-        console.log(`Calculing Pe(${currentNode?.name}, ε) = ${currentNode?.name}`);
-      }
-
-      let newCurrentNode;
-      if (wordSlice.length > 0) {
-        //@ts-ignore
-        newCurrentNode = pe({ ...data }, currentNode, wordSlice);
-      } else {
-        newCurrentNode = currentNode;
-        finish = true;
-      }
-
-      setData({ ...data });
-      wordSlice = wordSlice.slice(1, wordSlice.length);
-      currentNode = newCurrentNode;
-
-      if (finish) {
-        if (!currentNode?.end) {
-          console.log(`This '${word}' is not accepted in the automaton: The state ${currentNode?.name} not is final state`);
-        }
-
-        console.log(`This '${word}' is accepted in the automaton: The state ${currentNode?.name} is final state`);
-
-        clearInterval(func);
-      }
-    }, 1000);
   };
 
   const handleNodeClick = (node: INode) => {
@@ -189,19 +123,23 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       case 'link:create':
         //@ts-ignore
         if (selectedNode) {
-          callModal({
-            type: 'link:create',
-            callback: (name: string) => {
-              //@ts-ignore
-              setData(addLink({ ...data }, selectedNode.id, node?.id, name));
-            }
-          });
+          dispatch(
+            callModal({
+              type: 'link:create',
+              callback: (name: string) => {
+                //@ts-ignore
+                setData(addLink({ ...data }, selectedNode.id, node?.id, name));
+              }
+            })
+          );
+          return;
         }
+
+        //@ts-ignore
+        setData(selectNode({ ...data }, node?.id));
 
         break;
       default:
-        //@ts-ignore
-        setData(selectNode({ ...data }, node?.id));
         break;
     }
   };
