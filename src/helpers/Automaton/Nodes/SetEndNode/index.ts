@@ -8,7 +8,7 @@ const setEndNode = (automaton: IAutomaton, id: number): IAutomaton => {
     throw new Error('Node does not exist');
   }
 
-  node.end = true;
+  node.end = !node.end;
 
   return automaton;
 };

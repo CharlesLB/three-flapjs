@@ -30,7 +30,7 @@ const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false 
 const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   const automatonStorage = useAppSelector(getAutomatonStorage);
   const dispatch = useAppDispatch();
-
+  
   const width = window.innerWidth - 220;
 
   const clickAdd = () => {
@@ -147,8 +147,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   const handleNodeClick = (node: INode) => {
     switch (automatonStorage.mode) {
       case 'node:create':
-        //@ts-ignore
-        setData(selectNode({ ...data }, node?.id));
+        setData(addNode({ ...data }));
         break;
       case 'node:edit':
         dispatch(
@@ -165,8 +164,21 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
           })
         );
         break;
-
+      case 'node:started':
+        //@ts-ignore
+        setData(setStartNode({...data}, node?.id))
+        break;
+      case 'node:end':
+        //@ts-ignore
+        setData(setEndNode({...data}, node?.id))
+        break;
+      case 'node:delete':
+        //@ts-ignore
+        setData(deleteNode({...data}, node?.id))
+        break;
       default:
+        //@ts-ignore
+        setData(selectNode({ ...data }, node?.id));
         break;
     }
   };

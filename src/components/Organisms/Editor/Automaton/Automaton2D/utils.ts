@@ -22,9 +22,6 @@ const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScal
 const endNodeCanvas = (node: INode, ctx: CanvasRenderingContext2D) => {
   const { x, y } = node;
 
-  if (!x || !y)
-    throw new Error("Eh necessario saber a posicao do no")
-
   const nodeRadius = 6;
   const innerColor = 'white';
   const borderColor = 'white';
@@ -51,12 +48,8 @@ const startNodeCanvas = (node: INode, ctx: CanvasRenderingContext2D) => {
 
   const { x, y } = node;
 
-  if (!x || !y)
-  throw new Error("Eh necessario saber a posicao do no")
 
-  // Draw the triangle
-
-  
+  // Draw the triangle  
   ctx.beginPath();
   const xpos = x - 2*triangleSize;
   ctx.moveTo(xpos, y);
