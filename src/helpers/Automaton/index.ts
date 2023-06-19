@@ -1,13 +1,22 @@
 import { IAutomaton, ILink } from '@/@types/components/Automaton';
 import checkExistsLinkByNodeId from './Links/CheckExistsLinkByNodeId';
 import findAllLinksByNodeId from './Links/FindAllLinksByNodeId';
+import findLinkByNodeIdAndName from './Links/FindLinkByNodeIdAndName';
 
 const checkIfStartStateExists = (automaton: IAutomaton): boolean => {
   return automaton.nodes.some((node) => node.start);
 };
 
-const checkIfEndStateExists = (automaton: IAutomaton): boolean => {
-  return automaton.nodes.some((node) => node.end);
+const checkIfNotEmptyTransitionExists = (automaton: IAutomaton): boolean => {
+  return automaton.links.every((link) => {
+    //@ts-ignore
+    let existEmptyTransition = findLinkByNodeIdAndName(automaton, link.source.id, 'ε');
+    if (existEmptyTransition) {
+      return false;
+    }
+
+    return true;
+  });
 };
 
 const checkIfNotIsolatedStateExists = (automaton: IAutomaton): boolean => {
@@ -18,15 +27,35 @@ const checkIfNotIsolatedStateExists = (automaton: IAutomaton): boolean => {
   });
 };
 
+const comparingIfLinkNameIsEquals = (nameLink: string, nameOtherLink: string): boolean => {
+  const nameLinkSplit = nameLink.split(', ');
+  const nameOtherLinkSplit = nameOtherLink.split(', ');
+
+  for (let i = 0; i < nameLinkSplit.length; i++) {
+    for (let j = 0; j < nameLinkSplit.length; j++) {
+      if (nameLinkSplit[i] === nameOtherLinkSplit[j]) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+};
+
 const checkIfAllNamesLinksByNodeAreDifferents = (automaton: IAutomaton): boolean => {
-  return automaton.nodes.every((node) => {
-    const linksByNode: ILink[] = findAllLinksByNodeId(automaton, node.id);
-    return linksByNode.every((link, index) => {
-      return !linksByNode.some((otherLink, otherIndex) => {
-        return index !== otherIndex && link.name === otherLink.name;
-      });
-    });
-  });
+  for (let i = 0; i < automaton.nodes.length; i++) {
+    const linksByNode: ILink[] = findAllLinksByNodeId(automaton, automaton.nodes[i].id);
+
+    for (let j = 0; j < linksByNode.length; j++) {
+      for (let k = 0; k < linksByNode.length; k++) {
+        if (linksByNode[j] !== linksByNode[k] && comparingIfLinkNameIsEquals(linksByNode[j].name, linksByNode[k].name)) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
 };
 
 const checkIfAutomatonIsAFD = (automaton: IAutomaton): boolean => {
@@ -35,9 +64,10 @@ const checkIfAutomatonIsAFD = (automaton: IAutomaton): boolean => {
     throw new Error('Its not AFD: There is no initial state');
   }
 
-  const existEndState = checkIfEndStateExists(automaton);
-  if (!existEndState) {
-    throw new Error('Its not AFD: There is no end state');
+  const notExistEmptyTransition = checkIfNotEmptyTransitionExists(automaton);
+  console.log(notExistEmptyTransition);
+  if (!notExistEmptyTransition) {
+    throw new Error('Its not AFD: There is empty transition');
   }
 
   const existNotIsolatedState = checkIfNotIsolatedStateExists(automaton);
@@ -53,6 +83,6 @@ const checkIfAutomatonIsAFD = (automaton: IAutomaton): boolean => {
   return true;
 };
 
-export { checkIfStartStateExists, checkIfEndStateExists, checkIfNotIsolatedStateExists, checkIfAllNamesLinksByNodeAreDifferents };
+export { checkIfStartStateExists, checkIfNotIsolatedStateExists, checkIfAllNamesLinksByNodeAreDifferents };
 
 export default checkIfAutomatonIsAFD;

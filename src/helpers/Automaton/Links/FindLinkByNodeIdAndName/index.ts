@@ -1,10 +1,15 @@
 import { IAutomaton, ILink } from '@/@types/components/Automaton';
 
-const findLinkByNodeIdAndName = (automaton: IAutomaton, idNode: any, name: string): ILink | null => {
+const findLinkByNodeIdAndName = (automaton: IAutomaton, idNode: number, name: string): ILink | null => {
   return (
     automaton.links.find((link) => {
-      //@ts-ignore
-      return link.source.id === idNode && link.name === name;
+      const nameSplit = link.name.split(', ');
+      for (let i = 0; i < nameSplit.length; i++) {
+        //@ts-ignore
+        if (nameSplit[i] == name && link.source.id === idNode) {
+          return link;
+        }
+      }
     }) || null
   );
 };
