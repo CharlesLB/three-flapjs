@@ -59,7 +59,7 @@ const BuilderList: React.FC = () => {
   return (
     <Container>
       <header>
-        <SearchInput setValues={setSearch} value={search} />
+        <SearchInput setValue={setSearch} value={search} />
       </header>
       <BuilderOptions buildOptions={buildOptions} search={search} state={automatonStorage.mode} handleState={handleState} />
     </Container>

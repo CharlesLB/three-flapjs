@@ -5,11 +5,12 @@ import { Container } from './styles';
 interface Props {
   placeholder?: string;
   value: string;
-  setValues: (value: string) => void;
+  setValue: (value: string) => void;
+  error?: boolean;
 }
 
-const StringInput: React.FC<Props> = ({ placeholder = 'Search', value, setValues }) => {
-  return <Container placeholder={placeholder} value={value} onChange={(e) => setValues(e.target.value)} />;
+const StringInput: React.FC<Props> = ({ placeholder = 'Search', value, setValue, error }) => {
+  return <Container placeholder={placeholder} error={error} value={value} onChange={(e) => setValue(e.target.value)} />;
 };
 
 export default StringInput;
