@@ -1,4 +1,4 @@
-import { IAutomatonProps } from '@/@types/components/Automaton';
+import { IAutomatonProps, ILink, INode } from '@/@types/components/Automaton';
 import addLink from '@/helpers/Automaton/Links/AddLink';
 import addNode from '@/helpers/Automaton/Nodes/AddNode';
 import deleteNode from '@/helpers/Automaton/Nodes/DeleteNode';
@@ -22,10 +22,16 @@ import pe from '@/helpers/Automaton/StringTestInAutomaton';
 import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
 import setNotTestPositionNode from '@/helpers/Automaton/Nodes/SetNotTestPositionNode';
 import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestPositionNodes';
+import { getAutomatonStorage } from '@/redux/slices/automatonStorageSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { callModal, getModal } from '@/redux/slices/modalSlice';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
 const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
+  const automatonStorage = useAppSelector(getAutomatonStorage);
+  const dispatch = useAppDispatch();
+
   const width = window.innerWidth - 220;
 
   const clickAdd = () => {
@@ -139,6 +145,37 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     }, 1000);
   };
 
+  const handleNodeClick = (node: INode) => {
+    switch (automatonStorage.mode) {
+      case 'node:create':
+        //@ts-ignore
+        setData(selectNode({ ...data }, node?.id));
+        break;
+      case 'node:edit':
+        dispatch(
+          callModal({
+            type: 'node:edit',
+            data: {
+              node: {
+                id: node.id,
+                name: node.name,
+                start: node.start,
+                end: node.end
+              }
+            }
+          })
+        );
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const handleLinkClick = (link: ILink) => {};
+
+  const handleBackgroundClick = () => {};
+
   return (
     <>
       <button onClick={() => clickAdd()}>Add</button>
@@ -185,6 +222,8 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
           node.fy = node.y;
         }}
         onBackgroundClick={(data) => console.log(data)}
+        onNodeClick={(node) => handleNodeClick(node)}
+        onLinkClick={(link) => console.log(link)}
         minZoom={2}
         maxZoom={4}
       />

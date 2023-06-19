@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { getModal, resetModal } from '@/redux/slices/modalSlice';
 import Backdrop from '@/components/Atoms/Structures/Backdrop';
 import PreferencesModal from '../../Modals/PreferencesModal';
+import EditNodeModal from '../../Modals/EditNodeModal';
 
 const ModalCaller: React.FC = () => {
   const modal = useAppSelector(getModal);
@@ -18,7 +19,8 @@ const ModalCaller: React.FC = () => {
 
       {
         {
-          preferences: <PreferencesModal />
+          preferences: <PreferencesModal />,
+          'node:edit': <EditNodeModal />
         }[modal.type]
       }
     </Container>
