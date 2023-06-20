@@ -8,6 +8,7 @@ import { changeAction } from '@/redux/slices/automatonStorageSlice';
 import { getDataFromFile, getFileFromUser } from '@/utils/file';
 import { validateAutomaton } from '@/utils/automaton';
 import useLog from '@/hooks/useLog';
+import { callModal } from '@/redux/slices/modalSlice';
 
 const DashboardHeader: React.FC = () => {
   const logger = useLog();
@@ -62,21 +63,21 @@ const DashboardHeader: React.FC = () => {
         }
       ]
     },
-    // {
-    //   label: 'View',
-    //   items: [
-    //     {
-    //       label: 'Preferences',
-    //       onClick: () => {
-    //         dispatch(
-    //           callModal({
-    //             type: 'preferences'
-    //           })
-    //         );
-    //       }
-    //     }
-    //   ]
-    // },
+    {
+      label: 'View',
+      items: [
+        {
+          label: 'Preferences',
+          onClick: () => {
+            dispatch(
+              callModal({
+                type: 'preferences'
+              })
+            );
+          }
+        }
+      ]
+    },
     {
       label: 'About',
       items: [

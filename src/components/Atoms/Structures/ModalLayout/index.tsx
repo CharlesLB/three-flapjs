@@ -44,14 +44,16 @@ const ModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHa
         </button>
       </header>
       <main>{children}</main>
-      <footer>
-        <ModalButton onClick={() => closeModal()} cancelButton>
-          Cancel
-        </ModalButton>
-        <ModalButton type="submit" onClick={() => submitModal()}>
-          {submitText}
-        </ModalButton>
-      </footer>
+      {!big && (
+        <footer>
+          <ModalButton onClick={() => closeModal()} cancelButton>
+            Cancel
+          </ModalButton>
+          <ModalButton type="submit" onClick={() => submitModal()}>
+            {submitText}
+          </ModalButton>
+        </footer>
+      )}
     </Container>
   );
 };

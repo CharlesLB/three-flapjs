@@ -4,14 +4,14 @@ import { RootState } from '../store';
 const initialState: IPreferences = {
   exhibition: '2d',
   link: {
-    width: 10,
     color: '#000000',
     background: '#ffffff',
     particles: true
   },
   node: {
     color: '#000000',
-    background: '#ffffff'
+    background: '#ffffff',
+    autoAdjust: false
   }
 };
 
