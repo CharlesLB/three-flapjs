@@ -9,6 +9,8 @@ import { getDataFromFile, getFileFromUser } from '@/utils/file';
 import { validateAutomaton } from '@/utils/automaton';
 import useLog from '@/hooks/useLog';
 import { callModal } from '@/redux/slices/modalSlice';
+import OddAOddB from '@/utils/mocks/OddAOddB';
+import mocks from '@/utils/mocks';
 
 const DashboardHeader: React.FC = () => {
   const logger = useLog();
@@ -77,6 +79,20 @@ const DashboardHeader: React.FC = () => {
           }
         }
       ]
+    },
+    {
+      label: 'Examples',
+      items: mocks.map((mock) => ({
+        label: mock.name,
+        onClick: () => {
+          dispatch(
+            changeAction({
+              type: 'load',
+              data: mock.automaton
+            })
+          );
+        }
+      }))
     },
     {
       label: 'About',
