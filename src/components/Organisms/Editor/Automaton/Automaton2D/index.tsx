@@ -116,6 +116,9 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       case 'node:create':
         setData(addNode(data));
         break;
+      case 'link:create':
+        //@ts-ignore
+        setData(deselectAllNodes({ ...data }));
       default:
         break;
     }
