@@ -5,8 +5,6 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  max-width: min-content;
-  background-color: red !important;
 
   ::-webkit-scrollbar {
     width: 8px;

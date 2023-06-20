@@ -22,7 +22,8 @@ export default memo(createGlobalStyle`
     position: relative;
     background: var(--color-primary);
     font-family: var(--fonts) !important;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth;  
+    overflow: hidden;
   }
 
   a {

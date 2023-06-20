@@ -231,7 +231,7 @@ const Automaton: React.FC = () => {
   }, [linksToBeAdded]);
 
   return (
-    <Container>
+    <Container id="automaton">
       <Content>
         {
           {

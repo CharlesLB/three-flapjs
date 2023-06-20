@@ -11,7 +11,7 @@ interface Props {
 
 const Tab: React.FC<Props> = ({ id, label, selected, setSelected }) => {
   return (
-    <Container active={selected} onClick={() => setSelected(id)}>
+    <Container id={`tab-${id}`} active={selected} onClick={() => setSelected(id)}>
       {label}
     </Container>
   );

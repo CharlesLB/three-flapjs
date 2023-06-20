@@ -17,7 +17,7 @@ const SideList: React.FC = () => {
   ];
 
   return (
-    <Container>
+    <Container id="side-list">
       <header>
         <TabSelector tabs={tabs} selected={tab} setSelected={setTab} />
       </header>

@@ -25,7 +25,7 @@ const Logger: React.FC = () => {
   };
 
   return (
-    <Container>
+    <Container id="logger">
       <header>
         <TabsHorizontal tabs={tabs} selected={selected} setSelected={setSelected} />
 
