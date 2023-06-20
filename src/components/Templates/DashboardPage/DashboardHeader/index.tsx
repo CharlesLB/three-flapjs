@@ -9,7 +9,6 @@ import { getDataFromFile, getFileFromUser } from '@/utils/file';
 import { validateAutomaton } from '@/utils/automaton';
 import useLog from '@/hooks/useLog';
 import { callModal } from '@/redux/slices/modalSlice';
-import OddAOddB from '@/utils/mocks/OddAOddB';
 import mocks from '@/utils/mocks';
 
 const DashboardHeader: React.FC = () => {
