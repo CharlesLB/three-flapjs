@@ -132,6 +132,7 @@ const Automaton: React.FC = () => {
             newCurrentNode = pe({ ...data }, currentNode, wordSlice, log);
           } catch (e) {
             logger.logError(`${e}`);
+            setData(setNotAllTestPositionNodes({ ...data }));
             clearInterval(func);
           }
         } else {

@@ -64,6 +64,44 @@ const startNodeCanvas = (node: INode, ctx: CanvasRenderingContext2D) => {
 };
 
 const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScale: number, nodes: INode[]) => {
+  const getYWithCurvature = (start: INode, end: INode): number => {
+    // @ts-ignore
+    const centerPosition = start.y - 2 + (end.y - start.y) / 2;
+
+    // @ts-ignore
+    if (start.x < end.x) {
+      // @ts-ignore
+      return centerPosition + (start.x - end.x) / 4;
+    }
+
+    // @ts-ignore
+    if (start.x > end.x) {
+      // @ts-ignore
+      return centerPosition - (end.x - start.x) / 4;
+    }
+
+    return centerPosition;
+  };
+
+  const getXWithCurvature = (start: INode, end: INode): number => {
+    // @ts-ignore
+    const centerPosition = start.x - 2 + (end.x - start.x) / 2;
+
+    // @ts-ignore
+    if (start.y < end.y) {
+      // @ts-ignore
+      return centerPosition + (end.y - start.y) / 4;
+    }
+
+    // @ts-ignore
+    if (start.y > end.y) {
+      // @ts-ignore
+      return centerPosition - (start.y - end.y) / 4;
+    }
+
+    return centerPosition;
+  };
+
   const isSelfLoop = link.source === link.target;
 
   const label = `${link?.name}`;
@@ -74,6 +112,11 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
     ? {
         x: (start?.x || 0) + 22,
         y: (start?.y || 0) - 22
+      }
+    : link.curvature
+    ? {
+        x: getXWithCurvature(start as INode, end as INode),
+        y: getYWithCurvature(start as INode, end as INode)
       }
     : Object.assign(
         // @ts-ignore
