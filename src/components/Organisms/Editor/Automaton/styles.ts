@@ -6,6 +6,23 @@ export const Container = styled.div`
   height: 100%;
   position: relative;
 
+  > header {
+    top: 0;
+    right: 0;
+    width: min-content;
+    height: min-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.5rem;
+    z-index: 999999999999999;
+    position: absolute;
+
+    > a {
+      cursor: pointer;
+    }
+  }
+
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;

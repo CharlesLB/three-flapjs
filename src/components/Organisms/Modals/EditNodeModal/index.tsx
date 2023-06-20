@@ -7,10 +7,12 @@ import LabelledInput from '@/components/Molecules/InputGroups/LabelledInput';
 const EditNodeModal: React.FC<IModalSlice> = ({ data, callback }) => {
   const [value, setValue] = useState<string>(data || '');
 
-  const submitHandler = () => {
-    if (validation(value)) return;
+  const submitHandler = (): boolean => {
+    if (validation(value)) return false;
 
     if (callback) callback(value);
+
+    return true;
   };
 
   const validation = (value: string): string | void => {

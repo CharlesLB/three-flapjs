@@ -9,7 +9,7 @@ import ModalButton from '../../Buttons/ModalButton';
 interface Props {
   title: string;
   children?: React.ReactNode;
-  submitHandler: () => void;
+  submitHandler: () => boolean;
   cancelHandler?: () => void;
   submitText?: string;
   big?: boolean;
@@ -27,26 +27,28 @@ const ModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHa
   };
 
   const submitModal = () => {
-    submitHandler();
+    const success = submitHandler();
+    if (!success) return;
     dispatch(resetModal());
   };
 
   const onFormSubmit = (e: any) => {
     e.preventDefault();
+    submitModal();
   };
 
   return (
     <Container onSubmit={(e) => onFormSubmit(e)} big={big}>
       <header>
         <h2>{title}</h2>
-        <button onClick={() => closeModal()}>
+        <a onClick={() => closeModal()}>
           <RiCloseFill size={24} color="#ccc" />
-        </button>
+        </a>
       </header>
       <main>{children}</main>
       {!big && (
         <footer>
-          <ModalButton onClick={() => closeModal()} cancelButton>
+          <ModalButton type="button" onClick={() => closeModal()} cancelButton>
             Cancel
           </ModalButton>
           <ModalButton type="submit" onClick={() => submitModal()}>

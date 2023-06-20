@@ -8,10 +8,12 @@ import { checkLinkString } from '@/utils/string';
 const EditLinkModal: React.FC<IModalSlice> = ({ data, callback }) => {
   const [value, setValue] = useState<string>(data || '');
 
-  const submitHandler = () => {
-    if (validation(value)) return;
+  const submitHandler = (): boolean => {
+    if (validation(value)) return false;
 
     if (callback) callback(value);
+
+    return true;
   };
 
   const validation = (value: string): string | void => {

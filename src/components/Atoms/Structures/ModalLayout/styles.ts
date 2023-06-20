@@ -44,7 +44,7 @@ export const Container = styled.form<{
       color: #ccc;
     }
 
-    > button {
+    > a {
       background-color: transparent;
       display: flex;
       align-items: center;

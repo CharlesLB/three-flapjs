@@ -10,7 +10,10 @@ import ModalButton from '@/components/Atoms/Buttons/ModalButton';
 import { resetModal } from '@/redux/slices/modalSlice';
 
 const PreferencesModal: React.FC = () => {
-  const submitHandler = () => {};
+  const submitHandler = (): boolean => {
+    return true;
+  };
+
   const preferences = useAppSelector(getPreferences);
   const dispatch = useAppDispatch();
 
