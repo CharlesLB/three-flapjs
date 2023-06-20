@@ -7,7 +7,6 @@ const checkValidName = (automaton: IAutomaton, name: string): boolean => {
 
   return !nameExists;
 };
-
 const getAleatoryId = (automaton: IAutomaton): number => {
   const id = Math.floor(Math.random() * (100 - automaton.nodes.length) + automaton.nodes.length);
 
@@ -29,11 +28,16 @@ const getNewId = (automaton: IAutomaton, name: string): number => {
 };
 
 const editNode = (automaton: IAutomaton, id: any, name: string): IAutomaton => {
+  const node = findNodeById(automaton, id);
+
+  // @ts-ignore
+  if (node.name === name) {
+    return automaton;
+  }
+
   if (!checkValidName(automaton, name)) {
     throw new Error('Name already exists');
   }
-
-  const node = findNodeById(automaton, id);
 
   if (!node) {
     throw new Error('Node does not exist');
@@ -46,3 +50,5 @@ const editNode = (automaton: IAutomaton, id: any, name: string): IAutomaton => {
 };
 
 export default editNode;
+
+export { checkValidName };

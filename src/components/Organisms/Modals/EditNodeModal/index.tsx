@@ -5,7 +5,9 @@ import ModalLayout from '@/components/Atoms/Structures/ModalLayout';
 import LabelledInput from '@/components/Molecules/InputGroups/LabelledInput';
 
 const EditNodeModal: React.FC<IModalSlice> = ({ data, callback }) => {
-  const [value, setValue] = useState<string>(data || '');
+  const { name, nodeNames } = data;
+
+  const [value, setValue] = useState<string>(name || '');
 
   const submitHandler = (): boolean => {
     if (validation(value)) return false;
@@ -18,6 +20,10 @@ const EditNodeModal: React.FC<IModalSlice> = ({ data, callback }) => {
   const validation = (value: string): string | void => {
     if (!value) {
       return 'Cannot be empty';
+    }
+
+    if (nodeNames.includes(value) && value !== name) {
+      return 'Repeated values';
     }
 
     return;

@@ -34,7 +34,10 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
         dispatch(
           callModal({
             type: 'node:edit',
-            data: node?.name,
+            data: {
+              name: node?.name,
+              nodeNames: data.nodes.map((node) => node.name)
+            },
             callback: (name: string) => {
               //@ts-ignore
               setData(editNode({ ...data }, node?.id, name));
