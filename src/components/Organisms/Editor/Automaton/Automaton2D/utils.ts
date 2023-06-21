@@ -1,6 +1,6 @@
 import { ILink, INode } from '@/@types/components/Automaton';
 
-const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScale: number) => {
+const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScale: number, labelColor: string) => {
   if (node.end) endNodeCanvas(node, ctx);
 
   if (node.start) startNodeCanvas(node, ctx);
@@ -13,7 +13,7 @@ const nodeCanvasObject = (node: INode, ctx: CanvasRenderingContext2D, globalScal
 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = node.color || '#000';
+  ctx.fillStyle = node.color || labelColor;
   ctx.fillText(label, node?.x || 0, node?.y || 0);
 };
 
@@ -63,7 +63,7 @@ const startNodeCanvas = (node: INode, ctx: CanvasRenderingContext2D) => {
   ctx.fill();
 };
 
-const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScale: number, nodes: INode[]) => {
+const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScale: number, nodes: INode[], defaultColor: string) => {
   const getYWithCurvature = (start: INode, end: INode): number => {
     // @ts-ignore
     const centerPosition = start.y - 2 + (end.y - start.y) / 2;
@@ -129,13 +129,13 @@ const linkCanvasObject = (link: ILink, ctx: CanvasRenderingContext2D, globalScal
   const fontSize = 12 / globalScale;
   ctx.font = `${fontSize}px Sans-Serif`;
 
-  ctx.fillStyle = 'rgba(255, 255, 255)';
+  ctx.fillStyle = defaultColor;
   const { x: textX, y: textY } = textPos;
   ctx.fillText(label, textX, textY);
 };
 
-const nodeColor = (node: INode): string => {
-  return node?.selected || node?.testPosition ? '#686868' : '#fff';
+const nodeColor = (node: INode, defaultColor: string): string => {
+  return node?.selected || node?.testPosition ? '#686868' : defaultColor;
 };
 
 export { nodeCanvasObject, linkCanvasObject, nodeColor };

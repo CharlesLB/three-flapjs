@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Container } from './styles';
 import SplitPane from '@/components/Molecules/SplitPane';
@@ -8,9 +8,17 @@ import Logger from './Logger';
 import 'intro.js/introjs.css';
 import 'intro.js/themes/introjs-modern.css';
 import Intro from '@/components/Organisms/Controllers/Intro';
+import { useAppDispatch } from '@/redux/hooks';
+import { getPreviousPreferences } from '@/redux/slices/preferencesSlice';
 
 const Editor: React.FC = () => {
   const screenSize = window.screen.height;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getPreviousPreferences());
+  }, []);
 
   return (
     <>

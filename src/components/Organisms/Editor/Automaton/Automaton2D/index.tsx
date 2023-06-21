@@ -15,11 +15,13 @@ import { callModal } from '@/redux/slices/modalSlice';
 import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
 import editLink from '@/helpers/Automaton/Links/EditLink';
 import editNode from '@/helpers/Automaton/Nodes/EditNode';
+import { getPreferences } from '@/redux/slices/preferencesSlice';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
 
 const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
   const automatonStorage = useAppSelector(getAutomatonStorage);
+  const preferences = useAppSelector(getPreferences);
   const selectedNode = data.nodes.find((node) => node.selected);
   const dispatch = useAppDispatch();
 
@@ -134,21 +136,21 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       width={width}
       backgroundColor="#31363800"
       nodeAutoColorBy="group"
-      nodeColor={nodeColor}
+      nodeColor={(node) => nodeColor(node, preferences.node.background)}
       nodeRelSize={8}
       nodeCanvasObjectMode={() => 'after'}
-      nodeCanvasObject={nodeCanvasObject}
+      nodeCanvasObject={(node, ctx, globalScale) => nodeCanvasObject(node, ctx, globalScale, preferences.node.color)}
       linkHoverPrecision={1}
       linkCanvasObjectMode={() => 'after'}
       linkAutoColorBy="group"
-      linkCanvasObject={(link, ctx, globalScale) => linkCanvasObject(link, ctx, globalScale, data.nodes)}
+      linkCanvasObject={(link, ctx, globalScale) => linkCanvasObject(link, ctx, globalScale, data.nodes, preferences.link.color)}
       linkWidth={1}
-      linkColor="#aaa"
+      linkColor={() => preferences.link.background}
       linkDirectionalParticleSpeed={0.01}
       linkDirectionalArrowLength={5}
       linkCurvature="curvature"
-      linkDirectionalParticles={2}
-      cooldownTicks={0}
+      linkDirectionalParticles={preferences.link.particles ? 4 : 0}
+      cooldownTicks={preferences.node.autoAdjust ? 100 : 0}
       onNodeDragEnd={(node) => {
         node.fx = node.x;
         node.fy = node.y;

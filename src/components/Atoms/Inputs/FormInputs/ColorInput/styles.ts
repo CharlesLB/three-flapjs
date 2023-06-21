@@ -18,10 +18,27 @@ export const Container = styled.div`
   }
 
   > input {
-    padding: 0.8rem;
-    background: #ffffff;
-    border: 1px solid #939598;
+    padding: 0rem;
     border-radius: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 4rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.1rem;
+    cursor: pointer;
+
+    &::-webkit-color-swatch {
+      border-radius: 15px;
+      border: none;
+      border: 1px solid var(--color-primary-dark);
+    }
+    &::-moz-color-swatch {
+      border-radius: 15px;
+      border: none;
+    }
   }
 
   > span {
@@ -31,10 +48,5 @@ export const Container = styled.div`
     line-height: 18px;
     color: #bbb;
     width: 100%;
-  }
-
-  > input:disabled {
-    background: #e5e5e5;
-    cursor: not-allowed;
   }
 `;

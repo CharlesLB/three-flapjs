@@ -36,7 +36,6 @@ export const Field = styled.div<IField>`
   ${({ flex }) => flex && `flex: ${flex};`}
 
   width: 100%;
-  max-width: 15rem;
   margin-right: 0.5rem;
   margin-left: 0.5rem;
 

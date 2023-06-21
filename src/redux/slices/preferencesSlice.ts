@@ -1,10 +1,10 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-const initialState: IPreferences = {
+export const defaultPreferences: IPreferences = {
   exhibition: '2d',
   link: {
-    color: '#000000',
+    color: '#ffffff',
     background: '#ffffff',
     particles: true
   },
@@ -15,10 +15,7 @@ const initialState: IPreferences = {
   }
 };
 
-export const getPreviousPreferences = createAsyncThunk('preferences/getPreviousPreferences', () => {
-  const response = window.localStorage.getItem('preferences');
-  return response ? JSON.parse(response) : initialState;
-});
+const initialState: IPreferences = defaultPreferences;
 
 export const preferencesSlice = createSlice({
   name: 'preferences',
@@ -33,11 +30,16 @@ export const preferencesSlice = createSlice({
       state = action.payload;
       window.localStorage.setItem('preferences', JSON.stringify(state));
       return state;
+    },
+    resetPreferences: (state) => {
+      state = initialState;
+      window.localStorage.setItem('preferences', JSON.stringify(state));
+      return state;
     }
   }
 });
 
-export const { update } = preferencesSlice.actions;
+export const { update, resetPreferences, getPreviousPreferences } = preferencesSlice.actions;
 
 export const getPreferences = (state: RootState) => state.preferences;
 

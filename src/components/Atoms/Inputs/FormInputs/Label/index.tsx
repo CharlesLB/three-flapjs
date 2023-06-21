@@ -4,10 +4,6 @@ import { Container } from './styles';
 
 interface Props {
   data: IFormMakerInput;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleBlur: () => void;
-  value: any;
-  error: any;
 }
 
 const Label: React.FC<Props> = ({ data }) => {

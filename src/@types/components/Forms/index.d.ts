@@ -1,7 +1,6 @@
 type IFormMaker = {
   data: IFormMakerInput[][];
   onSubmit: (values: any, setErrors: (value: any) => void) => void;
-  title?: string;
   SubmitComponent: React.FC<{
     submit: () => unknown;
     disabled: boolean;

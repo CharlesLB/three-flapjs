@@ -3,9 +3,11 @@ import { Formik } from 'formik';
 import { Container, Field, Row } from './styles';
 import { Validator } from '@/utils/validations/validator';
 import SwitchInput from '@/components/Atoms/Inputs/FormInputs/SwitchInput';
+import Label from '@/components/Atoms/Inputs/FormInputs/Label';
+import ColorInput from '@/components/Atoms/Inputs/FormInputs/ColorInput';
 
 const FormMaker: React.FC<IFormMaker> = (props) => {
-  const { data, onSubmit, title, SubmitComponent } = props;
+  const { data, onSubmit, SubmitComponent } = props;
 
   const [submitTry, setSubmitTry] = useState<boolean>(false);
 
@@ -63,12 +65,6 @@ const FormMaker: React.FC<IFormMaker> = (props) => {
             handleSubmit();
           }}
         >
-          {title && (
-            <header>
-              <h2>{title}</h2>
-            </header>
-          )}
-
           {data.map((row, index) => (
             <Row key={index}>
               {row.map((field, index) => {
@@ -84,7 +80,11 @@ const FormMaker: React.FC<IFormMaker> = (props) => {
                       {
                         boolean: (
                           <SwitchInput data={field} onChange={handleChange} handleBlur={onBlur} value={values[field.id]} error={error} />
-                        )
+                        ),
+                        color: (
+                          <ColorInput data={field} onChange={handleChange} handleBlur={onBlur} value={values[field.id]} error={error} />
+                        ),
+                        label: <Label data={field} />
                       }[field.type]
                     }
                   </Field>
