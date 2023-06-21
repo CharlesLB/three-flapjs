@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Container } from './styles';
-import ModalLayout from '@/components/Atoms/Structures/ModalLayout';
+import FormModalLayout from '@/components/Atoms/Structures/FormModalLayout';
 import LabelledInput from '@/components/Molecules/InputGroups/LabelledInput';
 import { checkLinkString } from '@/utils/string';
 
@@ -29,11 +29,11 @@ const CreateLinkModal: React.FC<IModalSlice> = ({ callback }) => {
   };
 
   return (
-    <ModalLayout title="Create Link" submitHandler={submitHandler}>
+    <FormModalLayout title="Create Link" submitHandler={submitHandler}>
       <Container>
         <LabelledInput placeholder="String" value={value} setValue={setValue} validation={validation} />
       </Container>
-    </ModalLayout>
+    </FormModalLayout>
   );
 };
 

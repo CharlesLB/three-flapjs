@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Container, Footer } from './styles';
-import ModalLayout from '@/components/Atoms/Structures/ModalLayout';
+import FormModalLayout from '@/components/Atoms/Structures/FormModalLayout';
 import { Validator } from '@/utils/validations/validator';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { getPreferences } from '@/redux/slices/preferencesSlice';
@@ -38,7 +38,7 @@ const PreferencesModal: React.FC = () => {
   ];
 
   return (
-    <ModalLayout title="Preferences" submitHandler={submitHandler} big>
+    <FormModalLayout title="Preferences" submitHandler={submitHandler} big>
       <Container>
         <FormMaker
           data={form}
@@ -53,7 +53,7 @@ const PreferencesModal: React.FC = () => {
           )}
         />
       </Container>
-    </ModalLayout>
+    </FormModalLayout>
   );
 };
 

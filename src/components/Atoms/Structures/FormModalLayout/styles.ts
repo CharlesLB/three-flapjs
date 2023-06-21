@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.form<{
-  big?: boolean;
-}>`
+export const Container = styled.form`
   position: absolute;
   top: 0;
   left: 0;
@@ -13,7 +11,7 @@ export const Container = styled.form<{
   justify-content: center;
 
   max-height: 90vh;
-  max-width: ${({ big }) => (big ? '800px' : '400px')};
+  max-width: 400px;
   height: min-content;
   margin: auto auto;
   background-color: var(--color-primary);

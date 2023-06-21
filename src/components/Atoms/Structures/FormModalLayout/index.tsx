@@ -15,7 +15,7 @@ interface Props {
   big?: boolean;
 }
 
-const ModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHandler, submitText = 'Save', big }) => {
+const FormModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHandler, submitText = 'Save' }) => {
   const dispatch = useAppDispatch();
 
   const closeModal = () => {
@@ -38,7 +38,7 @@ const ModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHa
   };
 
   return (
-    <Container onSubmit={(e) => onFormSubmit(e)} big={big}>
+    <Container onSubmit={(e) => onFormSubmit(e)}>
       <header>
         <h2>{title}</h2>
         <a onClick={() => closeModal()}>
@@ -46,18 +46,16 @@ const ModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHa
         </a>
       </header>
       <main>{children}</main>
-      {!big && (
-        <footer>
-          <ModalButton type="button" onClick={() => closeModal()} cancelButton>
-            Cancel
-          </ModalButton>
-          <ModalButton type="submit" onClick={() => submitModal()}>
-            {submitText}
-          </ModalButton>
-        </footer>
-      )}
+      <footer>
+        <ModalButton type="button" onClick={() => closeModal()} cancelButton>
+          Cancel
+        </ModalButton>
+        <ModalButton type="submit" onClick={() => submitModal()}>
+          {submitText}
+        </ModalButton>
+      </footer>
     </Container>
   );
 };
 
-export default ModalLayout;
+export default FormModalLayout;
