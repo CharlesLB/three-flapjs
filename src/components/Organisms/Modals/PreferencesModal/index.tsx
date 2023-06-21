@@ -106,8 +106,6 @@ const PreferencesModal: React.FC = () => {
       exhibition: '2d'
     };
 
-    console.log(newPreferences, values['link-particles']);
-
     dispatch(update(newPreferences));
     dispatch(resetModal());
 
