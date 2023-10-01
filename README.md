@@ -1,28 +1,31 @@
 # Three FlapJS
 
-## Descrição
+## Description
 
-O Three FlapJS é um site que permite a criação e manipulação de autômatos para linguagens formais. Com esta ferramenta interativa, você pode construir, visualizar e testar autômatos finitos determinísticos (AFDs), autômatos finitos não determinísticos (AFNs).
+Three FlapJS is a website that allows the creation and manipulation of automata for formal languages. With this interactive tool, you can build, visualize, and test deterministic finite automata (DFAs) and non-deterministic finite automata (NFAs).
 
-## Recursos
+## Preview
 
-- Interface intuitiva para criação e edição de autômatos.
-- Visualização gráfica dos autômatos.
-- Teste de reconhecimento de cadeias de entrada em relação aos autômatos.
-- Suporte a autômatos finitos determinísticos, não determinísticos.
+[Three FlapJS Website](https://three-flapjs.vercel.app)
 
-## Sumário
+## Features
 
-- [Instalação](#instalação)
-- [Uso](#uso)
-- [Lista de Tarefas](#lista-de-tarefas)
+- Intuitive interface for creating and editing automata.
+- Graphical visualization of automata.
+- Testing of input string recognition with respect to automata.
+- Support for deterministic and non-deterministic finite automata.
 
-## Instalação
+## Summary
 
-1. Clone o repositório: `git clone [URL do repositório]`
-2. Navegue até o diretório do projeto: `cd [diretório do projeto]`
-3. Instale as dependências: `yarn install`
+- [Installation](#installation)
+- [Usage](#usage)
 
-## Uso
+## Installation
 
-1. Inicie o projeto com o comando: `yarn dev`
+1. Clone the repository: `git clone [repository URL]`
+2. Navigate to the project directory: `cd [project directory]`
+3. Install dependencies: `yarn install`
+
+## Usage
+
+1. Start the project with the command: `yarn dev`
