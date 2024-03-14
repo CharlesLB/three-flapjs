@@ -37,3 +37,20 @@ Three FlapJS is a website that allows the creation and manipulation of automata 
 5. Navigate to the api directory: `cd api`
 6. Install dependencies: `npm install`
 7. Start the project: `npm start`
+
+## To Do
+
+Vou escrever em português para facilitar a comunicação.
+
+- [ ] Criar um banco de dados que armazene os autômatos criados pelos usuários com um id de sessão.
+  - Estava pensando em um sqlite, armazenando o id da sessão e o autômato em formato JSON. Só isso
+- [ ] Adicionar no front a possibilidade de criar sessão
+  - Aqui vai ter que criar um botão para copiar o link de convite
+  - A criação da sessão vai criar um item no banco
+  - A sessão será armazenada como GET param
+  - Quando duas pessoas estiverem na mesma sessão, o autômato será compartilhado (ACHO que dá para testar em abas diferentes e depois testar em máquinas diferentes com a API no servidor)
+- [ ] Cada alteração no autômato vai ser salva no banco
+
+  - a cada alteração, altera o JSON no banco e manda apenas a nova alteração feita no autômato (acho que o google não altera todo o autômato toda vez que você faz uma alteração)
+
+- [ ] Subir projeto
