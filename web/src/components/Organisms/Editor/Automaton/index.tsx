@@ -17,6 +17,7 @@ import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
 import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
 import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestPositionNodes';
 import { BsFillTrashFill } from 'react-icons/bs';
+import { socket } from '@/api/socket';
 
 const Automaton3D = dynamic(() => import('./Automaton3D'), { ssr: false });
 const Automaton2D = dynamic(() => import('./Automaton2D'), { ssr: false });
@@ -238,12 +239,25 @@ const Automaton: React.FC = () => {
     }
   }, [linksToBeAdded]);
 
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('connect');
+    });
+  }, []);
+
   return (
     <Container id="automaton">
       <header>
         <a onClick={() => clearAutomaton()} title="Clear logs">
           <BsFillTrashFill color="#ccc" size={16} />
         </a>
+        <button
+          onClick={() => {
+            socket.emit('message', 'oi');
+          }}
+        >
+          test message
+        </button>
       </header>
       <Content>
         {
