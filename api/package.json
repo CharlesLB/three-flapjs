@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/server.ts"
+    "start": "ts-node src/server.ts",
+    "build:database": "ts-node src/database/build.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,8 @@
   "dependencies": {
     "express": "^4.18.3",
     "socket.io": "^4.7.4",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
   },
