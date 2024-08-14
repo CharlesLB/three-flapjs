@@ -38,6 +38,12 @@ const Automaton3D: React.FC<IAutomatonProps> = ({ data }) => {
     Object.assign(sprite.position, middlePos);
   };
 
+  const onNodeDragEnd = (node: NodeObject): void => {
+    node.fx = node.x;
+    node.fy = node.y;
+    node.fz = node.z;
+  };
+
   return (
     <ForceGraph3D
       graphData={data}
@@ -57,11 +63,7 @@ const Automaton3D: React.FC<IAutomatonProps> = ({ data }) => {
       linkDirectionalArrowLength={5}
       linkCurveRotation="rotation"
       linkDirectionalParticles={2}
-      onNodeDragEnd={(node) => {
-        node.fx = node.x;
-        node.fy = node.y;
-        node.fz = node.z;
-      }}
+      onNodeDragEnd={onNodeDragEnd}
     />
   );
 };
