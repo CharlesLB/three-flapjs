@@ -1,27 +1,21 @@
 import { IAutomaton } from '@/@types/components/Automaton';
+import { isArray, isNullish } from 'remeda';
 
 const validateAutomaton = (automaton: IAutomaton): boolean => {
   if (!automaton || typeof automaton !== 'object') {
     return false;
   }
 
-  if (!Array.isArray(automaton.nodes) || !Array.isArray(automaton.links)) {
+  if (!isArray(automaton.nodes) || !isArray(automaton.links)) {
     return false;
   }
 
   const nodesValid = automaton.nodes.every((node) => {
-    return node.id !== null && node.id !== undefined && node.name !== null && node.name !== undefined;
+    return !(isNullish(node.id) || isNullish(node.name));
   });
 
   const linksValid = automaton.links.every((link) => {
-    return (
-      link.name !== null &&
-      link.name !== undefined &&
-      link.source !== null &&
-      link.source !== undefined &&
-      link.target !== null &&
-      link.target !== undefined
-    );
+    return !(isNullish(link.name) || isNullish(link.source) || isNullish(link.target));
   });
 
   return nodesValid && linksValid;
