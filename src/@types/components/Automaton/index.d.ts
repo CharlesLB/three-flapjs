@@ -15,3 +15,9 @@ interface IAutomatonProps {
   data: IAutomaton;
   setData: (data: IAutomaton) => void;
 }
+
+type Coords = { x: number; y: number; z: number };
+type LinkUpdateCoords = {
+  start: Coords;
+  end: Coords;
+};

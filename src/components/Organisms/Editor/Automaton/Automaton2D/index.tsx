@@ -27,7 +27,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
 
   const width = window.innerWidth - 220;
 
-  const handleNodeClick = (node: INode) => {
+  const onNodeClick = (node: INode): void => {
     switch (automatonStorage.mode) {
       case 'node:create':
         setData(addNode({ ...data }));
@@ -89,7 +89,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     }
   };
 
-  const handleLinkClick = (link: ILink) => {
+  const onLinkClick = (link: ILink): void => {
     switch (automatonStorage.mode) {
       case 'link:edit':
         dispatch(
@@ -116,7 +116,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
     }
   };
 
-  const handleBackgroundClick = (_event: MouseEvent) => {
+  const onBackgroundClick = (_event: MouseEvent): void => {
     switch (automatonStorage.mode) {
       case 'node:create':
         setData(addNode(data));
@@ -127,6 +127,11 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       default:
         break;
     }
+  };
+
+  const onNodeDragEnd = (node: INode): void => {
+    node.fx = node.x;
+    node.fy = node.y;
   };
 
   return (
@@ -151,13 +156,10 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       linkCurvature="curvature"
       linkDirectionalParticles={preferences.link.particles ? 4 : 0}
       cooldownTicks={preferences.node.autoAdjust ? 100 : 0}
-      onNodeDragEnd={(node) => {
-        node.fx = node.x;
-        node.fy = node.y;
-      }}
-      onBackgroundClick={(data) => handleBackgroundClick(data)}
-      onNodeClick={(node) => handleNodeClick(node)}
-      onLinkClick={(link) => handleLinkClick(link)}
+      onNodeDragEnd={onNodeDragEnd}
+      onBackgroundClick={onBackgroundClick}
+      onNodeClick={onNodeClick}
+      onLinkClick={onLinkClick}
       minZoom={2}
       maxZoom={4}
     />
