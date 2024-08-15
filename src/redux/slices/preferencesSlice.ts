@@ -3,6 +3,7 @@ import { RootState } from '../store';
 
 export const defaultPreferences: IPreferences = {
   exhibition: '2d',
+  timer: 1000,
   link: {
     color: '#ffffff',
     background: '#ffffff',

@@ -88,6 +88,23 @@ const PreferencesModal: React.FC = () => {
         initialValue: preferences.node.color,
         validation: Validator.string()
       }
+    ],
+    [
+      {
+        id: 'exhibition',
+        type: 'label',
+        label: 'Exhibition'
+      }
+    ],
+    [
+      {
+        id: 'timer',
+        label: 'Timer',
+        type: 'number',
+        description: 'Time in milliseconds to wait before the next iteration',
+        initialValue: preferences.timer,
+        validation: Validator.number()
+      }
     ]
   ];
 
@@ -103,7 +120,8 @@ const PreferencesModal: React.FC = () => {
         background: values['node-background'] || defaultPreferences.node.background,
         color: values['node-color'] || defaultPreferences.node.color
       },
-      exhibition: '2d'
+      exhibition: '2d',
+      timer: values['timer']
     };
 
     dispatch(update(newPreferences));

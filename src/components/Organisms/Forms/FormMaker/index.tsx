@@ -5,6 +5,7 @@ import { Validator } from '@/utils/validations/validator';
 import SwitchInput from '@/components/Atoms/Inputs/FormInputs/SwitchInput';
 import Label from '@/components/Atoms/Inputs/FormInputs/Label';
 import ColorInput from '@/components/Atoms/Inputs/FormInputs/ColorInput';
+import NumberFormInput from '@/components/Atoms/Inputs/FormInputs/NumberFormInput';
 
 const FormMaker: React.FC<IFormMaker> = (props) => {
   const { data, onSubmit, SubmitComponent } = props;
@@ -84,7 +85,16 @@ const FormMaker: React.FC<IFormMaker> = (props) => {
                         color: (
                           <ColorInput data={field} onChange={handleChange} handleBlur={onBlur} value={values[field.id]} error={error} />
                         ),
-                        label: <Label data={field} />
+                        label: <Label data={field} />,
+                        number: (
+                          <NumberFormInput
+                            data={field}
+                            onChange={handleChange}
+                            handleBlur={onBlur}
+                            value={values[field.id]}
+                            error={error}
+                          />
+                        )
                       }[field.type]
                     }
                   </Field>

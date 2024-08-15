@@ -34,10 +34,12 @@ const Automaton: React.FC = () => {
     links: []
   });
 
+  const timer = preferences.timer;
+
   const getDataFromStorage = (): IAutomaton => {
     const previousData = localStorage.getItem('automaton');
 
-    setTimeout(() => localStorage.removeItem('automaton'), 1000);
+    setTimeout(() => localStorage.removeItem('automaton'), timer);
 
     if (!previousData) {
       setLoading(false);
@@ -156,7 +158,7 @@ const Automaton: React.FC = () => {
           setData(setNotAllTestPositionNodes({ ...data }));
           clearInterval(func);
         }
-      }, 1000);
+      }, timer);
     } catch (error: any) {
       logger.logError(error?.message);
     }

@@ -28,7 +28,7 @@ const SwitchInput: React.FC<ISwitchInput> = (props: ISwitchInput): JSX.Element =
       <span>{data.description}</span>
       <Switch
         onChange={changeValue}
-        checked={isChecked}
+        checked={Boolean(isChecked)}
         handleDiameter={30}
         uncheckedIcon={false}
         checkedIcon={false}
