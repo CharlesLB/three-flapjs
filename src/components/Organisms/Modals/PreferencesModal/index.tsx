@@ -103,7 +103,7 @@ const PreferencesModal: React.FC = () => {
         type: 'number',
         description: 'Time in milliseconds to wait before the next iteration',
         initialValue: preferences.timer,
-        validation: Validator.number()
+        validation: Validator.number().min(0)
       }
     ]
   ];
