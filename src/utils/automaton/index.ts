@@ -1,5 +1,5 @@
 import { IAutomaton } from '@/@types/components/Automaton';
-import { isArray, isNullish } from 'remeda';
+import { isArray, isNil } from 'lodash';
 
 const validateAutomaton = (automaton: IAutomaton): boolean => {
   if (!automaton || typeof automaton !== 'object') {
@@ -11,11 +11,11 @@ const validateAutomaton = (automaton: IAutomaton): boolean => {
   }
 
   const nodesValid = automaton.nodes.every((node) => {
-    return !(isNullish(node.id) || isNullish(node.name));
+    return !(isNil(node.id) || isNil(node.name));
   });
 
   const linksValid = automaton.links.every((link) => {
-    return !(isNullish(link.name) || isNullish(link.source) || isNullish(link.target));
+    return !(isNil(link.name) || isNil(link.source) || isNil(link.target));
   });
 
   return nodesValid && linksValid;
