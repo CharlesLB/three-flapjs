@@ -36,7 +36,7 @@ const PreferencesModal: React.FC = () => {
         type: 'number',
         description: 'Speed of the particles',
         initialValue: preferences.link.particlesSpeed,
-        validation: Validator.number().min(0)
+        validation: Validator.number().min(0.1)
       }
     ],
     [
@@ -47,9 +47,7 @@ const PreferencesModal: React.FC = () => {
         description: 'Color of the link',
         initialValue: preferences.link.color,
         validation: Validator.string()
-      }
-    ],
-    [
+      },
       {
         id: 'link-color',
         label: 'Link Label Color',
@@ -59,6 +57,25 @@ const PreferencesModal: React.FC = () => {
         validation: Validator.string()
       }
     ],
+    [
+      {
+        id: 'link-width',
+        label: 'Link Width',
+        type: 'number',
+        description: 'Width of the link',
+        initialValue: preferences.link.width,
+        validation: Validator.number().min(1)
+      },
+      {
+        id: 'link-arrowLength',
+        label: 'Link Arrow Length',
+        type: 'number',
+        description: 'Length of the arrow',
+        initialValue: preferences.link.arrowLength,
+        validation: Validator.number().min(1)
+      }
+    ],
+
     [
       {
         id: 'node',
@@ -85,9 +102,7 @@ const PreferencesModal: React.FC = () => {
         placeholder: '',
         initialValue: preferences.node.background,
         validation: Validator.string()
-      }
-    ],
-    [
+      },
       {
         id: 'node-color',
         label: 'Node Label Color',
@@ -95,6 +110,16 @@ const PreferencesModal: React.FC = () => {
         description: 'Color of the node',
         initialValue: preferences.node.color,
         validation: Validator.string()
+      }
+    ],
+    [
+      {
+        id: 'node-size',
+        label: 'Node Size',
+        type: 'number',
+        description: 'Size of the node',
+        initialValue: preferences.node.size,
+        validation: Validator.number().min(8)
       }
     ],
     [
@@ -111,7 +136,7 @@ const PreferencesModal: React.FC = () => {
         type: 'number',
         description: 'Time in milliseconds to wait before the next iteration',
         initialValue: preferences.timer,
-        validation: Validator.number().min(0)
+        validation: Validator.number().min(100)
       }
     ]
   ];
@@ -122,12 +147,15 @@ const PreferencesModal: React.FC = () => {
         particles: values['link-particles'],
         color: values['link-backgroundColor'] || defaultPreferences.link.color,
         background: values['link-color'] || defaultPreferences.link.background,
-        particlesSpeed: values['link-particlesSpeed'] || defaultPreferences.link.particlesSpeed
+        particlesSpeed: values['link-particlesSpeed'] || defaultPreferences.link.particlesSpeed,
+        arrowLength: values['link-arrowLength'] || defaultPreferences.link.arrowLength,
+        width: values['link-width'] || defaultPreferences.link.width
       },
       node: {
         autoAdjust: values['node-autoAdjust'],
         background: values['node-background'] || defaultPreferences.node.background,
-        color: values['node-color'] || defaultPreferences.node.color
+        color: values['node-color'] || defaultPreferences.node.color,
+        size: values['node-size'] || defaultPreferences.node.size
       },
       exhibition: '2d',
       timer: values['timer']

@@ -6,10 +6,13 @@ interface IPreferences {
     background: string;
     particles: boolean;
     particlesSpeed: number;
+    arrowLength: number;
+    width: number;
   };
   node: {
     color: string;
     background: string;
     autoAdjust: boolean;
+    size: number;
   };
 }

@@ -142,17 +142,17 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       backgroundColor="#31363800"
       nodeAutoColorBy="group"
       nodeColor={(node) => nodeColor(node, preferences.node.background)}
-      nodeRelSize={8}
+      nodeRelSize={preferences.node.size}
       nodeCanvasObjectMode={() => 'after'}
       nodeCanvasObject={(node, ctx, globalScale) => nodeCanvasObject(node, ctx, globalScale, preferences.node.color)}
       linkHoverPrecision={1}
       linkCanvasObjectMode={() => 'after'}
       linkAutoColorBy="group"
       linkCanvasObject={(link, ctx, globalScale) => linkCanvasObject(link, ctx, globalScale, data.nodes, preferences.link.color)}
-      linkWidth={1}
+      linkWidth={preferences.link.width}
       linkColor={() => preferences.link.background}
       linkDirectionalParticleSpeed={preferences.link.particlesSpeed / 1000}
-      linkDirectionalArrowLength={5}
+      linkDirectionalArrowLength={preferences.link.arrowLength}
       linkCurvature="curvature"
       linkDirectionalParticles={preferences.link.particles ? 4 : 0}
       cooldownTicks={preferences.node.autoAdjust ? 100 : 0}

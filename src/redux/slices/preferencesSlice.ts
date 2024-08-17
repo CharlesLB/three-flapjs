@@ -8,12 +8,15 @@ export const defaultPreferences: IPreferences = {
     color: '#ffffff',
     background: '#ffffff',
     particles: true,
-    particlesSpeed: 4
+    particlesSpeed: 4,
+    arrowLength: 5,
+    width: 1
   },
   node: {
     color: '#000000',
     background: '#ffffff',
-    autoAdjust: false
+    autoAdjust: false,
+    size: 8
   }
 };
 
