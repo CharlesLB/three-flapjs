@@ -29,6 +29,14 @@ const PreferencesModal: React.FC = () => {
         description: 'Particles that move around the link',
         initialValue: preferences.link.particles,
         validation: Validator.boolean()
+      },
+      {
+        id: 'link-particlesSpeed',
+        label: 'Particles Speed',
+        type: 'number',
+        description: 'Speed of the particles',
+        initialValue: preferences.link.particlesSpeed,
+        validation: Validator.number().min(0)
       }
     ],
     [
@@ -113,7 +121,8 @@ const PreferencesModal: React.FC = () => {
       link: {
         particles: values['link-particles'],
         color: values['link-backgroundColor'] || defaultPreferences.link.color,
-        background: values['link-color'] || defaultPreferences.link.background
+        background: values['link-color'] || defaultPreferences.link.background,
+        particlesSpeed: values['link-particlesSpeed'] || defaultPreferences.link.particlesSpeed
       },
       node: {
         autoAdjust: values['node-autoAdjust'],

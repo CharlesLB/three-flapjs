@@ -5,6 +5,7 @@ interface IPreferences {
     color: string;
     background: string;
     particles: boolean;
+    particlesSpeed: number;
   };
   node: {
     color: string;

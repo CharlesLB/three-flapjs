@@ -151,7 +151,7 @@ const Automaton2D: React.FC<IAutomatonProps> = ({ data, setData }) => {
       linkCanvasObject={(link, ctx, globalScale) => linkCanvasObject(link, ctx, globalScale, data.nodes, preferences.link.color)}
       linkWidth={1}
       linkColor={() => preferences.link.background}
-      linkDirectionalParticleSpeed={0.01}
+      linkDirectionalParticleSpeed={preferences.link.particlesSpeed / 1000}
       linkDirectionalArrowLength={5}
       linkCurvature="curvature"
       linkDirectionalParticles={preferences.link.particles ? 4 : 0}

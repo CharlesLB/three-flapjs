@@ -7,7 +7,8 @@ export const defaultPreferences: IPreferences = {
   link: {
     color: '#ffffff',
     background: '#ffffff',
-    particles: true
+    particles: true,
+    particlesSpeed: 4
   },
   node: {
     color: '#000000',
