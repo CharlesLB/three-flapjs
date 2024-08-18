@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container } from './styles';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { getModal, resetModal } from '@/redux/slices/modalSlice';
+import { getModal, closeModal } from '@/redux/slices/modalSlice';
 import Backdrop from '@/components/Atoms/Structures/Backdrop';
 import PreferencesModal from '../../Modals/PreferencesModal';
 import EditNodeModal from '../../Modals/EditNodeModal';
@@ -17,7 +17,7 @@ const ModalCaller: React.FC = () => {
 
   return (
     <Container>
-      <Backdrop handler={() => dispatch(resetModal())} active />
+      <Backdrop handler={() => dispatch(closeModal())} active />
 
       {
         {

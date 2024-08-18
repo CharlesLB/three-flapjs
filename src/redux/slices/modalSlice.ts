@@ -12,13 +12,13 @@ export const modalSlice = createSlice({
     callModal: (_state, action: PayloadAction<IModalSlice>) => {
       return action.payload;
     },
-    resetModal: () => {
+    closeModal: () => {
       return initialState;
     }
   }
 });
 
-export const { resetModal, callModal } = modalSlice.actions;
+export const { closeModal, callModal } = modalSlice.actions;
 
 export const getModal = (state: RootState) => state.modal;
 

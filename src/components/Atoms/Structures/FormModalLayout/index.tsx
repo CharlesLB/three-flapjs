@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container } from './styles';
 import { RiCloseFill } from 'react-icons/ri';
-import { resetModal } from '@/redux/slices/modalSlice';
+import { closeModal } from '@/redux/slices/modalSlice';
 import { useAppDispatch } from '@/redux/hooks';
 import ModalButton from '../../Buttons/ModalButton';
 
@@ -18,18 +18,18 @@ interface Props {
 const FormModalLayout: React.FC<Props> = ({ title, children, cancelHandler, submitHandler, submitText = 'Save' }) => {
   const dispatch = useAppDispatch();
 
-  const closeModal = () => {
+  const onCloseModal = () => {
     if (cancelHandler) {
       cancelHandler();
     }
 
-    dispatch(resetModal());
+    dispatch(closeModal());
   };
 
   const submitModal = () => {
     const success = submitHandler();
     if (!success) return;
-    dispatch(resetModal());
+    dispatch(closeModal());
   };
 
   const onFormSubmit = (e: any) => {
@@ -41,13 +41,13 @@ const FormModalLayout: React.FC<Props> = ({ title, children, cancelHandler, subm
     <Container onSubmit={(e) => onFormSubmit(e)}>
       <header>
         <h2>{title}</h2>
-        <a onClick={() => closeModal()}>
+        <a onClick={() => onCloseModal()}>
           <RiCloseFill size={24} color="#ccc" />
         </a>
       </header>
       <main>{children}</main>
       <footer>
-        <ModalButton type="button" onClick={() => closeModal()} cancelButton>
+        <ModalButton type="button" onClick={() => onCloseModal()} cancelButton>
           Cancel
         </ModalButton>
         <ModalButton type="submit" onClick={() => submitModal()}>

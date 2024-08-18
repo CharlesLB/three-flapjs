@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { Container, Footer } from './styles';
+import { Container, Footer, FooterLeft, FooterRight } from './styles';
 import { Validator } from '@/utils/validations/validator';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { defaultPreferences, getPreferences, update } from '@/redux/slices/preferencesSlice';
 import FormMaker from '../../Forms/FormMaker';
 import ModalButton from '@/components/Atoms/Buttons/ModalButton';
-import { resetModal } from '@/redux/slices/modalSlice';
+import { closeModal } from '@/redux/slices/modalSlice';
 import BigModalLayout from '@/components/Atoms/Structures/BigModalLayout';
+import TextButton from '@/components/Atoms/Buttons/TextButton';
 
 const PreferencesModal: React.FC = () => {
   const preferences = useAppSelector(getPreferences);
@@ -141,6 +142,11 @@ const PreferencesModal: React.FC = () => {
     ]
   ];
 
+  const resetHandler = () => {
+    dispatch(update(defaultPreferences));
+    dispatch(closeModal());
+  };
+
   const submitHandler = (values: any): boolean => {
     const newPreferences: IPreferences = {
       link: {
@@ -162,7 +168,7 @@ const PreferencesModal: React.FC = () => {
     };
 
     dispatch(update(newPreferences));
-    dispatch(resetModal());
+    dispatch(closeModal());
 
     return true;
   };
@@ -175,10 +181,16 @@ const PreferencesModal: React.FC = () => {
           onSubmit={submitHandler}
           SubmitComponent={({ submit }) => (
             <Footer>
-              <ModalButton onClick={() => dispatch(resetModal())} cancelButton>
-                Cancel
-              </ModalButton>
-              <ModalButton onClick={() => submit()}>Save</ModalButton>
+              <FooterLeft>
+                <TextButton onClick={() => resetHandler()}>Reset</TextButton>
+              </FooterLeft>
+
+              <FooterRight>
+                <ModalButton onClick={() => dispatch(closeModal())} cancelButton>
+                  Cancel
+                </ModalButton>
+                <ModalButton onClick={() => submit()}>Save</ModalButton>
+              </FooterRight>
             </Footer>
           )}
         />

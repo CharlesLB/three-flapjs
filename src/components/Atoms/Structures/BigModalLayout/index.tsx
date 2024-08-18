@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container } from './styles';
 import { RiCloseFill } from 'react-icons/ri';
-import { resetModal } from '@/redux/slices/modalSlice';
+import { closeModal } from '@/redux/slices/modalSlice';
 import { useAppDispatch } from '@/redux/hooks';
 
 interface Props {
@@ -14,15 +14,15 @@ interface Props {
 const BigModalLayout: React.FC<Props> = ({ title, children }) => {
   const dispatch = useAppDispatch();
 
-  const closeModal = () => {
-    dispatch(resetModal());
+  const onCloseModal = () => {
+    dispatch(closeModal());
   };
 
   return (
     <Container>
       <header>
         <h2>{title}</h2>
-        <a onClick={() => closeModal()}>
+        <a onClick={() => onCloseModal()}>
           <RiCloseFill size={24} color="#ccc" />
         </a>
       </header>
