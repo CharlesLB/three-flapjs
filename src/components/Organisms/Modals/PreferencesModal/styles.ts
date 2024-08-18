@@ -15,7 +15,3 @@ export const Footer = styled.footer`
     margin-left: 0.5rem;
   }
 `;
-
-export const FooterLeft = styled.div``;
-
-export const FooterRight = styled.div``;

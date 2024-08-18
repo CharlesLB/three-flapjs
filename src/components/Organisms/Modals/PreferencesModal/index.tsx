@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Footer, FooterLeft, FooterRight } from './styles';
+import { Container, Footer } from './styles';
 import { Validator } from '@/utils/validations/validator';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { defaultPreferences, getPreferences, update } from '@/redux/slices/preferencesSlice';
@@ -181,16 +181,16 @@ const PreferencesModal: React.FC = () => {
           onSubmit={submitHandler}
           SubmitComponent={({ submit }) => (
             <Footer>
-              <FooterLeft>
+              <div>
                 <TextButton onClick={() => resetHandler()}>Reset</TextButton>
-              </FooterLeft>
+              </div>
 
-              <FooterRight>
+              <div>
                 <ModalButton onClick={() => dispatch(closeModal())} cancelButton>
                   Cancel
                 </ModalButton>
                 <ModalButton onClick={() => submit()}>Save</ModalButton>
-              </FooterRight>
+              </div>
             </Footer>
           )}
         />
