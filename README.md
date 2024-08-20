@@ -31,3 +31,5 @@ Three FlapJS is a website that allows the creation and manipulation of automata 
 ## Usage
 
 1. Start the project with the command: `yarn dev`
+2. Open the browser and navigate to `http://localhost:3000`
+3. Open prisma studio with the command: `yarn prisma studio`
