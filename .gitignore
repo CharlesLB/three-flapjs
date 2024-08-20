@@ -38,3 +38,7 @@ prisma/prod.db
 
 # vscode
 .vscode
+
+# Prisma
+*.db
+*.db-journal

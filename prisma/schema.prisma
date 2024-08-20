@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(cuid())
+  name      String
+  Session   Session @relation(fields: [sessionId], references: [id])
+  sessionId String
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  key       String
+  data      String
+  Session   Session  @relation(fields: [sessionId], references: [id])
+  sessionId String
+  time      DateTime
+}
+
+model Session {
+  id        String  @id @default(cuid())
+  startData String
+  User      User[]
+  Event     Event[]
+}

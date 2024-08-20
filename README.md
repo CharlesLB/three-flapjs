@@ -25,6 +25,8 @@ Three FlapJS is a website that allows the creation and manipulation of automata 
 1. Clone the repository: `git clone [repository URL]`
 2. Navigate to the project directory: `cd [project directory]`
 3. Install dependencies: `yarn install`
+4. Run `yarn prisma generate`
+5. Run `yarn prisma migrate dev --name init`
 
 ## Usage
 
