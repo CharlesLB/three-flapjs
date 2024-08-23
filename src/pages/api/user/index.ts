@@ -21,16 +21,35 @@ export async function createUser(req: NextApiRequest, res: NextApiResponse) {
       if (!session) {
         return res.status(404).json({ error: 'Session not found' });
       }
+
+      const result = await prisma.user.create({
+        data: {
+          name,
+          sessionId: sessionId
+        },
+        include: {
+          Session: true
+        }
+      });
+
+      return res.json(result);
     }
 
     const result = await prisma.user.create({
       data: {
         name,
-        sessionId: sessionId ?? undefined
+        Session: {
+          create: {
+            startData: '[]'
+          }
+        }
+      },
+      include: {
+        Session: true
       }
     });
 
-    res.json(result);
+    return res.json(result);
   } catch (e) {
     return res.status(500).json({ error: 'Internal Server Error' + e });
   }
@@ -51,6 +70,9 @@ export async function getUsers(req: NextApiRequest, res: NextApiResponse) {
   const users = await prisma.user.findMany({
     where: {
       sessionId
+    },
+    include: {
+      Session: true
     }
   });
 

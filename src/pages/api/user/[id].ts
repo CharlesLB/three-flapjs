@@ -17,6 +17,9 @@ export async function getUser(req: NextApiRequest, res: NextApiResponse) {
   const user = await prisma.user.findUnique({
     where: {
       id: id
+    },
+    include: {
+      Session: true
     }
   });
 
@@ -50,6 +53,9 @@ export async function updateUser(req: NextApiRequest, res: NextApiResponse) {
     data: {
       name,
       sessionId
+    },
+    include: {
+      Session: true
     }
   });
 
@@ -78,6 +84,9 @@ export async function removeUser(req: NextApiRequest, res: NextApiResponse) {
     },
     data: {
       name
+    },
+    include: {
+      Session: true
     }
   });
 
