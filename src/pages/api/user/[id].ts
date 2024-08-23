@@ -30,18 +30,20 @@ export async function getUser(req: NextApiRequest, res: NextApiResponse) {
 export async function updateUser(req: NextApiRequest, res: NextApiResponse) {
   const { name, sessionId } = req.body;
 
-  if (!name || !sessionId) {
-    return res.status(400).json({ error: 'Name and sessionId are required' });
+  if (!name) {
+    return res.status(400).json({ error: 'Name is required' });
   }
 
-  const session = await prisma.session.findUnique({
-    where: {
-      id: sessionId
-    }
-  });
+  if (sessionId) {
+    const session = await prisma.session.findUnique({
+      where: {
+        id: sessionId
+      }
+    });
 
-  if (!session) {
-    return res.status(404).json({ error: 'Session not found' });
+    if (!session) {
+      return res.status(404).json({ error: 'Session not found' });
+    }
   }
 
   const result = await prisma.user.create({
