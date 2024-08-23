@@ -64,7 +64,6 @@ export async function updateUser(req: NextApiRequest, res: NextApiResponse) {
 
 export async function removeUser(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
-  const { name } = req.body;
 
   if (!id) {
     return res.status(400).json({ error: 'ID is required' });
@@ -74,27 +73,17 @@ export async function removeUser(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json({ error: 'Only one ID is allowed' });
   }
 
-  if (!name) {
-    return res.status(400).json({ error: 'Name is required' });
-  }
+  const user = await prisma.user
+    .delete({
+      where: {
+        id: id
+      }
+    })
+    .catch((_) => {
+      return res.status(500).json({ error: 'User not found' });
+    });
 
-  const user = await prisma.user.update({
-    where: {
-      id: id
-    },
-    data: {
-      name
-    },
-    include: {
-      Session: true
-    }
-  });
-
-  if (!user) {
-    return res.status(404).json({ error: 'User not found' });
-  }
-
-  res.json(user);
+  return res.json(user);
 }
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {

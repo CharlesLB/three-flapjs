@@ -67,20 +67,20 @@ export async function removeSession(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json({ error: 'Only one ID is allowed' });
   }
 
-  const session = await prisma.session.delete({
-    where: {
-      id: id as string
-    },
-    include: {
-      User: true
-    }
-  });
+  const session = await prisma.session
+    .delete({
+      where: {
+        id: id as string
+      },
+      include: {
+        User: true
+      }
+    })
+    .catch((_) => {
+      return res.status(404).json({ error: 'Session not found' });
+    });
 
-  if (!session) {
-    return res.status(404).json({ error: 'Session not found' });
-  }
-
-  res.json(session);
+  return res.json(session);
 }
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
