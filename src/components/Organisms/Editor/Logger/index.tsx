@@ -30,7 +30,7 @@ const Logger: React.FC = () => {
         <TabsHorizontal tabs={tabs} selected={selected} setSelected={setSelected} />
 
         <aside>
-          <a onClick={() => handleCleanLogs()} title="Clear logs">
+          <a onClick={() => handleCleanLogs()} title="Clean logs">
             <BsFillTrashFill color="#ccc" size={16} />
           </a>
         </aside>

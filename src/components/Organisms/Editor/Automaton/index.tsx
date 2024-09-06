@@ -243,7 +243,7 @@ const Automaton: React.FC = () => {
   return (
     <Container id="automaton">
       <header>
-        <a onClick={() => clearAutomaton()} title="Clear logs">
+        <a onClick={() => clearAutomaton()} title="Clean Automaton">
           <BsFillTrashFill color="#ccc" size={16} />
         </a>
       </header>
