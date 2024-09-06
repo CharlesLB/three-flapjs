@@ -79,7 +79,7 @@ export async function removeUser(req: NextApiRequest, res: NextApiResponse) {
         id: id
       }
     })
-    .catch((_) => {
+    .catch((_: Error) => {
       return res.status(500).json({ error: 'User not found' });
     });
 

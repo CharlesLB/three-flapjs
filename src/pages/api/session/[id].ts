@@ -76,7 +76,7 @@ export async function removeSession(req: NextApiRequest, res: NextApiResponse) {
         User: true
       }
     })
-    .catch((_) => {
+    .catch((_: Error) => {
       return res.status(404).json({ error: 'Session not found' });
     });
 
