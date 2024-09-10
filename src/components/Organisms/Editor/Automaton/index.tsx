@@ -17,6 +17,7 @@ import setTestPositionNode from '@/helpers/Automaton/Nodes/SetTestPositionNode';
 import deselectAllNodes from '@/helpers/Automaton/Nodes/DeselectAllNodes';
 import setNotAllTestPositionNodes from '@/helpers/Automaton/Nodes/SetNotAllTestPositionNodes';
 import { BsFillTrashFill } from 'react-icons/bs';
+import SessionContainer from '@/components/Molecules/SessionContainer';
 
 const Automaton3D = dynamic(() => import('./Automaton3D'), { ssr: false });
 const Automaton2D = dynamic(() => import('./Automaton2D'), { ssr: false });
@@ -243,6 +244,8 @@ const Automaton: React.FC = () => {
   return (
     <Container id="automaton">
       <header>
+        <SessionContainer />
+
         <a onClick={() => clearAutomaton()} title="Clean Automaton">
           <BsFillTrashFill color="#ccc" size={16} />
         </a>
