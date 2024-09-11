@@ -18,8 +18,14 @@ export const Container = styled.div`
     z-index: 999999999999999;
     position: absolute;
 
+    > * {
+      margin-left: 0.5rem;
+    }
+
     > a {
       cursor: pointer;
+      display: flex;
+      align-items: center;
     }
   }
 
