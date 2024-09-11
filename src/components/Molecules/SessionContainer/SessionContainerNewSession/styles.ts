@@ -11,8 +11,10 @@ export const NewSectionButton = styled.button`
   background-image: linear-gradient(#42484b, #363b3d);
   color: #eee;
   padding: 0.2rem 1rem;
-  font-size: 12px;
+  height: 100%;
+  font-size: 0.75rem;
   border-radius: 2px;
+  align-items: center;
   cursor: pointer;
 
   &:hover {
